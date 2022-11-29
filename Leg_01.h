@@ -1,0 +1,37 @@
+#pragma once
+#include "CComponent.h"
+#include "Drive.h"
+class Leg_01 :
+	public Drive
+{
+private:
+	static Model* flont;
+	static Model* Back;
+
+	static ID3D11VertexShader* m_VertexShader;
+	static ID3D11PixelShader* m_PixelShader;
+	static ID3D11InputLayout* m_VertexLayout;
+	Float3 addpos;
+
+public:
+	Leg_01(GameObject* inobject) :Drive(inobject)
+	{
+		oldPos = inobject->Getpos();
+		angle = 0.0f;
+		spd = 0.01f;
+		move = true;
+		addpos = Float3(0.0f, 0.0f, 0.0f);
+	}
+
+	void Init();
+	void Uninit();
+	void Update();
+	void Draw();
+
+	static void Load();
+
+	void SetMove(bool Move = false) { move = Move; }
+	bool GetMove() { return move; }
+
+	static Model* GetModel() { return flont; }
+};

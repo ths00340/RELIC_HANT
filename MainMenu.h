@@ -1,0 +1,31 @@
+#pragma once
+#include "Game.h"
+#include "Camera_.h"
+#include "MenuTitle.h"
+#include "NumberManager.h"
+#include "Blur_Tex.h"
+
+enum class MISSION
+{
+	PRACTICE,//ó˚èK
+	ENEMY_ANNI,//ürñ≈
+	ENDURA,//ëœãv
+	BOSS_1,//íPëÃ
+	BOSS_2,//É{ÉX
+	NONE,//èIóπ
+};
+
+class MainMenu :
+	public Game
+{
+private:
+	class Camera_* menuCam;
+	class MenuTitle* title;
+	class Blur_Tex* blur;
+	class NumberManager* score;
+	MISSION MissionNum = MISSION::PRACTICE;
+public:
+	void Init();
+	void Uninit();
+	void Update();
+};

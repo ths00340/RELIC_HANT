@@ -7,10 +7,7 @@
 class InfinityEnemySpone :
 	public BATTLE_DATA
 {
-private:
-	float ptime = 0.0f;
 public:
 	void Init();
-	void Uninit();
 	void Update();
 };

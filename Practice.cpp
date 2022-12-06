@@ -5,16 +5,14 @@
 #include "Practice.h"
 #include "SousaH.h"
 #include "Blinking_Space.h"
+#include "MissionTex.h"
+
 void Practice::Init()
 {
 	Once = true;
 	Clear = false;
 	Manager::GetScene()->AddGameObject<SousaH>((int)OBJ_LAYER::UI);
 	Start = false;
-}
-
-void Practice::Uninit()
-{
 }
 
 void Practice::Update()
@@ -33,7 +31,9 @@ void Practice::Update()
 	}
 	Scene* sce = Manager::GetScene();
 
+	//Å‰‚Ì“®‚«
 	if (!Start)
+	{
 		if (mtex->GetEnd())
 		{
 			sce->SetAllStop(false);
@@ -44,6 +44,7 @@ void Practice::Update()
 			sce->SetAllStop();
 			mtex->SetStop(false);
 		}
+	}
 
 	if (Input::GetKeyPress(VK_SPACE))
 	{
@@ -54,7 +55,7 @@ void Practice::Update()
 		ClTime = 0.f;
 	}
 
-	if (ClTime > 0.1f)
+	if (ClTime > 3.0f)
 	{
 		Clear = true;
 	}

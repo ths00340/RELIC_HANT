@@ -9,6 +9,5 @@ class BOSS_01 :
 {
 public:
 	void Init();
-	void Uninit();
 	void Update();
 };

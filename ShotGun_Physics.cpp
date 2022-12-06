@@ -1,14 +1,10 @@
 #include "main.h"
 #include "renderer.h"
-#include "input.h"
 #include "audio.h"
-#include "Scene.h"
 #include "manager.h"
-#include "model.h"
 #include "GameObject.h"
 #include "Tools.h"
 #include "Camera.h"
-#include "ExplosiveBullet.h"
 #include "Status.h"
 #include "bullet.h"
 #include "ShotGun_Physics.h"
@@ -32,6 +28,10 @@ void ShotGun_Physics::Init()
 
 void ShotGun_Physics::Uninit()
 {
+#ifndef MUTE
+	shot->Destroy();
+	shot = NULL;
+#endif // MUTE
 }
 
 void ShotGun_Physics::Update()

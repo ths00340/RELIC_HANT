@@ -1,27 +1,27 @@
+///system
 #include "main.h"
 #include "renderer.h"
-#include "model.h"
-#include "Status.h"
-#include "Player.h"
+#include "audio.h"
 #include "input.h"
-#include "Scene.h"
 #include "manager.h"
+#include "model.h"
 #include "Tools.h"
-#include "Camera.h"
+
+///GameObject
+#include "Player.h"
 #include "ViewCamera.h"
+#include "Camera_.h"
+
+///Component
+#include "Status.h"
+#include "Camera.h"
 #include "GameObject.h"
 #include "CarMove.h"
-#include "audio.h"
 #include "Gravity.h"
 #include "SphereShadow.h"
 #include "Bazooka.h"
-#include "HitBox.h"
-#include "CarWheel.h"
-#include "ChargeLaser.h"
-#include "Gatling.h"
 #include "ExplodeDome.h"
 #include "NormalMove.h"
-#include "Camera_.h"
 
 static ViewCamera* ViewCam = NULL;
 static Camera* Cam = NULL;
@@ -238,7 +238,7 @@ void Player::SetHP(int Inhp)
 {
 	if (Hp == nullptr)
 	{
-		Hp = Manager::GetScene()->AddGameObject<HP>((int)OBJ_LAYER::UI);
+		Hp = Manager::GetScene()->AddGameObject<NumberManager>((int)OBJ_LAYER::UI);
 		Hp->SetStatus(Float2(80.f, 80.f), Float2(230.f, 40.f), true);
 		Hp->SetScore(Inhp);
 	}
@@ -257,7 +257,7 @@ void Player::SetMP()
 {
 	if (Mp == nullptr)
 	{
-		Mp = Manager::GetScene()->AddGameObject<MP>((int)OBJ_LAYER::UI);
+		Mp = Manager::GetScene()->AddGameObject<NumberManager>((int)OBJ_LAYER::UI);
 		Mp->SetStatus(Float2(80.f, 80.f), Float2(230.f, 130.f), true);
 	}
 }

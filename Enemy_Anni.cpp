@@ -20,15 +20,13 @@ void Enemy_Anni::Init()
 	Start = false;
 }
 
-void Enemy_Anni::Uninit()
-{
-}
-
 void Enemy_Anni::Update()
 {
 	Scene* sce = Manager::GetScene();
 
+	//Å‰‚Ì“®‚«
 	if (!Start)
+	{
 		if (mtex->GetEnd())
 		{
 			sce->SetAllStop(false);
@@ -39,13 +37,18 @@ void Enemy_Anni::Update()
 			sce->SetAllStop();
 			mtex->SetStop(false);
 		}
-
-	EnemyNum = sce->GetList((int)OBJ_LAYER::Enemy).size();
-
-	if (EnemyNum <= 0)
-	{
-		Clear = true;
 	}
-	if (!sce->GetGameObject<Player>())
-		GameOver = true;
+
+	//ìí‚Ì‰Â”Û”»’è
+	{
+		EnemyNum = sce->GetList((int)OBJ_LAYER::Enemy).size();
+		if (EnemyNum <= 0)
+		{
+			Clear = true;
+		}
+		if (!sce->GetGameObject<Player>())
+		{
+			GameOver = true;
+		}
+	}
 }

@@ -9,6 +9,5 @@ class Enemy_Anni :
 {
 public:
 	void Init();
-	void Uninit();
 	void Update();
 };

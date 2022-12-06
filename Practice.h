@@ -11,6 +11,5 @@ class Practice :
 	float ClTime = 0.0f;//I—¹—p•Ï”
 public:
 	void Init();
-	void Uninit();
 	void Update();
 };

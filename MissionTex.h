@@ -1,5 +1,6 @@
 #pragma once
 #include "Polygon2D.h"
+
 class MissionTex :
 	public Polygon2D
 {

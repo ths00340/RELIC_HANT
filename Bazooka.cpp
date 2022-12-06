@@ -1,6 +1,5 @@
 #include "main.h"
 #include "renderer.h"
-#include "input.h"
 #include "Scene.h"
 #include "manager.h"
 #include "model.h"
@@ -10,7 +9,6 @@
 #include "Camera.h"
 #include "ExplosiveBullet.h"
 #include "Status.h"
-#include "bullet.h"
 
 Model* Bazooka::model;
 Model* Bazooka::hit;
@@ -43,9 +41,10 @@ void Bazooka::Uninit()
 
 void Bazooka::Update()
 {
+	time++;
 	Camera* cam = object->LoadComponent<Camera>();
 	m_scl = object->Getscl();
-	time++;
+
 	Scene* scene = Manager::GetScene();
 
 	objS = object->LoadComponent<Status>();

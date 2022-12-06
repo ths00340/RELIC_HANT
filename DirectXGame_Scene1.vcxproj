@@ -60,7 +60,6 @@
     <ClInclude Include="Gatling.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="HitBox.h" />
-    <ClInclude Include="HP.h" />
     <ClInclude Include="InfinityEnemySpone.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="LaserBullet.h" />
@@ -74,7 +73,6 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="CarMove.h" />
     <ClInclude Include="Fade.h" />
-    <ClInclude Include="MP.h" />
     <ClInclude Include="NormalFade.h" />
     <ClInclude Include="NormalMove.h" />
     <ClInclude Include="Number.h" />
@@ -106,6 +104,7 @@
     <ClInclude Include="DebugCamMove.h" />
     <ClInclude Include="TimeFrame.h" />
     <ClInclude Include="Timer2D.h" />
+    <ClInclude Include="TimeStr.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Title2D.h" />
     <ClInclude Include="Tools.h" />
@@ -116,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio.cpp" />
+    <ClCompile Include="BATTLE_DATA.cpp" />
     <ClCompile Include="Bazooka.cpp" />
     <ClCompile Include="Blinking_Space.cpp" />
     <ClCompile Include="Blur_Tex.cpp" />

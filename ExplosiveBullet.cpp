@@ -38,10 +38,6 @@ void ExplosiveBullet::Finish()
 
 void ExplosiveBullet::Init()
 {
-	m_model = Manager::AddModel("asset\\models\\Bazooka_bul.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
-
 	AddComponent<Gravity>();
 	m_pos = Float3(-3.0f, 1.0f, 0.0f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
@@ -121,7 +117,9 @@ void ExplosiveBullet::Set(Float3 pos, Float3 rot, float vel, int dmg, float dmgr
 
 void ExplosiveBullet::Load()
 {
-
+	m_model = Manager::AddModel("asset\\models\\Bazooka_bul.obj");
+	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void ExplosiveBullet::AddVel(Float3 add)

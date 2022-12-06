@@ -11,6 +11,5 @@ private:
 	bool Once = false;//ˆê‰ñ‚µ‚©s“®‚µ‚È‚¢‚½‚ß‚Ìƒtƒ‰ƒO
 public:
 	void Init();
-	void Uninit();
 	void Update();
 };

@@ -1,5 +1,5 @@
+#include "manager.h"
 #include "Tools.h"
-#include "input.h"
 #include "Camera_.h"
 
 void Camera_::Init()
@@ -59,4 +59,9 @@ void Camera_::Addmenu(int in)
 	menu += in;
 	menu = TOOL::Limit(menu, (int)MENU::SHOP - 1, (int)MENU::GARAGE);
 	time = 0;
+}
+
+const Float3 Camera_::GetDir()
+{
+	return Dir;
 }

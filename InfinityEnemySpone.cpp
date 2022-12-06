@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "InfinityEnemySpone.h"
 #include "Stage02.h"
+#include "TimeStr.h"
+#include "Timer2D.h"
 
 void InfinityEnemySpone::Init()
 {
@@ -17,22 +19,21 @@ void InfinityEnemySpone::Init()
 		en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
 		en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
 	}
-	Endurance = 60;
+	Endurance = new TimeStr();
+	*Endurance = 60;
 	ptime = 0.f;
 	timer = sce->AddGameObject<Timer2D>((int)OBJ_LAYER::UI);
-	timer->SetTime(Endurance.Min, Endurance.Sec);
+	timer->SetTime(Endurance->Min, Endurance->Sec);
 	Start = false;
-}
-
-void InfinityEnemySpone::Uninit()
-{
 }
 
 void InfinityEnemySpone::Update()
 {
 	Scene* sce = Manager::GetScene();
 
+	//Å‰‚Ì“®‚«
 	if (!Start)
+	{
 		if (mtex->GetEnd())
 		{
 			sce->SetAllStop(false);
@@ -43,36 +44,45 @@ void InfinityEnemySpone::Update()
 			sce->SetAllStop();
 			mtex->SetStop(false);
 		}
+	}
 
-	int num = sce->GetGameObjects<Enemy>((int)OBJ_LAYER::Enemy).size();
-	if (num < EnemyNum)
+	//ƒQ[ƒ€’†‚Ì“®‚«
 	{
-		for (int i = 0; i < EnemyNum - num; i++)
+		int num = sce->GetGameObjects<Enemy>((int)OBJ_LAYER::Enemy).size();
+		if (num < EnemyNum)
 		{
-			Enemy* en = NULL;
-			en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
-			en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
-			en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
+			for (int i = 0; i < EnemyNum - num; i++)
+			{
+				Enemy* en = NULL;
+				en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
+				en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
+				en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
+			}
 		}
 	}
 
-	if (Start && !Clear && !GameOver)
-		ptime += TOOL::SecDiv(1.0f);
-
-	if (ptime > 1.f)
+	//ìí‚Ì‰Â”Û”»’è
 	{
-		Endurance = Endurance - 1;
-		ptime = ptime - 1.f;
-		TOOL::Display((char*)"§ŒÀŠÔ:%d/Hour %d/Min %d/Sec\n", Endurance.Hour, Endurance.Min, Endurance.Sec);
+		if (Endurance <= 0)
+		{
+			Clear = true;
+		}
+		if (!sce->GetGameObject<Player>())
+		{
+			GameOver = true;
+		}
 	}
 
-	if (Endurance <= 0)
+	//§ŒÀŠÔ
 	{
-		Clear = true;
+		if (Start && !Clear && !GameOver)
+			ptime += TOOL::SecDiv(1.0f);
+
+		if (ptime > 1.f)
+		{
+			*Endurance -= 1;
+			ptime = ptime - 1.f;
+		}
+		timer->SetTime(Endurance->Min, Endurance->Sec);
 	}
-	if (!sce->GetGameObject<Player>())
-	{
-		GameOver = true;
-	}
-	timer->SetTime(Endurance.Min, Endurance.Sec);
 }

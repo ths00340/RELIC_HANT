@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CComponent.h"
 #include "Wepon.h"
 class Gatling :
 	public Wepon

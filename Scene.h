@@ -124,7 +124,6 @@ public:
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_back(gameObject);
-		obj->SetMe(gameObject);
 		return gameObject;
 	}
 
@@ -135,7 +134,6 @@ public:
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_front(gameObject);
-		obj->SetMe(gameObject);
 		return gameObject;
 	}
 

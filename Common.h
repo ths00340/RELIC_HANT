@@ -42,7 +42,6 @@ public:
 		FadeParent* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[(int)OBJ_LAYER::UI].push_back(gameObject);
-		obj->SetMe(gameObject);
 		fade = obj;
 		return gameObject;
 	}

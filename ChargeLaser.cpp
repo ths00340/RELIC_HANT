@@ -1,8 +1,6 @@
 #include "main.h"
 #include "renderer.h"
-#include "Scene.h"
 #include "manager.h"
-#include "model.h"
 #include "GameObject.h"
 #include "Tools.h"
 #include "Camera.h"

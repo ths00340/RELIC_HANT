@@ -1,8 +1,9 @@
 #pragma once
 
-#include "CComponent.h"
 #include "Wepon.h"
-#include "ChargeEffect.h"
+
+class ChargeEffect;
+
 class ChargeLaser :
 	public Wepon
 {
@@ -12,8 +13,6 @@ class ChargeLaser :
 	static ID3D11VertexShader* m_VertexShader;
 	static ID3D11PixelShader* m_PixelShader;
 	static ID3D11InputLayout* m_VertexLayout;
-
-	//c‚ÌƒAƒ“ƒOƒ‹‚Ì‚İ
 
 	int charge_rate = 0;
 	ChargeEffect* eff = nullptr;

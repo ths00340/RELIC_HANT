@@ -89,14 +89,14 @@ public:
 	void SetShake(int max = 60, float Str = 1.f);
 
 	GameObject* GetTarget() { return tag; }
-	Float3 GetDir();
-	Float3 GetAngle() { return Angle; };
-	Float3 GetTag() { return m_tag; }
-	Float3 GetUp() { return m_up; }
-	Float3 GetPos() { return m_pos; }
-	CamMode GetMode() { return Mode; }
-	float GetViewAng() { return ViewAng; }
-	D3DXMATRIX GetViewMatrix() { return m_ViewMatrix; }
+	const Float3 GetDir();
+	const Float3 GetAngle() { return Angle; };
+	const Float3 GetTag() { return m_tag; }
+	const Float3 GetUp() { return m_up; }
+	const Float3 GetPos() { return m_pos; }
+	const CamMode GetMode() { return Mode; }
+	const float GetViewAng() { return ViewAng; }
+	const D3DXMATRIX GetViewMatrix() { return m_ViewMatrix; }
 
 	//ƒ|ƒCƒ“ƒ^“n‚µ
 	Float3* GetTagPoint() { return &m_tag; }

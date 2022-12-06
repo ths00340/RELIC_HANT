@@ -1,8 +1,10 @@
 #pragma once
 #include "main.h"
-#include "Status.h"
 #include "CComponent.h"
-#include "audio.h"
+
+class Status;
+class Audio;
+
 class Wepon :
 	public CComponent
 {
@@ -17,7 +19,7 @@ protected:
 	Float3 shotpos;
 
 	Status* objS = NULL;
-	Audio* shot;
+	Audio* shot = NULL;
 	float range;
 	int shotnum;
 	int shotMax;
@@ -36,5 +38,8 @@ public:
 		shotnum = 0;
 		shotMax = 20;
 		ReCast = 3.f;
+
+		objS = NULL;
+		shot = NULL;
 	};
 };

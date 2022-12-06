@@ -132,7 +132,7 @@ void Camera::SetShake(int max, float Str)
 	shakeStr = Str;
 }
 
-Float3 Camera::GetDir()
+const Float3 Camera::GetDir()
 {
 	return Dir;
 }

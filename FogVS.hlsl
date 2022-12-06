@@ -25,9 +25,6 @@ void main(in VS_IN In, out PS_IN Out)
 	//テクスチャ座標を出力
 	Out.TexCoord = In.TexCoord;
 
-
-
 	//ワールド変換した頂点座標を出力
 	Out.WorldPosition = mul(In.Position, World);
-
 }

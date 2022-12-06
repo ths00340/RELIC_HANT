@@ -3,9 +3,9 @@
 #include "Wepon.h"
 #include "DriveSystem.h"
 #include "Drive.h"
-#include "HP.h"
-#include "MP.h"
 #define SE_MAX_NUM (10)
+
+class NumberManager;
 
 class Player :public GameObject
 {
@@ -23,8 +23,8 @@ private:
 	Wepon* wepon = nullptr;
 	DriveSystem* driveS = nullptr;
 	Drive* drive = nullptr;
-	HP* Hp = nullptr;
-	MP* Mp = nullptr;
+	NumberManager* Hp = nullptr;
+	NumberManager* Mp = nullptr;
 	float Idol = 0.0f;
 public:
 	static void Load();

@@ -1,6 +1,4 @@
 #pragma once
-
-#include "CComponent.h"
 #include "Wepon.h"
 class Bazooka :
 	public Wepon
@@ -12,7 +10,6 @@ class Bazooka :
 	static ID3D11PixelShader* m_PixelShader;
 	static ID3D11InputLayout* m_VertexLayout;
 
-	//c‚ÌƒAƒ“ƒOƒ‹‚Ì‚İ
 	int fire_rate = 0;
 
 	void Predicted(Float3 spos, Float3 vel);

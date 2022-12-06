@@ -38,17 +38,13 @@ void ExplodeDome::Finish()
 
 void ExplodeDome::Load()
 {
-
+	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	m_model = Manager::AddModel("asset\\models\\bomdome.obj");
+	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void ExplodeDome::Init()
 {
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-
-	m_model = Manager::AddModel("asset\\models\\bomdome.obj");
-
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
-
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
 	m_pos = TOOL::Uniform();

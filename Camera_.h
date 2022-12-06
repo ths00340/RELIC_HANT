@@ -1,8 +1,4 @@
 #pragma once
-#include <list>
-#include <vector>
-#include <typeinfo>
-#include "manager.h"
 #include "Tools.h"
 #include "GameObject.h"
 
@@ -60,9 +56,9 @@ public:
 	int Getmenu() { return menu; }
 
 	GameObject* GetTarget() { return tag; }
-	Float3 GetDir();
-	Float3 GetAngle() { return Angle; };
-	Float3 GetTag() { return m_tag; }
-	CamMode GetMode() { return Mode; }
-	D3DXMATRIX GetViewMatrix() { return m_ViewMatrix; }
+	const Float3 GetDir();
+	const Float3 GetAngle() { return Angle; };
+	const Float3 GetTag() { return m_tag; }
+	const CamMode GetMode() { return Mode; }
+	const D3DXMATRIX GetViewMatrix() { return m_ViewMatrix; }
 };

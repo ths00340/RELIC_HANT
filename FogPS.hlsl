@@ -1,9 +1,7 @@
 //thsozai ==>前回までの状態　ZIP　　パスワード　nabe
 
-
 //BlinnPhongLightingPS.hlsl
 //BlinnPhongLightingVS.hlsl
-
 
 #include "common.hlsl"
 
@@ -58,5 +56,4 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	float dist = distance(In.WorldPosition.xyz, CameraPosition.xyz);
 	float fog = saturate(dist / 100.f);
 	outDiffuse.rgb = outDiffuse.rgb * (1.f - fog) + float3(0.95f, 0.95f, 0.95f) * fog;
-
 }

@@ -372,14 +372,8 @@
     <ClInclude Include="Score.h">
       <Filter>ヘッダー ファイル\GameObject\UIs</Filter>
     </ClInclude>
-    <ClInclude Include="HP.h">
-      <Filter>ヘッダー ファイル\GameObject\UIs</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="MP.h">
-      <Filter>ヘッダー ファイル\GameObject\UIs</Filter>
     </ClInclude>
     <ClInclude Include="BATTLE_DATA.h">
       <Filter>ヘッダー ファイル\base</Filter>
@@ -497,6 +491,15 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeStr.h">
+      <Filter>ヘッダー ファイル\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -724,6 +727,9 @@
     </ClCompile>
     <ClCompile Include="ShotGun_Physics.cpp">
       <Filter>ソース ファイル\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BATTLE_DATA.cpp">
+      <Filter>ソース ファイル\BATTLE_DATA</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

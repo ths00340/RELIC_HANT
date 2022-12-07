@@ -178,17 +178,17 @@ void Enemy::Finish()
 	Scene* scene = Manager::GetScene();
 	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, m_model->Get_max().z * m_scl.z, 0.2f, 0);
 
-	//mana = scene->AddGameObject<ParticleManager>(1);
-	//mana->SetModel(PARTICLE_S::ITEM2, BLEND_S::OBJ_TRANS);
-	//mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 2.0f * m_scl.z, TOOL::RandF() * 15 + 5 + (50 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana = scene->AddGameObject<ParticleManager>(1);
+	mana->SetModel(PARTICLE_S::ITEM2, BLEND_S::OBJ_TRANS);
+	mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 2.0f * m_scl.z, TOOL::RandF() * 15 + 5 + (50 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
 
-	//mana = scene->AddGameObject<ParticleManager>(1);
-	//mana->SetModel(PARTICLE_S::ITEM3, BLEND_S::OBJ_TRANS);
-	//mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 3.0f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana = scene->AddGameObject<ParticleManager>(1);
+	mana->SetModel(PARTICLE_S::ITEM3, BLEND_S::OBJ_TRANS);
+	mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 3.0f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
 
-	//mana = scene->AddGameObject<ParticleManager>(1);
-	//mana->SetModel(PARTICLE_S::GIA, BLEND_S::OBJ_OPAQUE);
-	//mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 0.5f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana = scene->AddGameObject<ParticleManager>(1);
+	mana->SetModel(PARTICLE_S::GIA, BLEND_S::OBJ_OPAQUE);
+	mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 0.5f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
 
 	mana = scene->AddGameObject<ParticleManager>(1);
 	mana->SetModel(PARTICLE_S::CUBE, BLEND_S::OBJ_TRANS);

@@ -30,10 +30,10 @@ void Status::Update()
 	if (AutoHeal)
 	{
 		heal += TOOL::SecDiv(HP_MAX) / HealTime;
-		if (heal > 1.f)
+		if (heal >= 1.f)
 		{
-			HP += heal / 1.f;
-			heal -= heal / 1.f;
+			HP +=1;
+			heal -= 1.f;
 		}
 	}
 

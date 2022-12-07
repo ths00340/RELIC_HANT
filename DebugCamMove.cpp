@@ -3,7 +3,6 @@
 #include "renderer.h"
 #include "input.h"
 #include "manager.h"
-#include "Scene.h"
 #include "Tools.h"
 #include "Camera.h"
 #include "ViewCamera.h"

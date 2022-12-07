@@ -1,23 +1,25 @@
 #include "MainMenu.h"
-#include "Camera.h"
-#include "Skybox.h"
-#include "Polygon2D.h"
-#include "Field.h"
+
+///system
+#include "manager.h"
 #include "audio.h"
-#include "ViewCamera.h"
 #include "Platform.h"
-#include "DebugCamMove.h"
 #include "input.h"
-#include "Common.h"
 #include "Fade.h"
-#include "CreateLogo.h"
-#include "Score.h"
+
+///Scene
 #include "EnemyAnni.h"
 #include "ENDURANCE.h"
 #include "Boss01.h"
 #include "Boss01_2.h"
-#include "BulrS.h"
+
+///GameObject
 #include "NumberManager.h"
+#include "Camera_.h"
+#include "MenuTitle.h"
+#include "Blur_Tex.h"
+#include "BulrS.h"
+
 
 class Game_S;
 NumberManager* a;

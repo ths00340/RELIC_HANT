@@ -27,7 +27,7 @@ private:
 	int menu = (int)MENU::STAGE;
 	Float3 Nextpos[(int)MENU::MAX];
 	Float3 Nexttag[(int)MENU::MAX];
-	float time;
+	float time = 0.f;
 public:
 	Camera_()
 	{
@@ -38,6 +38,7 @@ public:
 		Angle = Float3(0.0f, 0.0f, 0.0f);
 		ViewAng = 1.0f;
 		Mode = CamMode::TPP;
+		time = 0.f;
 	}
 	void Init();
 	void Uninit();

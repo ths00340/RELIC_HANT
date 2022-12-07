@@ -1,5 +1,8 @@
+//==============================================================================
+// Filename: CarWheel.h
+// Description: Driveを継承したホイールクラスの定義
+//==============================================================================
 #pragma once
-#include "CComponent.h"
 #include "Drive.h"
 class CarWheel :
 	public Drive

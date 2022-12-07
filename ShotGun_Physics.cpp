@@ -86,7 +86,6 @@ void ShotGun_Physics::Update()
 				if (object->LoadComponent<Camera>())
 					object->LoadComponent<Camera>()->SetShake(10, 0.25f);
 			}
-			shotnum++;
 		}
 	}
 

@@ -115,7 +115,7 @@ void Model::Unload()
 	delete[] m_SubsetArray;
 }
 
-Float3 Model::Get_max()
+const Float3 Model::Get_max()
 {
 	Float3 ret = Float3(
 		Size_max.x,
@@ -125,7 +125,7 @@ Float3 Model::Get_max()
 	return ret;
 }
 
-Float3 Model::Get_min()
+const Float3 Model::Get_min()
 {
 	Float3 ret = Float3(
 		Size_min.x,
@@ -135,7 +135,7 @@ Float3 Model::Get_min()
 	return ret;
 }
 
-Float3 Model::Get_total()
+const Float3 Model::Get_total()
 {
 	Float3 ret = Float3(
 		Size_max.x - Size_min.x,
@@ -148,6 +148,7 @@ Float3 Model::Get_total()
 //モデル読込////////////////////////////////////////////
 void Model::LoadObj(const char* FileName, MODEL* Model)
 {
+	int t = 0;//警告対策
 	Size_max = Float3(0.0f, 0.0f, 0.0f);
 	Size_min = Float3(1000.0f, 1000.0f, 1000.0f);
 	char dir[MAX_PATH];
@@ -184,7 +185,7 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 	//要素数カウント
 	while (true)
 	{
-		fscanf(file, "%s", str);
+		t = fscanf(file, "%s", str);
 
 		if (feof(file) != 0)
 			break;
@@ -211,7 +212,7 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 
 			do
 			{
-				fscanf(file, "%s", str);
+				t = fscanf(file, "%s", str);
 				vertexNum++;
 				in++;
 				c = fgetc(file);
@@ -252,7 +253,7 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 
 	while (true)
 	{
-		fscanf(file, "%s", str);
+		t = fscanf(file, "%s", str);
 
 		if (feof(file) != 0)
 			break;
@@ -260,7 +261,7 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 		if (strcmp(str, "mtllib") == 0)
 		{
 			//マテリアルファイル
-			fscanf(file, "%s", str);
+			t = fscanf(file, "%s", str);
 
 			char path[256];
 			strcpy(path, dir);
@@ -272,14 +273,14 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 		else if (strcmp(str, "o") == 0)
 		{
 			//オブジェクト名
-			fscanf(file, "%s", str);
+			t = fscanf(file, "%s", str);
 		}
 		else if (strcmp(str, "v") == 0)
 		{
 			//頂点座標
-			fscanf(file, "%f", &position->x);
-			fscanf(file, "%f", &position->y);
-			fscanf(file, "%f", &position->z);
+			t = fscanf(file, "%f", &position->x);
+			t = fscanf(file, "%f", &position->y);
+			t = fscanf(file, "%f", &position->z);
 
 			{
 				if (position->x > Size_max.x)
@@ -308,23 +309,23 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 		else if (strcmp(str, "vn") == 0)
 		{
 			//法線
-			fscanf(file, "%f", &normal->x);
-			fscanf(file, "%f", &normal->y);
-			fscanf(file, "%f", &normal->z);
+			t = fscanf(file, "%f", &normal->x);
+			t = fscanf(file, "%f", &normal->y);
+			t = fscanf(file, "%f", &normal->z);
 			normal++;
 		}
 		else if (strcmp(str, "vt") == 0)
 		{
 			//テクスチャ座標
-			fscanf(file, "%f", &texcoord->x);
-			fscanf(file, "%f", &texcoord->y);
+			t = fscanf(file, "%f", &texcoord->x);
+			t = fscanf(file, "%f", &texcoord->y);
 			texcoord->y = 1.0f - texcoord->y;
 			texcoord++;
 		}
 		else if (strcmp(str, "usemtl") == 0)
 		{
 			//マテリアル
-			fscanf(file, "%s", str);
+			t = fscanf(file, "%s", str);
 
 			if (sc != 0)
 				Model->SubsetArray[sc - 1].IndexNum = ic - Model->SubsetArray[sc - 1].StartIndex;
@@ -352,7 +353,7 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 
 			do
 			{
-				fscanf(file, "%s", str);
+				t = fscanf(file, "%s", str);
 
 				s = strtok(str, "/");
 				Model->VertexArray[vc].Position = positionArray[atoi(s) - 1];
@@ -421,7 +422,7 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 	//要素数カウント
 	while (true)
 	{
-		fscanf(file, "%s", str);
+		int t = fscanf(file, "%s", str);
 
 		if (feof(file) != 0)
 			break;
@@ -442,7 +443,7 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 
 	while (true)
 	{
-		fscanf(file, "%s", str);
+		int t = fscanf(file, "%s", str);
 
 		if (feof(file) != 0)
 			break;
@@ -451,47 +452,47 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 		{
 			//マテリアル名
 			mc++;
-			fscanf(file, "%s", materialArray[mc].Name);
+			t = fscanf(file, "%s", materialArray[mc].Name);
 			strcpy(materialArray[mc].TextureName, "");
 		}
 		else if (strcmp(str, "Ka") == 0)
 		{
 			//アンビエント
-			fscanf(file, "%f", &materialArray[mc].Material.Ambient.r);
-			fscanf(file, "%f", &materialArray[mc].Material.Ambient.g);
-			fscanf(file, "%f", &materialArray[mc].Material.Ambient.b);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Ambient.r);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Ambient.g);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Ambient.b);
 			materialArray[mc].Material.Ambient.a = 1.0f;
 		}
 		else if (strcmp(str, "Kd") == 0)
 		{
 			//ディフューズ
-			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.r);
-			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.g);
-			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.b);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Diffuse.r);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Diffuse.g);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Diffuse.b);
 			materialArray[mc].Material.Diffuse.a = 1.0f;
 		}
 		else if (strcmp(str, "Ks") == 0)
 		{
 			//スペキュラ
-			fscanf(file, "%f", &materialArray[mc].Material.Specular.r);
-			fscanf(file, "%f", &materialArray[mc].Material.Specular.g);
-			fscanf(file, "%f", &materialArray[mc].Material.Specular.b);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Specular.r);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Specular.g);
+			t=fscanf(file, "%f", &materialArray[mc].Material.Specular.b);
 			materialArray[mc].Material.Specular.a = 1.0f;
 		}
 		else if (strcmp(str, "Ns") == 0)
 		{
 			//スペキュラ強度
-			fscanf(file, "%f", &materialArray[mc].Material.Shininess);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Shininess);
 		}
 		else if (strcmp(str, "d") == 0)
 		{
 			//アルファ
-			fscanf(file, "%f", &materialArray[mc].Material.Diffuse.a);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Diffuse.a);
 		}
 		else if (strcmp(str, "map_Kd") == 0)
 		{
 			//テクスチャ
-			fscanf(file, "%s", str);
+			t=fscanf(file, "%s", str);
 
 			char path[256];
 			strcpy(path, dir);
@@ -503,14 +504,14 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 		else if (strcmp(str, "Ni") == 0)
 		{
 			//アルファ
-			fscanf(file, "%f", &materialArray[mc].Material.Shininess);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Shininess);
 		}
 		else if (strcmp(str, "Ke") == 0)
 		{
 			//アルファ
-			fscanf(file, "%f", &materialArray[mc].Material.Emission.r);
-			fscanf(file, "%f", &materialArray[mc].Material.Emission.g);
-			fscanf(file, "%f", &materialArray[mc].Material.Emission.b);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Emission.r);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Emission.g);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Emission.b);
 			materialArray[mc].Material.Emission.a = 1.0f;
 		}
 	}

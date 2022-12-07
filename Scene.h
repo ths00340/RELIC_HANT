@@ -187,7 +187,7 @@ public:
 		return objects;
 	}
 
-	bool GetLiveObj(GameObject* obj, int a = -1)
+	const bool GetLiveObj(GameObject* obj, int a = -1)
 	{
 		if (a == -1)
 		{

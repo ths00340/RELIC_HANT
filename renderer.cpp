@@ -2,7 +2,7 @@
 #include "renderer.h"
 #include <io.h>
 
-D3D_FEATURE_LEVEL       Renderer::m_FeatureLevel = D3D_FEATURE_LEVEL_11_0;
+D3D_FEATURE_LEVEL       Renderer::m_FeatureLevel = D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_11_0;
 
 ID3D11Device* Renderer::m_Device = NULL;
 ID3D11DeviceContext* Renderer::m_DeviceContext = NULL;
@@ -200,8 +200,8 @@ void Renderer::Init()
 	// ÉâÉCÉgèâä˙âª
 	LIGHT light{};
 	light.Enable = true;
-	light.Direction = D3DXVECTOR4(1.0f, -1.0f, 1.0f, 1.0f);
-	light.Position = D3DXVECTOR4(0.f, 5.f, 0.f, 0.f);
+	light.Direction = D3DXVECTOR4(0.25f, -1.0f, 0.0f, 1.0f);
+	light.Position = D3DXVECTOR4(0.f, 500.f, 0.f, 0.f);
 	D3DXVec4Normalize(&light.Direction, &light.Direction);
 	light.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.2f, 1.0f);
 	light.Diffuse = D3DXCOLOR(2.f, 2.f, 2.f, 1.f);

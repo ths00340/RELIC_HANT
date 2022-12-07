@@ -63,7 +63,7 @@ void InfinityEnemySpone::Update()
 
 	//ìí‚Ì‰Â”Û”»’è
 	{
-		if (Endurance <= 0)
+		if (*Endurance <= 0)
 		{
 			Clear = true;
 		}

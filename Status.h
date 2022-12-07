@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Status.h
+// Description: コンポーネントクラスを継承したステータスクラスの定義
+//==============================================================================
 #pragma once
 #include "Tools.h"
 #include "CComponent.h"
@@ -5,26 +9,26 @@ class Status :
 	public CComponent
 {
 private:
-	float heal;
-	int HP;
-	float St;
-	int HP_MAX;
-	float St_MAX;
+	float heal;		//int型のHPを回復するためのfloat
+	int HP;			//体力
+	float St;		//スタミナ
+	int HP_MAX;		//体力の最大値
+	float St_MAX;	//スタミナの最大値
 
-	bool AutoHeal;
-	float HealTime;
+	bool AutoHeal;//自己回復するか否か:体力
+	float HealTime;//最大値に回復するまでの時間
 
-	bool AutoStHeal;
-	float StHealTime;
+	bool AutoStHeal;//自己回復するか否か:スタミナ
+	float StHealTime;//最大値に回復するまでの時間
 
-	bool AutoBreak;
+	bool AutoBreak;//自己破壊設定
 
 	float speedmax;//最大速度
 	float acc;//加速度
 
 	bool Shot;//射撃フラグ
 
-	int wheel;
+	int wheel;//マウスホイールの移動量
 public:
 	Status(GameObject* inobject) :CComponent(inobject) {
 		heal = 0.f;
@@ -91,30 +95,38 @@ public:
 
 	void SetShot(bool inshot) { Shot = inshot; }
 
+	void SetHP(int hp) {
+		HP = hp;
+	}
+	void SetST(int st)
+	{
+		St = st;
+	}
+
 	//取得系
 		//HPの取得
-	int GetHP() { return HP; }
+	const int GetHP() { return HP; }
 	//HP最大値の取得
-	int GetHPM() { return HP_MAX; }
+	const int GetHPM() { return HP_MAX; }
 	//スタミナの取得
-	float GetST() { return St; }
+	const float GetST() { return St; }
 	//スタミナ最大値の取得
-	float GetSTM() { return St_MAX; }
+	const float GetSTM() { return St_MAX; }
 	//生存でTrue
-	bool GetLive() { return HP > 0; }
+	const bool GetLive() { return HP > 0; }
 	//wheelの移動量を取得
-	int GetWheel() {
+	const int GetWheel() {
 		return wheel;
 	}
 
 	//最大速度の取得
-	float GetSpdmax() { return speedmax; }
+	const float GetSpdmax() { return speedmax; }
 
 	//加速度の取得
-	float GetAcc() { return acc; }
+	const float GetAcc() { return acc; }
 
 	//射撃フラグの取得
-	bool GetShot() { return Shot; }
+	const bool GetShot() { return Shot; }
 
 	//減算系
 	void PullHP(int inHp) { HP -= inHp; }

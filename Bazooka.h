@@ -1,19 +1,23 @@
+//==============================================================================
+// Filename: Bazooka.h
+// Description: Weponクラス継承したバズーカクラスの定義
+//==============================================================================
 #pragma once
 #include "Wepon.h"
 class Bazooka :
 	public Wepon
 {
-	static Model* model;
-	static Model* hit;
+	static Model* model;//砲身
+	static Model* hit;//着弾予測モデル
 
 	static ID3D11VertexShader* m_VertexShader;
 	static ID3D11PixelShader* m_PixelShader;
 	static ID3D11InputLayout* m_VertexLayout;
 
-	int fire_rate = 0;
+	int fire_rate = 0;//発射レート
 
-	void Predicted(Float3 spos, Float3 vel);
-	Float3 PredictedPoint;
+	void Predicted(Float3 spos, Float3 vel);//予測用
+	Float3 PredictedPoint;//着弾予測座標
 public:
 	Bazooka(GameObject* inobject) :Wepon(inobject)
 	{

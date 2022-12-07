@@ -322,7 +322,7 @@ public:
 
 	//指定した追加シーンの削除
 	template<typename T>
-	static bool DeleteAddScene()
+	static const bool DeleteAddScene()
 	{
 		for (Scene* sce : addScene)
 		{
@@ -389,7 +389,7 @@ public:
 	}
 
 	//指定したモデルの検索キーの取得 -1なら存在しない
-	static int GetModelKey(const char* Filename)
+	static const int GetModelKey(const char* Filename)
 	{
 		if (Modelname.empty())//中身が空だった場合1
 		{
@@ -467,7 +467,7 @@ public:
 	}
 
 	//指定した2Dテクスチャの検索キーの取得　-1なら存在しない
-	static int GetTexKey(const char* Filename)
+	static const int GetTexKey(const char* Filename)
 	{
 		if (TextureName.empty())//中身が空だった場合1
 		{

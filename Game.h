@@ -6,8 +6,8 @@ class Game :
 	public Scene
 {
 protected:
-	class Audio* bgm;
-	class Common* fade;
+	class Audio* bgm = nullptr;;
+	class Common* fade = nullptr;;
 	class Player* pl = nullptr;
 	bool Next = false;
 	BATTLE_DATA* B_Data = nullptr;

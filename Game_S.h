@@ -10,10 +10,10 @@ protected:
 	bool Start = false;
 	bool Once = false;
 	bool Stop = false;
-	Blur_Tex* tex;
-	int cleartime;
-	Audio* ClearBGM;
-	Audio* OverBGM;
+	Blur_Tex* tex = nullptr;
+	int cleartime = 0;
+	Audio* ClearBGM = nullptr;;
+	Audio* OverBGM = nullptr;;
 public:
 	virtual void Init();
 	virtual void Uninit();

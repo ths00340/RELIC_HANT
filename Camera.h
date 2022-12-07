@@ -1,6 +1,8 @@
+//==============================================================================
+// Filename: Camera.h
+// Description: コンポーネントクラス継承したカメラクラスの定義
+//==============================================================================
 #pragma once
-#include <list>
-#include <vector>
 #include <typeinfo>
 #include "manager.h"
 #include "Tools.h"
@@ -11,22 +13,24 @@ class GameObject;
 class Camera :public CComponent
 {
 private:
-	CamMode Mode;
-	Float3 m_pos;
-	Float3 m_tag;
-	Float3 m_up;
-	D3DXMATRIX m_ViewMatrix;
-	Float3 Dir;
-	Float3 Angle;
-	Float3 Addpos;
+	CamMode Mode;//FPPかTPPか
+	Float3 m_pos;//座標
+	Float3 m_tag;//注視点
+	Float3 m_up;//頂点
+	D3DXMATRIX m_ViewMatrix;//視点行列
+	Float3 Dir;//座標から注視点へのベクトル
+	Float3 Angle;//角度
+	Float3 Addpos;//追加座標
 	float ViewAng;//視野角
-	GameObject* tag = NULL;
+	GameObject* tag = NULL;//ターゲットオブジェクト
 	float Range;//取得範囲
-
+	
+	/// 揺れ用変数
 	bool shake = false;
 	int  time = 0;
 	int	 maxrand = 0;
 	float shakeStr = 1.0f;
+
 public:
 
 	Camera(GameObject* inobject) :CComponent(inobject) {

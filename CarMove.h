@@ -1,6 +1,9 @@
+//==============================================================================
+// Filename: CarMove.h
+// Description: DriveSystemを継承した移動用ホイールクラスの定義
+//==============================================================================
 #pragma once
 #include "main.h"
-#include "CComponent.h"
 #include "DriveSystem.h"
 class CarMove :
 	public DriveSystem

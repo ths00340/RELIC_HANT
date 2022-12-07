@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: HitBox.h
+// Description: コンポーネントクラスを継承した当たり判定クラスの定義
+//==============================================================================
 #pragma once
 #include "CComponent.h"
 
@@ -37,7 +41,7 @@ public:
 	void Draw();
 	void Set(HITBOX_TYPE intype = HITBOX_TYPE::CUBE, bool indraw = false);
 	HITBOX_TYPE Gettype() { return type; }
-	bool GetDraw() { return draw; }
+	const bool GetDraw() { return draw; }
 
 	static void Load();
 };

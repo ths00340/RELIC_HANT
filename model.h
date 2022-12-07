@@ -38,13 +38,13 @@ class Model
 {
 private:
 
-	ID3D11Buffer* m_VertexBuffer;
-	ID3D11Buffer* m_IndexBuffer;
+	ID3D11Buffer* m_VertexBuffer = NULL;
+	ID3D11Buffer* m_IndexBuffer = NULL;
 
-	SUBSET* m_SubsetArray;
-	unsigned int	m_SubsetNum;
-	Float3 Size_max;
-	Float3 Size_min;
+	SUBSET* m_SubsetArray = NULL;
+	unsigned int	m_SubsetNum = 0;
+	Float3 Size_max={0.f,0.f,0.f};
+	Float3 Size_min={0.f,0.f,0.f};
 
 	void LoadObj(const char* FileName, MODEL* Model);
 	void LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, unsigned int* MaterialNum);
@@ -56,7 +56,7 @@ public:
 	void Load(const char* FileName);
 	void Unload();
 
-	Float3 Get_max();
-	Float3 Get_min();
-	Float3 Get_total();
+	const Float3 Get_max();
+	const Float3 Get_min();
+	const Float3 Get_total();
 };

@@ -19,7 +19,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	lightDir = In.WorldPosition - Light.Position;
 	lightDir = normalize(lightDir);
 
-	float light = -dot(normal.xyz, lightDir.xyz);
+	float light = 0.5f - dot(normal.xyz, lightDir.xyz) * 0.5f;
 
 	//スペキュラの計算
 	//カメラからピクセルへ向かうベクトル
@@ -54,6 +54,6 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 
 	//float len = length((In.WorldPosition.xyz - CameraPosition.xyz));
 	float dist = distance(In.WorldPosition.xyz, CameraPosition.xyz);
-	float fog = saturate(dist / 100.f);
+	float fog = saturate(dist / 150.f);
 	outDiffuse.rgb = outDiffuse.rgb * (1.f - fog) + float3(0.95f, 0.95f, 0.95f) * fog;
 }

@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Gatling.h
+// Description: Weponクラス継承したガトリングクラスの定義
+//==============================================================================
 #pragma once
 
 #include "Wepon.h"
@@ -13,16 +17,16 @@ class Gatling :
 	static ID3D11InputLayout* m_VertexLayout;
 
 	//縦のアングルのみ
-	int fire_time = 0;
-	float fire_rate = 0.f;
+	int fire_time = 0;//発射レート
+	float fire_rate = 0.f;//発射スパン
 	float rate_min = 0.75f;
-	float roll_max = 3.14f;
+	float roll_max = 3.14f;//回転速度最大値
 	float barrelRoll = 0.0f;
 	int maxspednum = 20;//何発で最速発射になるか
-	int shotnum = 0;
+	int shotnum = 0;//発射数カウント用
 	Float3 randrot = Float3(0.0f, 0.0f, 0.0f);
 
-	Float3 m_barrelpos;
+	Float3 m_barrelpos;//砲身の座標
 public:
 	Gatling(GameObject* inobject) :Wepon(inobject)
 	{

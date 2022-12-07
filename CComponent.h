@@ -1,10 +1,15 @@
+//==============================================================================
+// Filename: CComponent.h
+// Description: オブジェクトに付与されるコンポーネントクラスの定義
+//==============================================================================
+
 #pragma once
 class GameObject;
 
 class CComponent
 {
 protected:
-	GameObject* object;
+	GameObject* object;//付与されたオブジェクト
 public:
 	CComponent(GameObject* gameobj)
 	{

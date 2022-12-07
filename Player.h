@@ -6,6 +6,7 @@
 #define SE_MAX_NUM (10)
 
 class NumberManager;
+class Model;
 
 class Player :public GameObject
 {
@@ -17,9 +18,9 @@ private:
 	static ID3D11InputLayout* m_VertexLayout;
 	static ID3D11BlendState* blendState;
 
-	class Audio* m_ShotSE;
+	class Audio* m_ShotSE = nullptr;
 
-	Status* sta;
+	Status* sta = nullptr;
 	Wepon* wepon = nullptr;
 	DriveSystem* driveS = nullptr;
 	Drive* drive = nullptr;
@@ -27,6 +28,19 @@ private:
 	NumberManager* Mp = nullptr;
 	float Idol = 0.0f;
 public:
+	Player()
+	{
+		m_ShotSE = nullptr;
+
+		sta = nullptr;
+		wepon = nullptr;
+		driveS = nullptr;
+		drive = nullptr;
+		Hp = nullptr;
+		Mp = nullptr;
+		Idol = 0.0f;
+	}
+
 	static void Load();
 	void Init();
 	void Uninit();

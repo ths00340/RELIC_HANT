@@ -6,18 +6,29 @@ enum class BLEND_S;
 class ParticleTest :public GameObject
 {
 private:
-	Model* m_model;
-	ID3D11BlendState* blendState;
+	Model* m_model = nullptr;
+	ID3D11BlendState* blendState = nullptr;
 
-	Float3 m_vel;
-	Float3 m_ang_vel;
-	float Gravity;
-	int live_time;
-	int time;
+	Float3 m_vel = { 0.f,0.f,0.f };
+	Float3 m_ang_vel = { 0.f,0.f,0.f };
+	float Gravity = 0.f;
+	int live_time = 0;
+	int time = 0;
 
 	Float3 DefaultSize;
 
 public:
+	ParticleTest()
+	{
+		m_model = nullptr;
+		blendState = nullptr;
+
+		m_vel = { 0.f,0.f,0.f };
+		m_ang_vel = { 0.f,0.0f,0.f };
+		Gravity = 0.f;;
+		live_time = 0;
+		time = 0;
+	}
 	void Init();
 	void Uninit();
 	void Update();

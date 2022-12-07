@@ -1,9 +1,5 @@
 #pragma once
 #include "Game.h"
-#include "Camera_.h"
-#include "MenuTitle.h"
-#include "NumberManager.h"
-#include "Blur_Tex.h"
 
 enum class MISSION
 {

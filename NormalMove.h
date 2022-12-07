@@ -1,6 +1,9 @@
+//==============================================================================
+// Filename: NormalMove.h
+// Description: DriveSystemを継承した移動用クラスの定義
+//==============================================================================
 #pragma once
 #include "main.h"
-#include "CComponent.h"
 #include "DriveSystem.h"
 class NormalMove :
 	public DriveSystem

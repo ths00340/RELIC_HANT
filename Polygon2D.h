@@ -7,19 +7,19 @@
 class Polygon2D :public GameObject
 {
 protected:
-	ID3D11Buffer* m_VertexBuffer;//頂点バッファ
-	ID3D11ShaderResourceView* m_Texture;//テクスチャー
+	ID3D11Buffer* m_VertexBuffer = nullptr;//頂点バッファ
+	ID3D11ShaderResourceView* m_Texture = nullptr;//テクスチャー
 
-	ID3D11VertexShader* m_VertexShader;	//
-	ID3D11PixelShader* m_PixelShader;	//描画用プログラムを保存しておく用
-	ID3D11InputLayout* m_VertexLayout;	//
-	ID3D11BlendState* blendState;
-	Float2 pos;
-	Float2 size;
-	Float2 uv;
-	Float2 wh;
-	COLOR  color;
-	float  rot;
+	ID3D11VertexShader* m_VertexShader = nullptr;	//
+	ID3D11PixelShader* m_PixelShader = nullptr;	//描画用プログラムを保存しておく用
+	ID3D11InputLayout* m_VertexLayout = nullptr;	//
+	ID3D11BlendState* blendState = nullptr;
+	Float2 pos	={0.f,0.f};
+	Float2 size	={0.f,0.f};
+	Float2 uv	={0.f,0.f};
+	Float2 wh	={0.f,0.f};
+	COLOR  color = { 0.f,0.f,0.f,0.f };
+	float  rot = 0.f;
 public:
 	virtual void Init();
 	virtual void Uninit();

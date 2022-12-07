@@ -22,6 +22,7 @@
 #include "Bazooka.h"
 #include "ExplodeDome.h"
 #include "NormalMove.h"
+#include "NumberManager.h"
 
 static ViewCamera* ViewCam = NULL;
 static Camera* Cam = NULL;
@@ -45,13 +46,14 @@ void Player::Load()
 void Player::Init()
 {
 	name = "Player";
-	int hp = 100;
 
+	int hp = 100;
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
 
 	sta = AddComponent<Status>();
 	sta->SetAutoHeal_ST(true, 20.f);
+	sta->SetAutoHeal_HP(true, 10.0f);
 	Cam = AddComponent<Camera>();
 	Cam->SetRange(100.0f);
 
@@ -86,7 +88,9 @@ void Player::Init()
 		break;
 	}
 
-	sta->SetMAX(hp);
+	sta->SetMAX();
+	sta->SetST(0);
+	sta->SetHP(5);
 
 	AddComponent<Gravity>();
 	AddComponent<SphereShadow>();
@@ -151,6 +155,9 @@ void Player::Update()
 
 	if (Input::GetKeyTrigger('6'))
 		SetDrive<Leg_01>();
+
+	if (Input::GetKeyTrigger('K'))
+		sta->SetHP(5);
 
 	std::vector<GameObject*> enlist = Manager::GetScene()->GetGameObjCmp<Status>();
 	enlist = TOOL::WithinTObj(m_pos, (maxsize.z * m_scl.z) * 2.f, enlist);

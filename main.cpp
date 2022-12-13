@@ -57,12 +57,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	Manager::Init();
 
-	//ShowWindow(g_Window, nCmdShow);
-	ShowWindow(g_Window, SW_SHOWMAXIMIZED);
+	ShowWindow(g_Window, nCmdShow);
+	//ShowWindow(g_Window, SW_SHOWMAXIMIZED);
 	UpdateWindow(g_Window);
 
 	DWORD dwExecLastTime;
-	DWORD dwCurrentTime;
+	DWORD dwCurrentTime;	
 	timeBeginPeriod(1);
 	dwExecLastTime = timeGetTime();
 	dwCurrentTime = 0;

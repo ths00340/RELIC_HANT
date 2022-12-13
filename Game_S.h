@@ -12,8 +12,8 @@ protected:
 	bool Stop = false;
 	Blur_Tex* tex = nullptr;
 	int cleartime = 0;
-	Audio* ClearBGM = nullptr;;
-	Audio* OverBGM = nullptr;;
+	Audio* ClearBGM = nullptr;
+	Audio* OverBGM = nullptr;
 public:
 	virtual void Init();
 	virtual void Uninit();
@@ -21,4 +21,6 @@ public:
 	virtual void Draw();
 	virtual void NextScene();
 	virtual void BGMSelect();
+	virtual void Clear();
+	virtual void GameOver();
 };

@@ -16,7 +16,7 @@ void MissionTex::Update()
 	{
 		pos.x -= TOOL::SecDiv(SCREEN_WIDTH * 0.5f);
 	}
-	else if (time < 3.f)
+	else if (time < 1.f)
 	{
 		time += TOOL::SecDiv(1.f);
 	}

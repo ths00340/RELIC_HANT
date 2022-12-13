@@ -121,19 +121,12 @@ void ShutterFade::Load()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 	//テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/FadeTexShutter.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
-
-	assert(m_Texture);
+	m_Texture = ResourceManager::AddTex("asset/texture/FadeTexShutter.png");
 
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
-	blendState = Manager::GetBlend(BLEND_S::SORT_FALSE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
 }
 
 void ShutterFade::UnLoad()

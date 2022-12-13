@@ -7,7 +7,7 @@ class MenuTitle :
 	float type = 0.0f;
 	int time = 0;
 	int maxtime = 0;
-	float defaultpos=-100.0f;
+	float defaultpos = -100.0f;
 public:
 	void Init();
 	void Update();

@@ -9,5 +9,6 @@ class Enemy_Anni :
 {
 public:
 	void Init();
-	void Update();
+	void Begin();//Å‰‚Ì“®ì
+	void ClearObserver();//ƒNƒŠƒAğŒ‚Ì”äŠr
 };

@@ -54,6 +54,6 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 
 	//float len = length((In.WorldPosition.xyz - CameraPosition.xyz));
 	float dist = distance(In.WorldPosition.xyz, CameraPosition.xyz);
-	float fog = saturate(dist / 150.f);
-	outDiffuse.rgb = outDiffuse.rgb * (1.f - fog) + float3(0.95f, 0.95f, 0.95f) * fog;
+	float fog = saturate(dist / 300.f);
+	outDiffuse.rgb = outDiffuse.rgb * (1.f-fog) + (float3(0.95f, 0.95f, 0.95f)) * fog;
 }

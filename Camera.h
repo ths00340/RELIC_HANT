@@ -24,12 +24,17 @@ private:
 	float ViewAng;//視野角
 	GameObject* tag = NULL;//ターゲットオブジェクト
 	float Range;//取得範囲
-	
+
 	/// 揺れ用変数
-	bool shake = false;
 	int  time = 0;
-	int	 maxrand = 0;
-	float shakeStr = 1.0f;
+
+	bool shakeP = false;
+	bool shakeR = false;
+
+	int	 MaxRandP = 0;
+	int	 MaxRandR = 0;
+	float shakeStrP = 1.0f;
+	float shakeStrR = 1.0f;
 
 public:
 
@@ -43,9 +48,11 @@ public:
 		ViewAng = 1.0f;
 		Range = 30.0f;
 		Mode = CamMode::TPP;
-		shake = false;
+		shakeP = false;
+		shakeR = false;
 		time = 0;
-		maxrand = 0;
+		MaxRandP = 0;
+		MaxRandR = 0;
 	}
 	void Init();
 	void Uninit();
@@ -90,9 +97,9 @@ public:
 		if (tag == NULL)
 			tag = intag;
 	}
-	void SetShake(int max = 60, float Str = 1.f);
+	void SetShakePos(int max = 60, float Str = 1.f);
+	void SetShakeRot(int max = 60, float Str = 1.f);
 
-	GameObject* GetTarget() { return tag; }
 	const Float3 GetDir();
 	const Float3 GetAngle() { return Angle; };
 	const Float3 GetTag() { return m_tag; }
@@ -107,4 +114,5 @@ public:
 	Float3* GetUpPoint() { return &m_up; }
 	Float3* GetPosPoint() { return &m_pos; }
 	D3DXMATRIX* GetViewMatrixPoint() { return &m_ViewMatrix; }
+	GameObject* GetTarget() { return tag; }
 };

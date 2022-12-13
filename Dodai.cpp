@@ -6,10 +6,10 @@
 
 void Dodai::Init()
 {
-	m_model = Manager::AddModel("asset\\models\\pedestalOBJ.obj");
+	m_model = ResourceManager::AddModel("asset\\models\\pedestalOBJ.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 
 	name = "Dodai";
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

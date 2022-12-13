@@ -141,8 +141,8 @@ void Bazooka::Draw()
 
 void Bazooka::Load()
 {
-	model = Manager::AddModel("asset\\models\\Bazooka_01.obj");
-	hit = Manager::AddModel("asset\\models\\hiteff.obj");
+	model = ResourceManager::AddModel("asset\\models\\Bazooka_01.obj");
+	hit = ResourceManager::AddModel("asset\\models\\hiteff.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 }

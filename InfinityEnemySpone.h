@@ -9,5 +9,7 @@ class InfinityEnemySpone :
 {
 public:
 	void Init();
-	void Update();
+	void Begin();
+	void ClearObserver();
+	void ExtraMove();
 };

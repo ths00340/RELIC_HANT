@@ -52,8 +52,8 @@ void Platform::Draw()
 
 void Platform::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\settingroom.obj");
+	m_model = ResourceManager::AddModel("asset\\models\\settingroom.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }

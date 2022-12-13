@@ -12,9 +12,9 @@ void NormalFade::Init()
 	FadeParent::Init();
 
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
-	blendState = Manager::GetBlend(BLEND_S::SORT_FALSE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
 	pos = Float2(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f);
 }
 

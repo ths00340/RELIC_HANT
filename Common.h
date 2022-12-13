@@ -4,7 +4,7 @@
 class Common :public Scene
 {
 protected:
-	bool Destroy = false;
+	bool Destroy = false;//Trueにするとこのシーンを破棄
 	bool InFade = false;//終わったタイミングでTrue
 	bool OutFade = false;//終わったタイミングでTrue
 	int time = 0;

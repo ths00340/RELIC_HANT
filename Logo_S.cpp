@@ -10,6 +10,8 @@
 #include "NormalFade.h"
 #include "ShutterFade.h"
 
+#include <thread>
+
 void Logo_S::Init()
 {
 	time = 0;

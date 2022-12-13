@@ -140,11 +140,11 @@ void Enemy::Draw()
 
 void Enemy::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\CamBot_E01.obj");
+	m_model = ResourceManager::AddModel("asset\\models\\CamBot_E01.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void Enemy::Damage(int dmg)

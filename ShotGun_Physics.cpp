@@ -84,7 +84,7 @@ void ShotGun_Physics::Update()
 				blt->SetScl(TOOL::Uniform(4.0f * m_scl.z));
 
 				if (object->LoadComponent<Camera>())
-					object->LoadComponent<Camera>()->SetShake(10, 0.25f);
+					object->LoadComponent<Camera>()->SetShakePos(10, 0.25f);
 			}
 		}
 	}
@@ -163,9 +163,9 @@ void ShotGun_Physics::Draw()
 
 void ShotGun_Physics::Load()
 {
-	model = Manager::AddModel("asset\\models\\Tullet05ho.obj");
-	barrel = Manager::AddModel("asset\\models\\Tullet06.obj");
-	predictionLine = Manager::AddModel("asset\\models\\laser01.obj");
+	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
+	barrel = ResourceManager::AddModel("asset\\models\\Tullet06.obj");
+	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 }

@@ -32,7 +32,7 @@ void Status::Update()
 		heal += TOOL::SecDiv(HP_MAX) / HealTime;
 		if (heal >= 1.f)
 		{
-			HP +=1;
+			HP += 1;
 			heal -= 1.f;
 		}
 	}

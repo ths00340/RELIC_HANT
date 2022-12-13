@@ -54,7 +54,7 @@ void Camera::Update()
 		}
 	}
 	if (tag)
-		if (!TOOL::HitCheck(object->Getpos(), tag->Getpos(), Range))
+		if (!TOOL::CanHit(object->Getpos(), tag->Getpos(), Range))
 		{
 			tag = NULL;
 		}
@@ -75,24 +75,46 @@ void Camera::Update()
 	}
 	if (Mode == CamMode::TPP)
 	{
-		if (shake)
+		//—h‚ê
 		{
 			time++;
+			if (shakeP)
+			{
+				{//ˆÊ’u—h‚ê
+					float x, y, a;
+					a = 1.f - ((float)time / (float)MaxRandP);
+					x = shakeStrP * a * (TOOL::RandF() - 0.5f);
+					y = shakeStrP * a * (TOOL::RandF() - 0.5f);
 
-			float x, y, a;
-			a = 1.f - ((float)time / (float)maxrand);
-			x = shakeStr * a * (TOOL::RandF() - 0.5f);
-			y = shakeStr * a * (TOOL::RandF() - 0.5f);
+					Addpos.y = y;
+					Addpos.x = cosf(Angle.y) * x;
+					Addpos.z = -sinf(Angle.y) * x;
+				}
 
-			Addpos.y = y;
-			Addpos.x = cosf(Angle.y) * x;
-			Addpos.z = -sinf(Angle.y) * x;
+				if (time >= MaxRandP)
+				{
+					shakeP = false;
+					Addpos = TOOL::Uniform();
+				}
+			}
+			if (shakeR)
+			{
+				{//Šp“x—h‚ê
+					m_up = { 0.f, 1.f, 0.f };
+					float a = 1.f - ((float)time / (float)MaxRandR);
+					float i = shakeStrR * a * (TOOL::RandF() - 0.5f);
+					m_up += { cosf(Angle.y)* i, -i, -sinf(Angle.y) * i };
+				}
 
-			if (time >= maxrand)
+				if (time >= MaxRandR)
+				{
+					shakeR = false;
+				}
+			}
+
+			if (!shakeP && !shakeR)
 			{
 				time = 0;
-				shake = false;
-				Addpos = TOOL::Uniform();
 			}
 		}
 
@@ -124,12 +146,20 @@ void Camera::SetUp(D3DXVECTOR3 inup)
 	m_up = inup;
 }
 
-void Camera::SetShake(int max, float Str)
+void Camera::SetShakePos(int max, float Str)
 {
-	shake = true;
+	shakeP = true;
 	time = 0;
-	maxrand = max;
-	shakeStr = Str;
+	MaxRandP = max;
+	shakeStrP = Str;
+}
+
+void Camera::SetShakeRot(int max, float Str)
+{
+	shakeR = true;
+	time = 0;
+	MaxRandR = max;
+	shakeStrR = Str;
 }
 
 const Float3 Camera::GetDir()

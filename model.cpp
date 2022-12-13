@@ -458,25 +458,25 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 		else if (strcmp(str, "Ka") == 0)
 		{
 			//アンビエント
-			t=fscanf(file, "%f", &materialArray[mc].Material.Ambient.r);
-			t=fscanf(file, "%f", &materialArray[mc].Material.Ambient.g);
-			t=fscanf(file, "%f", &materialArray[mc].Material.Ambient.b);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Ambient.r);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Ambient.g);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Ambient.b);
 			materialArray[mc].Material.Ambient.a = 1.0f;
 		}
 		else if (strcmp(str, "Kd") == 0)
 		{
 			//ディフューズ
-			t=fscanf(file, "%f", &materialArray[mc].Material.Diffuse.r);
-			t=fscanf(file, "%f", &materialArray[mc].Material.Diffuse.g);
-			t=fscanf(file, "%f", &materialArray[mc].Material.Diffuse.b);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Diffuse.r);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Diffuse.g);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Diffuse.b);
 			materialArray[mc].Material.Diffuse.a = 1.0f;
 		}
 		else if (strcmp(str, "Ks") == 0)
 		{
 			//スペキュラ
-			t=fscanf(file, "%f", &materialArray[mc].Material.Specular.r);
-			t=fscanf(file, "%f", &materialArray[mc].Material.Specular.g);
-			t=fscanf(file, "%f", &materialArray[mc].Material.Specular.b);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Specular.r);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Specular.g);
+			t = fscanf(file, "%f", &materialArray[mc].Material.Specular.b);
 			materialArray[mc].Material.Specular.a = 1.0f;
 		}
 		else if (strcmp(str, "Ns") == 0)
@@ -492,7 +492,7 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 		else if (strcmp(str, "map_Kd") == 0)
 		{
 			//テクスチャ
-			t=fscanf(file, "%s", str);
+			t = fscanf(file, "%s", str);
 
 			char path[256];
 			strcpy(path, dir);

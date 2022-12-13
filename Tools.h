@@ -49,7 +49,7 @@ public:
 	}
 
 	//一定距離以上
-	static bool RangeCheck(Float3 pos1, Float3 pos2, float range)
+	static bool CanRange(Float3 pos1, Float3 pos2, float range)
 	{
 		float x1 = pos1.x - pos2.x;
 		float y1 = pos1.y - pos2.y;
@@ -62,7 +62,7 @@ public:
 	}
 
 	//一定距離以内
-	static bool HitCheck(Float3 pos1, Float3 pos2, float range)
+	static bool CanHit(Float3 pos1, Float3 pos2, float range)
 	{
 		float x1 = pos1.x - pos2.x;
 		float y1 = pos1.y - pos2.y;
@@ -296,7 +296,7 @@ public:
 		{
 			Float3 CovPos = Cov->Getpos();
 
-			if (RangeCheck(pPos, CovPos, MaxLange))
+			if (CanRange(pPos, CovPos, MaxLange))
 				continue;
 
 			ppulle = CovPos - pPos;
@@ -326,14 +326,14 @@ public:
 		return ret;
 	}
 
-	//渡したリストかつ範囲内のオブジェクト
+	//渡したゲームオブジェクトリストかつ範囲内のオブジェクト
 	static std::vector<GameObject*> WithinObj(Float3 center, float range, std::vector<GameObject*> CovList)
 	{
 		std::vector<GameObject*> objects;
 
 		for (GameObject* obj : CovList)
 		{
-			if (HitCheck(center, obj->Getpos(), range))
+			if (CanHit(center, obj->Getpos(), range))
 			{
 				objects.push_back(obj);
 			}
@@ -342,6 +342,7 @@ public:
 		return objects;
 	}
 
+	//渡したTリストかつ範囲内のオブジェクト
 	template<typename T>
 	static std::vector<T*> WithinTObj(Float3 center, float range, std::vector<T*> CovList)
 	{
@@ -349,7 +350,7 @@ public:
 
 		for (T* obj : CovList)
 		{
-			if (HitCheck(center, obj->Getpos(), range))
+			if (CanHit(center, obj->Getpos(), range))
 			{
 				objects.push_back(obj);
 			}

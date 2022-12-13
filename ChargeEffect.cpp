@@ -153,20 +153,10 @@ void ChargeEffect::Load()
 	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
 
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
+	m_Texture = ResourceManager::AddTex("asset/texture/charge_bru.png");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
 
-	//テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/charge_bru.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
-
-	assert(m_Texture);
-
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-
-	blendState = Manager::GetBlend(BLEND_S::SORT_TRUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 }
 
 void ChargeEffect::UnLoad()

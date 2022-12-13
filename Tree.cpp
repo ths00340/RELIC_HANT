@@ -151,19 +151,12 @@ void Tree::Load()
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
 	//テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/Tree01.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
-
-	assert(m_Texture);
+	m_Texture = ResourceManager::AddTex("asset/texture/Tree01.png");
 
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 
-	blendState = Manager::GetBlend(BLEND_S::SORT_TRUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 }
 
 void Tree::UnLoad()

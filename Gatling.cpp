@@ -177,9 +177,9 @@ void Gatling::Draw()
 
 void Gatling::Load()
 {
-	model = Manager::AddModel("asset\\models\\Tullet05ho.obj");
-	barrel = Manager::AddModel("asset\\models\\Tullet05barrel.obj");
-	predictionLine = Manager::AddModel("asset\\models\\laser01.obj");
+	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
+	barrel = ResourceManager::AddModel("asset\\models\\Tullet05barrel.obj");
+	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 }

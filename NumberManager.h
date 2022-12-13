@@ -18,8 +18,8 @@ private:
 	std::vector<Number*> num;
 	int Score = 0;
 
-	Float2 Pos	={0.f,0.f};
-	Float2 Size	={0.f,0.f};
+	Float2 Pos = { 0.f,0.f };
+	Float2 Size = { 0.f,0.f };
 	Float2 Addpos = { 0.f,0.f };
 	bool ZeroDraw = false;//ƒ[ƒ‚Ì•\¦‚ğ‚·‚é‚©
 	int DrawNum = 5;
@@ -37,7 +37,6 @@ public:
 		Addpos = { 0.f,0.f };
 		ZeroDraw = false;//ƒ[ƒ‚Ì•\¦‚ğ‚·‚é‚©
 		DrawNum = 5;
-
 	}
 
 	void Init();

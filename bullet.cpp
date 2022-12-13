@@ -34,7 +34,7 @@ void Bullet::Uninit() {}
 void Bullet::Update()
 {
 	Scene* scene = Manager::GetScene();
-	if (TOOL::RangeCheck(m_pos, startpos, 1.f))
+	if (TOOL::CanRange(m_pos, startpos, 1.f))
 	{
 		std::vector<GameObject*>enemyList = scene->GetGameObjCmp<Status>();
 
@@ -44,7 +44,7 @@ void Bullet::Update()
 			float size_z_e = enemy->Getmax().z * enemy->Getscl().z;
 			float size_z_m = m_model->Get_max().z * m_scl.z;
 
-			if (TOOL::HitCheck(m_pos, enemyPos, size_z_e + size_z_m))
+			if (TOOL::CanHit(m_pos, enemyPos, size_z_e + size_z_m))
 
 			{
 				Status* sta;
@@ -63,7 +63,7 @@ void Bullet::Update()
 		}
 	}
 
-	if (TOOL::RangeCheck(m_pos, startpos, range))
+	if (TOOL::CanRange(m_pos, startpos, range))
 	{
 		SetDestroy();
 	}
@@ -100,7 +100,7 @@ void Bullet::Set(Float3 pos, Float3 rot, float vel, int dmg, float maxrange)
 
 void Bullet::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\bul.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	m_model = ResourceManager::AddModel("asset\\models\\bul.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }

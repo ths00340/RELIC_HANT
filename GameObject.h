@@ -67,6 +67,7 @@ public:
 	}
 
 	//Žæ“¾Œn
+	const bool	 GetDestory() { return m_Destoroy; }
 	const bool   GetStop() { return m_Stop; }
 	const Float3 Getpos() { return m_pos; };
 	const Float3 Getrot() { return m_rot; };
@@ -165,9 +166,10 @@ public:
 	T* LoadComponent()
 	{
 		GameObject* a = this;
-
+		int aaa = 0;
 		for (CComponent* comp : Component)
 		{
+			aaa++;
 			if (typeid(*comp) == typeid(T))//Œ^‚ð’²‚×‚é
 			{
 				return (T*)comp;

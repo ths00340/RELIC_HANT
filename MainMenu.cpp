@@ -20,7 +20,6 @@
 #include "Blur_Tex.h"
 #include "BulrS.h"
 
-
 class Game_S;
 NumberManager* a;
 

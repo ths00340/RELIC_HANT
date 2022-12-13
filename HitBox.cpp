@@ -74,7 +74,7 @@ void HitBox::Draw()
 	Renderer::SetWorldMatrix(&world);
 	model[(int)type]->Draw();
 
-	Renderer::GetDeviceContext()->OMSetBlendState(Manager::GetBlend(BLEND_S::OBJ_OPAQUE), blendFactor, 0xffffffff);
+	Renderer::GetDeviceContext()->OMSetBlendState(ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE), blendFactor, 0xffffffff);
 }
 
 void HitBox::Set(HITBOX_TYPE intype, bool indraw)
@@ -85,8 +85,8 @@ void HitBox::Set(HITBOX_TYPE intype, bool indraw)
 
 void HitBox::Load()
 {
-	model[(int)HITBOX_TYPE::CUBE] = Manager::AddModel("asset\\models\\Hitbox_Cube.obj");
-	model[(int)HITBOX_TYPE::SPHERE] = Manager::AddModel("asset\\models\\Hitbox_Sphere.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_TRANS);
+	model[(int)HITBOX_TYPE::CUBE] = ResourceManager::AddModel("asset\\models\\Hitbox_Cube.obj");
+	model[(int)HITBOX_TYPE::SPHERE] = ResourceManager::AddModel("asset\\models\\Hitbox_Sphere.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
 }

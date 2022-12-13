@@ -9,13 +9,14 @@
 
 void Practice::Init()
 {
+	sce = Manager::GetScene();
 	Once = true;
 	Clear = false;
 	Manager::GetScene()->AddGameObject<SousaH>((int)OBJ_LAYER::UI);
 	Start = false;
 }
 
-void Practice::Update()
+void Practice::Begin()
 {
 	if (Once)
 	{
@@ -29,23 +30,21 @@ void Practice::Update()
 
 		mtex = Manager::GetScene()->AddGameObject<MissionTex>((int)OBJ_LAYER::UI);
 	}
-	Scene* sce = Manager::GetScene();
 
-	//Å‰‚Ì“®‚«
-	if (!Start)
+	if (mtex->GetEnd())
 	{
-		if (mtex->GetEnd())
-		{
-			sce->SetAllStop(false);
-			Start = true;
-		}
-		else
-		{
-			sce->SetAllStop();
-			mtex->SetStop(false);
-		}
+		sce->SetAllStop(false);
+		Start = true;
 	}
+	else
+	{
+		sce->SetAllStop();
+		mtex->SetStop(false);
+	}
+}
 
+void Practice::ClearObserver()
+{
 	if (Input::GetKeyPress(VK_SPACE))
 	{
 		ClTime += TOOL::SecDiv(1.0f);

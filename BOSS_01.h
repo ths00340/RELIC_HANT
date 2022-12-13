@@ -9,5 +9,6 @@ class BOSS_01 :
 {
 public:
 	void Init();
-	void Update();
+	void Begin();
+	void ClearObserver();
 };

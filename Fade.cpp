@@ -2,12 +2,6 @@
 #include "Fade.h"
 #include "ShutterFade.h"
 
-ID3D11Buffer* Fade::m_VertexBuffer;//頂点バッファ
-ID3D11ShaderResourceView* Fade::m_Texture;//テクスチャー
-ID3D11VertexShader* Fade::m_VertexShader;	//
-ID3D11PixelShader* Fade::m_PixelShader;	//描画用プログラムを保存しておく用
-ID3D11InputLayout* Fade::m_VertexLayout;	//
-
 void Fade::Load()
 {
 }
@@ -31,28 +25,32 @@ void Fade::Uninit()
 
 void Fade::Update()
 {
-	Scene::Update();
 	if (fade == NULL)
 		fade = AddGameObject<ShutterFade>((int)OBJ_LAYER::UI);
 
 	Scene::Update();
-	if (time == 0)
-		fade->SetA(true, false, DestroyTime / 2);
 
+	if (time == 0)//初期動作
+	{
+		OutputDebugString(TEXT("フェードイン開始\n"));
+		fade->SetA(true, false, DestroyTime / 2);
+	}
 	time++;
-	if (time < DestroyTime / 2.0f)
+
+	if (time < DestroyTime / 2.0f)//フェードイン中の動作
 	{
 	}
-	else if (time == DestroyTime / 2.0f)
+	else if (time == DestroyTime / 2.0f)//フェードイン終了用動作
 	{
 		OutputDebugString(TEXT("フェードイン終了\n"));
 		InFade = true;
 		fade->SetA(false, true, DestroyTime / 2);
+		OutputDebugString(TEXT("フェードアウト開始\n"));
 	}
-	else if (time <= DestroyTime)
+	else if (time <= DestroyTime)//フェードアウト中の動作
 	{
 	}
-	else
+	else//フェードアウト終了用動作
 	{
 		OutputDebugString(TEXT("フェードアウト終了\n"));
 		OutFade = true;

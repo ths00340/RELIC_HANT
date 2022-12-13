@@ -6,7 +6,7 @@ class MissionTex :
 {
 protected:
 	bool End = false;
-	float time=0.f;
+	float time = 0.f;
 public:
 	MissionTex()
 	{

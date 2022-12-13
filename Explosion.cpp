@@ -151,12 +151,12 @@ void Explosion::Load()
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
 	//テクスチャ読み込み
-	m_Texture = Manager::AddTex("asset/texture/fire_.png");
+	m_Texture = ResourceManager::AddTex("asset/texture/fire_.png");
 
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
 
-	blendState = Manager::GetBlend(BLEND_S::SORT_TRUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 }
 
 void Explosion::UnLoad()

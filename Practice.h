@@ -11,5 +11,6 @@ class Practice :
 	float ClTime = 0.0f;//I—¹—p•Ï”
 public:
 	void Init();
-	void Update();
+	void Begin();
+	void ClearObserver();
 };

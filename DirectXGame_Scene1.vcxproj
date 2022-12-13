@@ -64,6 +64,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="Leg_01.h" />
+    <ClInclude Include="LoadingLogo.h" />
     <ClInclude Include="Logo_S.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ResultBackGrownd.h" />
     <ClInclude Include="Result_S.h" />
     <ClInclude Include="Scene.h" />
@@ -149,6 +151,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="Leg_01.cpp" />
+    <ClCompile Include="LoadingLogo.cpp" />
     <ClCompile Include="Logo_S.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -169,6 +172,7 @@
     <ClCompile Include="Practice.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResultBackGrownd.cpp" />
     <ClCompile Include="Result_S.cpp" />
     <ClCompile Include="ShotGun_Physics.cpp" />
@@ -195,6 +199,22 @@
     <FxCompile Include="common.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="FarInvisiblePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="FarInvisibleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="FogPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

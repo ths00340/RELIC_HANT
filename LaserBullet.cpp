@@ -100,7 +100,7 @@ void LaserBullet::Finish()
 
 void LaserBullet::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\laser02.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	m_model = ResourceManager::AddModel("asset\\models\\laser02.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }

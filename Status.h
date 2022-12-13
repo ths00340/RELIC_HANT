@@ -62,6 +62,7 @@ public:
 	void SetMAX(int inHpM = 100, float inStM = 100.0f, bool Recover = true) {
 		HP_MAX = inHpM;
 		St_MAX = inStM;
+
 		if (!Recover)
 			return;
 

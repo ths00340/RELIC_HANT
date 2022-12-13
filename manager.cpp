@@ -1,6 +1,7 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
+#include "ResourceManager.h"
 #include "Scene.h"
 #include "input.h"
 #include <time.h>
@@ -14,17 +15,6 @@ Scene* Manager::NowScene;
 Common* Manager::common;
 std::list<Scene*> Manager::addScene;
 
-nametype Manager::Modelname;
-std::vector<Model*> Manager::models;
-
-nametype Manager::TextureName;
-std::vector<ID3D11ShaderResourceView*> Manager::Texture;
-
-ID3D11BlendState* Manager::B_State[(int)BLEND_S::BLEND_E];
-ID3D11RasterizerState* Manager::rs[(int)FRAME_S::FRAME_E];
-ID3D11VertexShader* Manager::m_VertexShader[(int)SHADER_S::SHADER_E];
-ID3D11PixelShader* Manager::m_PixelShader[(int)SHADER_S::SHADER_E];
-ID3D11InputLayout* Manager::m_VertexLayout[(int)SHADER_S::SHADER_E];
 MOVE_TYPE	Manager::legtype;
 WEPON_TYPE	Manager::wepon;
 
@@ -32,7 +22,7 @@ void Manager::Init()
 {
 	Renderer::Init();
 	Input::Init();
-	StartUp();
+	ResourceManager::Init();
 	Scene::Loads();
 	Audio::InitMaster();
 	common = NULL;
@@ -41,8 +31,8 @@ void Manager::Init()
 
 	srand((unsigned int)timeGetTime());
 	SetScene<Logo_S>();
-	legtype = MOVE_TYPE::CAR;
-	wepon = WEPON_TYPE::GATLING;
+	legtype = MOVE_TYPE::FREE;
+	wepon = WEPON_TYPE::BAZOOKA;
 }
 
 void Manager::Uninit()
@@ -50,8 +40,7 @@ void Manager::Uninit()
 	NowScene->Uninit();
 	Audio::UninitMaster();
 	delete NowScene;
-	DeleteModels();
-	ReleaseState();
+	ResourceManager::Uninit();
 	Scene::UnLoads();
 	Input::Uninit();
 	Renderer::Uninit();

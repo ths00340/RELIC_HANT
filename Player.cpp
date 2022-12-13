@@ -38,9 +38,9 @@ ID3D11BlendState* Player::blendState;
 
 void Player::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\hummer_ho.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	m_model = ResourceManager::AddModel("asset\\models\\hummer_ho.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void Player::Init()
@@ -51,9 +51,9 @@ void Player::Init()
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
 
-	sta = AddComponent<Status>();
-	sta->SetAutoHeal_ST(true, 20.f);
-	sta->SetAutoHeal_HP(true, 10.0f);
+	m_pSta = AddComponent<Status>();
+	m_pSta->SetAutoHeal_ST(true, 20.f);
+	m_pSta->SetAutoHeal_HP(true, 10.0f);
 	Cam = AddComponent<Camera>();
 	Cam->SetRange(100.0f);
 
@@ -88,9 +88,9 @@ void Player::Init()
 		break;
 	}
 
-	sta->SetMAX();
-	sta->SetST(0);
-	sta->SetHP(5);
+	m_pSta->SetMAX(hp);
+	m_pSta->SetST(0);
+	m_pSta->SetHP(5);
 
 	AddComponent<Gravity>();
 	AddComponent<SphereShadow>();
@@ -104,8 +104,8 @@ void Player::Init()
 	scene = Manager::GetScene();
 	ViewCam = scene->GetGameObject<ViewCamera>();
 
-	m_ShotSE = scene->AddGameObject<Audio>(0);
-	m_ShotSE->Load("asset\\SE\\ShotSound_2.wav");
+	m_pShotSE = scene->AddGameObject<Audio>(0);
+	m_pShotSE->Load("asset\\SE\\ShotSound_2.wav");
 
 	if (ViewCam != NULL)
 		ViewCam->SetView(Cam);
@@ -121,11 +121,11 @@ struct Floatt3 {
 
 void Player::Update()
 {
-	Idol += TOOL::AToR(30);
-	if (Idol > TOOL::AToR(90))
-		Idol = 0;
+	m_Idol += TOOL::AToR(30);
+	if (m_Idol > TOOL::AToR(90))
+		m_Idol = 0;
 
-	sta->AddWheel(Input::MouseWheel());
+	m_pSta->AddWheel(Input::MouseWheel());
 	if (Input::IsMouseRightTriggered())
 		if (Cam)
 		{
@@ -133,66 +133,76 @@ void Player::Update()
 		}
 
 	if (!m_Destoroy)
-		sta->SetShot(Input::IsMouseLeftPressed());
+		m_pSta->SetShot(Input::IsMouseLeftPressed());
 
-	if (Input::GetKeyTrigger(VK_F5))
-		DeleteWepon();
-
-	if (Input::GetKeyTrigger('1'))
-		SetWepon<Bazooka>();
-
-	if (Input::GetKeyTrigger('2'))
-		SetWepon<ChargeLaser>();
-
-	if (Input::GetKeyTrigger('3'))
-		SetWepon<Gatling>();
-
-	if (Input::GetKeyTrigger('4'))
-		SetWepon<ShotGun_Physics>();
-
-	if (Input::GetKeyTrigger('5'))
-		SetDrive<CarWheel>();
-
-	if (Input::GetKeyTrigger('6'))
-		SetDrive<Leg_01>();
-
-	if (Input::GetKeyTrigger('K'))
-		sta->SetHP(5);
-
-	std::vector<GameObject*> enlist = Manager::GetScene()->GetGameObjCmp<Status>();
-	enlist = TOOL::WithinTObj(m_pos, (maxsize.z * m_scl.z) * 2.f, enlist);
-
-	for (GameObject* obj : enlist)
+	//デバック用処理
 	{
-		if (obj == this)
-			continue;
+		if (Input::GetKeyTrigger(VK_F5))
+			DeleteWepon();
 
-		float model_Zp = m_model->Get_max().z * m_scl.z;
-		float model_Ze = obj->Getmax().z * obj->Getscl().z;
-		float model_Z_Total = model_Zp + model_Ze;
+		if (Input::GetKeyTrigger('1'))
+			SetWepon<Bazooka>();
 
-		if (TOOL::HitCheck(obj->Getpos(), m_pos, model_Z_Total))
+		if (Input::GetKeyTrigger('2'))
+			SetWepon<ChargeLaser>();
+
+		if (Input::GetKeyTrigger('3'))
+			SetWepon<Gatling>();
+
+		if (Input::GetKeyTrigger('4'))
+			SetWepon<ShotGun_Physics>();
+
+		if (Input::GetKeyTrigger('5'))
+			SetDrive<CarWheel>();
+
+		if (Input::GetKeyTrigger('6'))
+			SetDrive<Leg_01>();
+
+		if (Input::GetKeyTrigger('K'))
+			m_pSta->SetHP(5);
+	}
+
+	{
+		//ステータスを持っているオブジェクトの取得
+		std::vector<GameObject*> enlist = Manager::GetScene()->GetGameObjCmp<Status>();
+
+		//enlistの範囲内に居るオブジェクトの取得
+		enlist = TOOL::WithinObj(m_pos, (maxsize.z * m_scl.z) * 2.f, enlist);
+
+		for (GameObject* obj : enlist)
 		{
-			Float3 vec = obj->Getpos() - m_pos;
-			float ran = TOOL::PointRange(obj->Getpos(), m_pos);
-			float diff = ran - model_Z_Total;
-			vec = TOOL::VectorNormalize(vec);
-			vec.y = 0.0f;
-			vec = TOOL::VectorNormalize(vec);
-			m_pos += vec * diff;
-			Damage(1);
+			if (obj == this)
+				continue;
+
+			float model_Zp = m_model->Get_max().z * m_scl.z;	//プレイヤーモデルのZ軸の現在の大きさ
+			float model_Ze = obj->Getmax().z * obj->Getscl().z;	//エネミーモデルのZ軸の現在の大きさ
+			float model_Z_Total = model_Zp + model_Ze;			//エネミーとプレイヤーの半径の合計
+
+			if (TOOL::CanHit(obj->Getpos(), m_pos, model_Z_Total))//model_Z_Totalより直線距離が小さいとTrue
+			{
+				Float3 vec = obj->Getpos() - m_pos;
+				float ran = TOOL::PointRange(obj->Getpos(), m_pos);
+				float diff = ran - model_Z_Total;
+
+				vec = TOOL::VectorNormalize(vec);
+				m_pos += vec * diff;//当たった範囲分弾かれる
+				Damage(1);//衝突ダメージ
+			}
 		}
 	}
 
-	if (LoadComponent<Status>())
+	//ステータスコンポーネントを持っているなら
+	if (m_pSta != nullptr)
 	{
-		if (Mp)
+		//MP表示用UIのポインタを持っているなら
+		if (m_pMp != nullptr)
 		{
-			Mp->SetScore(sta->GetST());
+			m_pMp->SetScore(m_pSta->GetST());
 		}
-		if (Hp)
+		//HP表示用UIのポインタを持っているなら
+		if (m_pHp != nullptr)
 		{
-			Hp->SetScore(sta->GetHP());
+			m_pHp->SetScore(m_pSta->GetHP());
 		}
 	}
 }
@@ -210,7 +220,7 @@ void Player::Draw()
 	D3DXMATRIX world, scl, rot, trans;
 	D3DXMatrixScaling(&scl, m_scl.x, m_scl.y, m_scl.z);
 	D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y + m_addrot.y, m_rot.x + m_addrot.x, m_rot.z + m_addrot.z);
-	D3DXMatrixTranslation(&trans, m_pos.x + m_addpos.x, m_pos.y + m_addpos.y + (sinf(Idol) * 0.05f * m_scl.y), m_pos.z + m_addpos.z);
+	D3DXMatrixTranslation(&trans, m_pos.x + m_addpos.x, m_pos.y + m_addpos.y + (sinf(m_Idol) * 0.05f * m_scl.y), m_pos.z + m_addpos.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 	m_model->Draw();
@@ -219,15 +229,15 @@ void Player::Draw()
 void Player::Damage(int dmg)
 {
 	if (Cam)
-		Cam->SetShake(15, 0.8f);
+		Cam->SetShakeRot(15, TOOL::AToR(3.f));
 
-	if (sta)
-		sta->AddHP(-dmg);
+	if (m_pSta)
+		m_pSta->AddHP(-dmg);
 
-	if (Hp)
+	if (m_pHp)
 	{
-		Hp->Shake(10, 100.f);
-		Hp->SetScore(sta->GetHP());
+		m_pHp->Shake(10, 100.f);
+		m_pHp->SetScore(m_pSta->GetHP());
 	}
 }
 
@@ -236,36 +246,36 @@ void Player::Finish()
 	float maxshake = 60.f;
 	Scene* scene = Manager::GetScene();
 	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, 7.5, 0.2f, 0);
-	Cam->SetShake();
+	Cam->SetShakePos();
 
 	SetDestroy();
 }
 
 void Player::SetHP(int Inhp)
 {
-	if (Hp == nullptr)
+	if (m_pHp == nullptr)
 	{
-		Hp = Manager::GetScene()->AddGameObject<NumberManager>((int)OBJ_LAYER::UI);
-		Hp->SetStatus(Float2(80.f, 80.f), Float2(230.f, 40.f), true);
-		Hp->SetScore(Inhp);
+		m_pHp = Manager::GetScene()->AddGameObject<NumberManager>((int)OBJ_LAYER::UI);
+		m_pHp->SetStatus(Float2(80.f, 80.f), Float2(230.f, 40.f), true);
+		m_pHp->SetScore(Inhp);
 	}
 }
 
 void Player::DeleteHP()
 {
-	if (Hp)
+	if (m_pHp)
 	{
-		Hp->SetDestroy();
-		Hp = nullptr;
+		m_pHp->SetDestroy();
+		m_pHp = nullptr;
 	}
 }
 
 void Player::SetMP()
 {
-	if (Mp == nullptr)
+	if (m_pMp == nullptr)
 	{
-		Mp = Manager::GetScene()->AddGameObject<NumberManager>((int)OBJ_LAYER::UI);
-		Mp->SetStatus(Float2(80.f, 80.f), Float2(230.f, 130.f), true);
+		m_pMp = Manager::GetScene()->AddGameObject<NumberManager>((int)OBJ_LAYER::UI);
+		m_pMp->SetStatus(Float2(80.f, 80.f), Float2(230.f, 130.f), true);
 	}
 }
 
@@ -276,6 +286,6 @@ void Player::FixedUpdate()
 	GameObject* obj = Cam->GetTarget();
 
 	if (obj != NULL)
-		if (!obj->LoadComponent<Status>()->GetLive())
+		if (obj->GetDestory())
 			Cam->FlontTarget<Enemy>();
 }

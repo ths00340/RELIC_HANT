@@ -9,7 +9,7 @@
 
 void InfinityEnemySpone::Init()
 {
-	Scene* sce = Manager::GetScene();
+	sce = Manager::GetScene();
 	mtex = sce->AddGameObject<Stage02>((int)OBJ_LAYER::UI);
 	EnemyNum = 100;
 	for (int i = 0; i < EnemyNum; i++)
@@ -27,62 +27,43 @@ void InfinityEnemySpone::Init()
 	Start = false;
 }
 
-void InfinityEnemySpone::Update()
+void InfinityEnemySpone::Begin()
 {
-	Scene* sce = Manager::GetScene();
-
-	//Å‰‚Ì“®‚«
-	if (!Start)
+	if (mtex->GetEnd())
 	{
-		if (mtex->GetEnd())
-		{
-			sce->SetAllStop(false);
-			Start = true;
-		}
-		else
-		{
-			sce->SetAllStop();
-			mtex->SetStop(false);
-		}
+		sce->SetAllStop(false);
+		Start = true;
 	}
-
-	//ƒQ[ƒ€’†‚Ì“®‚«
+	else
 	{
-		int num = sce->GetGameObjects<Enemy>((int)OBJ_LAYER::Enemy).size();
-		if (num < EnemyNum)
-		{
-			for (int i = 0; i < EnemyNum - num; i++)
-			{
-				Enemy* en = NULL;
-				en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
-				en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
-				en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
-			}
-		}
+		sce->SetAllStop();
+		mtex->SetStop(false);
 	}
+}
 
-	//ìí‚Ì‰Â”Û”»’è
+void InfinityEnemySpone::ClearObserver()
+{
+	if (*Endurance <= 0)
 	{
-		if (*Endurance <= 0)
-		{
-			Clear = true;
-		}
-		if (!sce->GetGameObject<Player>())
-		{
-			GameOver = true;
-		}
+		Clear = true;
 	}
-
-	//§ŒÀŠÔ
+	if (!sce->GetGameObject<Player>())
 	{
-		if (Start && !Clear && !GameOver)
-			ptime += TOOL::SecDiv(1.0f);
+		GameOver = true;
+	}
+}
 
-		if (ptime > 1.f)
+void InfinityEnemySpone::ExtraMove()
+{
+	int num = sce->GetGameObjects<Enemy>((int)OBJ_LAYER::Enemy).size();
+	if (num < EnemyNum)
+	{
+		for (int i = 0; i < EnemyNum - num; i++)
 		{
-			*Endurance -= 1;
-			ptime = ptime - 1.f;
+			Enemy* en = NULL;
+			en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
+			en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
+			en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
 		}
-		timer->SetTime(Endurance->Min, Endurance->Sec);
 	}
 }

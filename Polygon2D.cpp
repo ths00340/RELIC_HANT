@@ -5,8 +5,8 @@
 
 void Polygon2D::Init()
 {
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = Manager::GetBlend(BLEND_S::SORT_FALSE);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
 
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd{};
@@ -98,5 +98,5 @@ void Polygon2D::Draw()
 
 void Polygon2D::LoadTex(const char* filename)
 {
-	m_Texture = Manager::AddTex(filename);
+	m_Texture = ResourceManager::AddTex(filename);
 }

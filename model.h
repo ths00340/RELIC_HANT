@@ -43,8 +43,8 @@ private:
 
 	SUBSET* m_SubsetArray = NULL;
 	unsigned int	m_SubsetNum = 0;
-	Float3 Size_max={0.f,0.f,0.f};
-	Float3 Size_min={0.f,0.f,0.f};
+	Float3 Size_max = { 0.f,0.f,0.f };
+	Float3 Size_min = { 0.f,0.f,0.f };
 
 	void LoadObj(const char* FileName, MODEL* Model);
 	void LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, unsigned int* MaterialNum);
@@ -52,6 +52,7 @@ private:
 public:
 
 	void Draw();
+	//void InstanceDraw();
 
 	void Load(const char* FileName);
 	void Unload();

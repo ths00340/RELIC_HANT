@@ -38,9 +38,9 @@ void ExplodeDome::Finish()
 
 void ExplodeDome::Load()
 {
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	m_model = Manager::AddModel("asset\\models\\bomdome.obj");
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	m_model = ResourceManager::AddModel("asset\\models\\bomdome.obj");
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void ExplodeDome::Init()

@@ -4,18 +4,19 @@
 //==============================================================================
 #pragma once
 #include "main.h"
-#include "Scene.h"
 
 class Timer2D;
 class TimeStr;
 class GameObject;
 class MissionTex;
+class Scene;
 
 //時間管理用の構造体の定義
 
 class BATTLE_DATA
 {
 protected:
+	Scene* sce;
 	int EnemyNum = 0;//生成する敵の数
 	Float3 ClearPos = Float3(0.0f, 0.0f, 0.0f);//クリア座標
 	Float3 ClearSize = Float3(1.0f, 1.0f, 1.0f);//クリア座標の範囲
@@ -23,13 +24,10 @@ protected:
 	GameObject* Target = nullptr;//撃破目標
 	bool Clear = false;//クリアフラグ
 	bool GameOver = false;//ゲームオーバーフラグ
-	Timer2D* timer;//タイマー描画用オブジェクト
-	MissionTex* mtex;//ミッションの詳細看板
+	Timer2D* timer = nullptr;//タイマー描画用オブジェクト
+	MissionTex* mtex = nullptr;//ミッションの詳細看板
 	bool Start;//スタートフラグ
 	float ptime = 0.0f;		//時間減算用
-
-	//virtual void StartUp();
-	//virtual void ClearObserver();
 public:
 	//初期化
 	virtual void Init() = 0;
@@ -38,7 +36,12 @@ public:
 	virtual void Uninit();
 
 	//更新処理
-	virtual void Update() = 0;
+	virtual void Update();
+
+	virtual void Begin() {};//最初の動作
+	virtual void ClearObserver() {};//クリア条件の比較
+	virtual void IsTimeLimit();//時間の進行
+	virtual void ExtraMove() {};
 
 	//クリアフラグの取得
 	bool GetClear() { return Clear; }

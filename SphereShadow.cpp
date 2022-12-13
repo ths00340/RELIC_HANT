@@ -137,17 +137,9 @@ void SphereShadow::Load()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 
-	//テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/Shadow.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
+	m_Texture = ResourceManager::AddTex("asset/texture/Shadow.png");
 
-	assert(m_Texture);
-
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INVISIBLE_FAR);
 }
 
 void SphereShadow::UnLoad()

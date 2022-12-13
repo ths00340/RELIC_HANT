@@ -98,16 +98,16 @@ void Wall::Init()
 		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 	}
 
-	m_Texture = Manager::AddTex("asset/texture/detline.png");
+	m_Texture = ResourceManager::AddTex("asset/texture/detline.png");
 
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INVISIBLE_FAR);
 
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	blendState = Manager::GetBlend(BLEND_S::SORT_FALSE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
 }
 
 void Wall::Uninit()

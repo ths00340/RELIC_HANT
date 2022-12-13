@@ -125,19 +125,11 @@ void Fissure::Load()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
-	//テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/Fis.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
+	m_Texture = ResourceManager::AddTex("asset/texture/Fis.png");
 
-	assert(m_Texture);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
 
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-
-	blendState = Manager::GetBlend(BLEND_S::SORT_TRUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 }
 
 void Fissure::UnLoad()

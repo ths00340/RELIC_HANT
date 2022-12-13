@@ -78,11 +78,11 @@ void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, f
 
 void ParticleManager::Load()
 {
-	m_model[(int)PARTICLE_S::ITEM1] = Manager::AddModel("asset\\models\\Item01.obj");
-	m_model[(int)PARTICLE_S::ITEM2] = Manager::AddModel("asset\\models\\Item02.obj");
-	m_model[(int)PARTICLE_S::ITEM3] = Manager::AddModel("asset\\models\\Item03.obj");
-	m_model[(int)PARTICLE_S::GIA] = Manager::AddModel("asset\\models\\neji.obj");
-	m_model[(int)PARTICLE_S::DEBRIS] = Manager::AddModel("asset\\models\\hahen.obj");
-	m_model[(int)PARTICLE_S::CUBE] = Manager::AddModel("asset\\models\\tolitoli.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	m_model[(int)PARTICLE_S::ITEM1] = ResourceManager::AddModel("asset\\models\\Item01.obj");
+	m_model[(int)PARTICLE_S::ITEM2] = ResourceManager::AddModel("asset\\models\\Item02.obj");
+	m_model[(int)PARTICLE_S::ITEM3] = ResourceManager::AddModel("asset\\models\\Item03.obj");
+	m_model[(int)PARTICLE_S::GIA] = ResourceManager::AddModel("asset\\models\\neji.obj");
+	m_model[(int)PARTICLE_S::DEBRIS] = ResourceManager::AddModel("asset\\models\\hahen.obj");
+	m_model[(int)PARTICLE_S::CUBE] = ResourceManager::AddModel("asset\\models\\tolitoli.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
 }

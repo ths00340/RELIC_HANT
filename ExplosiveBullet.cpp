@@ -31,8 +31,9 @@ void ExplosiveBullet::Finish()
 	{
 		float rang = TOOL::PointRange(pl->Getpos(), m_pos);
 		maxshake = rang / maxshake;
-		maxshake = 1.f - maxshake;
-		pl->LoadComponent<Camera>()->SetShake(30 * maxshake, 1.5f * maxshake);
+		maxshake = 1.f - maxshake;//—£‚ê‚½•ª‚¾‚¯Œ¸­
+		pl->LoadComponent<Camera>()->SetShakePos(30 * maxshake, 1.0f * maxshake);
+		pl->LoadComponent<Camera>()->SetShakeRot(30 * maxshake, TOOL::AToR(2.5f) * maxshake);
 	}
 }
 
@@ -64,7 +65,7 @@ void ExplosiveBullet::Update()
 		float size_z_e = enemy->GetModel()->Get_max().z * enemy->Getscl().z;
 		float size_z_m = m_model->Get_max().z * m_scl.z;
 
-		if (TOOL::HitCheck(m_pos, enemyPos, size_z_e + size_z_m))
+		if (TOOL::CanHit(m_pos, enemyPos, size_z_e + size_z_m))
 		{
 			Status* sta;
 			Finish();
@@ -80,7 +81,7 @@ void ExplosiveBullet::Update()
 	if (m_pos.y <= groundHeight + 0.1f)
 		Finish();
 
-	if (TOOL::RangeCheck(m_pos, startpos, 60.0f))
+	if (TOOL::CanRange(m_pos, startpos, 60.0f))
 	{
 		Finish();
 	}
@@ -117,9 +118,9 @@ void ExplosiveBullet::Set(Float3 pos, Float3 rot, float vel, int dmg, float dmgr
 
 void ExplosiveBullet::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\Bazooka_bul.obj");
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	m_model = ResourceManager::AddModel("asset\\models\\Bazooka_bul.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void ExplosiveBullet::AddVel(Float3 add)

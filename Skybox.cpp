@@ -64,9 +64,9 @@ void Skybox::Draw()
 
 void Skybox::Load()
 {
-	m_model = Manager::AddModel("asset\\models\\Skybox_001.obj");
+	m_model = ResourceManager::AddModel("asset\\models\\Skybox_001.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }

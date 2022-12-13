@@ -9,7 +9,7 @@
 
 void BOSS_01::Init()
 {
-	Scene* sce = Manager::GetScene();
+	sce = Manager::GetScene();
 	Enemy* en = NULL;
 	mtex = sce->AddGameObject<Stage03>((int)OBJ_LAYER::UI);
 	en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
@@ -26,48 +26,28 @@ void BOSS_01::Init()
 	Start = false;
 }
 
-void BOSS_01::Update()
+void BOSS_01::Begin()
 {
-	Scene* sce = Manager::GetScene();
-
-	//Å‰‚Ì“®‚«
-	if (!Start)
+	if (mtex->GetEnd())
 	{
-		if (mtex->GetEnd())
-		{
-			sce->SetAllStop(false);
-			Start = true;
-		}
-		else
-		{
-			sce->SetAllStop();
-			mtex->SetStop(false);
-		}
+		sce->SetAllStop(false);
+		Start = true;
 	}
-
-	//ìí‚Ì‰Â”Û”»’è
+	else
 	{
-		if (!sce->GetLiveObj(Target, (int)OBJ_LAYER::Enemy))
-		{
-			Clear = true;
-		}
-		if (!Manager::GetScene()->GetGameObject<Player>() || Endurance <= 0)
-		{
-			GameOver = true;
-		}
+		sce->SetAllStop();
+		mtex->SetStop(false);
 	}
+}
 
-	//§ŒÀŽžŠÔ
+void BOSS_01::ClearObserver()
+{
+	if (!sce->GetLiveObj(Target, (int)OBJ_LAYER::Enemy))
 	{
-		if (Start && !Clear && !GameOver)
-			ptime += TOOL::SecDiv(1.0f);
-
-		if (ptime > 1.f)
-		{
-			*Endurance -= 1;
-			ptime = ptime - 1.f;
-			//TOOL::Display((char*)"§ŒÀŽžŠÔ:%d/Hour %d/Min %d/Sec\n", Endurance->Hour, Endurance->Min, Endurance->Sec);
-		}
-		timer->SetTime(Endurance->Min, Endurance->Sec);
+		Clear = true;
+	}
+	if (!Manager::GetScene()->GetGameObject<Player>() || Endurance <= 0)
+	{
+		GameOver = true;
 	}
 }

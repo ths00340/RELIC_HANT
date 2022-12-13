@@ -75,8 +75,8 @@ void Leg_01::Draw()
 
 void Leg_01::Load()
 {
-	flont = Manager::AddModel("asset\\models\\Bot01_Leg_Flont.obj");
-	Back = Manager::AddModel("asset\\models\\Bot01_Leg_Back.obj");
+	flont = ResourceManager::AddModel("asset\\models\\Bot01_Leg_Flont.obj");
+	Back = ResourceManager::AddModel("asset\\models\\Bot01_Leg_Back.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 }

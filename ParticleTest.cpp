@@ -27,8 +27,8 @@ void ParticleTest::Init()
 		TOOL::RandF() * (10.0f / 60.0f) - (5.0f / 60.0f)
 	);
 
-	m_model = Manager::AddModel("asset\\models\\Item02.obj");
-	blendState = Manager::GetBlend(BLEND_S::OBJ_TRANS);
+	m_model = ResourceManager::AddModel("asset\\models\\Item02.obj");
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
 }
 
 void ParticleTest::Uninit()
@@ -107,5 +107,5 @@ void ParticleTest::Set(D3DXVECTOR3 pos,
 void ParticleTest::SetModel(Model* inmodel, BLEND_S blend)
 {
 	m_model = inmodel;
-	blendState = Manager::GetBlend(blend);
+	blendState = ResourceManager::GetBlend(blend);
 }

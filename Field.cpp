@@ -120,16 +120,16 @@ void Field::Init()
 
 	//テクスチャ読み込み
 
-	m_Texture = Manager::AddTex("asset/texture/ground_grass_3264_4062_Small.jpg");
+	m_Texture = ResourceManager::AddTex("asset/texture/ground_grass_3264_4062_Small.jpg");
 
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 
 	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	blendState = Manager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }
 
 void Field::Uninit()

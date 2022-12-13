@@ -6,7 +6,7 @@
 
 void Enemy_Anni::Init()
 {
-	Scene* sce = Manager::GetScene();
+	sce = Manager::GetScene();
 	mtex = sce->AddGameObject<Stage01>((int)OBJ_LAYER::UI);
 	EnemyNum = 20;
 	for (int i = 0; i < 20 - 1; i++)
@@ -20,35 +20,29 @@ void Enemy_Anni::Init()
 	Start = false;
 }
 
-void Enemy_Anni::Update()
+void Enemy_Anni::Begin()
 {
-	Scene* sce = Manager::GetScene();
-
-	//Å‰‚Ì“®‚«
-	if (!Start)
+	if (mtex->GetEnd())
 	{
-		if (mtex->GetEnd())
-		{
-			sce->SetAllStop(false);
-			Start = true;
-		}
-		else
-		{
-			sce->SetAllStop();
-			mtex->SetStop(false);
-		}
+		sce->SetAllStop(false);
+		Start = true;
 	}
-
-	//ìí‚Ì‰Â”Û”»’è
+	else
 	{
-		EnemyNum = sce->GetList((int)OBJ_LAYER::Enemy).size();
-		if (EnemyNum <= 0)
-		{
-			Clear = true;
-		}
-		if (!sce->GetGameObject<Player>())
-		{
-			GameOver = true;
-		}
+		sce->SetAllStop();
+		mtex->SetStop(false);
+	}
+}
+
+void Enemy_Anni::ClearObserver()
+{
+	EnemyNum = sce->GetList((int)OBJ_LAYER::Enemy).size();
+	if (EnemyNum <= 0)
+	{
+		Clear = true;
+	}
+	if (!sce->GetGameObject<Player>())
+	{
+		GameOver = true;
 	}
 }

@@ -90,7 +90,7 @@ void CarWheel::Draw()
 
 void CarWheel::Load()
 {
-	model = Manager::AddModel("asset\\models\\taiya01.obj");
+	model = ResourceManager::AddModel("asset\\models\\taiya01.obj");
 	//シェーダー関係
-	Manager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 }

@@ -1,0 +1,8 @@
+*.exe
+*.cache
+*.dll
+*.log
+*.pdb
+.vs/
+Debug/
+Release/

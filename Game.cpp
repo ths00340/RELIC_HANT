@@ -73,7 +73,7 @@ void Game::Draw()
 				com->Draw();
 		}
 
-	for (int i = 2; i < LAYER_NUM; i++)
+	for (int i = 2; i < LAYER_NUM-1; i++)
 	{
 		for (GameObject* object : g_GameObject[i])//範囲forループ
 		{
@@ -90,6 +90,18 @@ void Game::Draw()
 				com->Draw();
 		}
 	}
+
+	for (GameObject* object : g_GameObject[LAYER_NUM-1])//範囲forループ
+	{
+		if (object->GetBlendState() != NULL)
+			Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+		object->Draw();
+
+		for (CComponent* com : object->GetComponent())
+			com->Draw();
+	}
+
 }
 
 void Game::SetPlayer(Player* player)

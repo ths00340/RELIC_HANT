@@ -42,7 +42,7 @@ void Game_S::Init()
 
 	fade = NULL;
 
-	Manager::AddScene<DebugDrawScene>();
+	//Manager::AddScene<DebugDrawScene>();
 
 	////ƒJƒƒ‰¨3D¨2D‚Ì—¬‚ê
 	VCam=AddGameObject<ViewCamera>((int)OBJ_LAYER::System);

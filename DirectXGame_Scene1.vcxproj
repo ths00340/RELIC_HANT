@@ -41,6 +41,7 @@
     <ClInclude Include="Child_Temp.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="CreateLogo.h" />
+    <ClInclude Include="DebugDrawScene.h" />
     <ClInclude Include="Dodai.h" />
     <ClInclude Include="Drive.h" />
     <ClInclude Include="DriveSystem.h" />
@@ -132,7 +133,9 @@
     <ClCompile Include="CarWheel.cpp" />
     <ClCompile Include="ChargeEffect.cpp" />
     <ClCompile Include="ChargeLaser.cpp" />
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="CreateLogo.cpp" />
+    <ClCompile Include="DebugDrawScene.cpp" />
     <ClCompile Include="Dodai.cpp" />
     <ClCompile Include="ENDURANCE.cpp" />
     <ClCompile Include="EnemyAnni.cpp" />
@@ -175,6 +178,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResultBackGrownd.cpp" />
     <ClCompile Include="Result_S.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShotGun_Physics.cpp" />
     <ClCompile Include="ShutterFade.cpp" />
     <ClCompile Include="Skybox.cpp" />
@@ -225,6 +229,22 @@
     <FxCompile Include="FogVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="LODShadowPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="LODShadowVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
     </FxCompile>

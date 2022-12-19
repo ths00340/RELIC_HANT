@@ -12,15 +12,46 @@ void Wall::Init()
 	numVertex = (CHiP_Y + 1) * (CHiP_X + 1);
 	numIndex = ((4 + (2 * (CHiP_X - 1))) * CHiP_Y) + (2 * (CHiP_Y - 1));
 
+
+	VERTEX_3D Vertex[(CHiP_Y + 1) * (CHiP_X + 1)];
+	{	
+		//横には2回ループする
+		for (int y = 0; y < (CHiP_Y + 1); y++)
+		{
+			//y_t = rand() % 50;
+			//縦には必要枚数+1回ループする
+			for (int x = 0; x < (CHiP_X + 1); x++)
+			{
+				//配列のインデックスを計算する
+				int i = y * (CHiP_X + 1) + x;
+
+				Vertex[i].Position = D3DXVECTOR3(0.0f + (x * CHiP_SIZE_X) - ((CHiP_X / 2) * CHiP_SIZE_X), 0.0f - (y * CHiP_SIZE_Y) + ((CHiP_Y / 2) * CHiP_SIZE_X), 0.0f);
+				// UV値の設定
+				Vertex[i].TexCoord = D3DXVECTOR2(0.0f + x * 4.0f, 0.0f + y * 4.0f);
+
+				// 法線の設定
+				Vertex[i].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+				// 頂点カラーの設定
+				Vertex[i].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 0.25f);
+			}
+		}
+	}
+
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd{};
 	ZeroMemory(&bd, sizeof(bd));
-	bd.Usage = D3D11_USAGE_DYNAMIC;
+	bd.Usage = D3D11_USAGE_DEFAULT;
 	bd.ByteWidth = sizeof(VERTEX_3D) * numVertex;
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bd.CPUAccessFlags = 0;
 
-	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
+
+	D3D11_SUBRESOURCE_DATA sd;
+	ZeroMemory(&sd, sizeof(sd));
+	sd.pSysMem = Vertex;
+
+	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
+
 
 	// インデックスバッファ生成
 	ZeroMemory(&bd, sizeof(bd));
@@ -68,36 +99,6 @@ void Wall::Init()
 
 	Renderer::GetDeviceContext()->Unmap(m_IndexBuffer, 0);
 
-	{//頂点バッファの中身を埋める
-// 頂点バッファへのポインタを取得
-		D3D11_MAPPED_SUBRESOURCE msr;
-		Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
-
-		VERTEX_3D* pVtx = (VERTEX_3D*)msr.pData;
-
-		//横には2回ループする
-		for (int y = 0; y < (CHiP_Y + 1); y++)
-		{
-			//y_t = rand() % 50;
-			//縦には必要枚数+1回ループする
-			for (int x = 0; x < (CHiP_X + 1); x++)
-			{
-				//配列のインデックスを計算する
-				int i = y * (CHiP_X + 1) + x;
-
-				pVtx[i].Position = D3DXVECTOR3(0.0f + (x * CHiP_SIZE_X) - ((CHiP_X / 2) * CHiP_SIZE_X), 0.0f - (y * CHiP_SIZE_Y) + ((CHiP_Y / 2) * CHiP_SIZE_X), 0.0f);
-				// UV値の設定
-				pVtx[i].TexCoord = D3DXVECTOR2(0.0f + x * 4.0f, 0.0f + y * 4.0f);
-
-				// 法線の設定
-				pVtx[i].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-				// 頂点カラーの設定
-				pVtx[i].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 0.25f);
-			}
-		}
-		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
-	}
-
 	m_Texture = ResourceManager::AddTex("asset/texture/detline.png");
 
 	//シェーダー関係
@@ -107,7 +108,8 @@ void Wall::Init()
 	m_scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+	m_Parameter = { 0.f,0.f,0.f,0.f };
 }
 
 void Wall::Uninit()
@@ -118,12 +120,16 @@ void Wall::Uninit()
 
 void Wall::Update()
 {
+	m_Parameter.x += TOOL::SecDiv(1.5f);
+	if (m_Parameter.x >= 10.f)
+		m_Parameter.x = 0.f;
 }
 
 void Wall::Draw()
 {
 	// インデックスバッファ設定
 	Renderer::GetDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R16_UINT, 0);
+
 	//入力レイアウト設定
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 
@@ -139,6 +145,8 @@ void Wall::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 
+	Renderer::SetParameter(m_Parameter);
+
 	//頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
@@ -149,6 +157,7 @@ void Wall::Draw()
 	ZeroMemory(&material, sizeof(material));
 	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	Renderer::SetMaterial(material);
+
 
 	//テクスチャ設定
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);

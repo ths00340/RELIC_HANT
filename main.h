@@ -41,4 +41,4 @@ typedef D3DXVECTOR3 Float3;
 typedef D3DXVECTOR2 Float2;
 typedef D3DXQUATERNION Qua;
 
-#define MUTE//コメントアウトするとミュート解除
+#define MUTE//コメントアウトするとミュート解除※デバッグ用

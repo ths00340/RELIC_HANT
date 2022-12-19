@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "Tools.h"
 class Common :public Scene
 {
 protected:
@@ -15,22 +14,22 @@ public:
 	virtual void Uninit() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
-	void Set(float time = 1.0f) { DestroyTime = TOOL::FrameMulti(time); }
+	void Set(float time = 1.0f);
 
-	bool GetDestroy()
+	const bool GetDestroy()
 	{
 		return Destroy;
 	}
 
-	bool GetIn() { return InFade; }
-	bool GetOut() { return OutFade; }
+	const bool GetIn() { return InFade; }
+	const bool GetOut() { return OutFade; }
 
 	template <typename T>
-	bool SetEffect()
+	const bool SetEffect()
 	{
 		AddGameObject<T>((int)OBJ_LAYER::UI);
 	}
-	//リフレクション
+	//リフレクション…難しい
 
 	template <typename T>//テンプレート関数
 	FadeParent* SetFadeObject()

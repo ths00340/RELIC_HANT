@@ -14,14 +14,12 @@
 
 void Logo_S::Init()
 {
+	Scene::Init();
 	time = 0;
-	view.Width = (FLOAT)SCREEN_WIDTH;
-	view.Height = (FLOAT)SCREEN_HEIGHT;
-	view.MinDepth = 0.0f;
-	view.MaxDepth = 1.0f;
-	view.TopLeftX = 0;
-	view.TopLeftY = 0;
 	fade = NULL;
+
+	std::thread th1(Scene::Loads);
+	th1.detach();
 
 	AddGameObject<CreateLogo>((int)OBJ_LAYER::UI);
 }
@@ -39,9 +37,10 @@ void Logo_S::Update()
 
 	if (time > TOOL::FrameMulti(1.0f))
 	{
-		time = 0;
+		if(Scene::Getisload())
 		if (Manager::GetCommon() == NULL)
 		{
+			time = 0;
 			fade = Manager::SetCommon<Fade>();
 			fade->SetFadeObject<NormalFade>();
 			fade->Set(2.0f);

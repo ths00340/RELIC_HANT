@@ -12,31 +12,31 @@ class NumberManager :
 	public GameObject
 {
 private:
-	int time = 0;//ŠÔ‚Ìæ“¾
-	int maxTime = -1;//Å‘åŠÔ
-	float Power = 0.f;//—h‚ê‚Ì‹­‚³
-	std::vector<Number*> num;
-	int Score = 0;
+	int m_Time = 0;//ŠÔ‚Ìæ“¾
+	int m_MaxTime = -1;//Å‘åŠÔ
+	float m_Power = 0.f;//—h‚ê‚Ì‹­‚³
+	std::vector<Number*> m_Num;
+	int m_Score = 0;
 
-	Float2 Pos = { 0.f,0.f };
-	Float2 Size = { 0.f,0.f };
-	Float2 Addpos = { 0.f,0.f };
-	bool ZeroDraw = false;//ƒ[ƒ‚Ì•\¦‚ğ‚·‚é‚©
-	int DrawNum = 5;
+	Float2 m_Pos = { 0.f,0.f };
+	Float2 m_Size = { 0.f,0.f };
+	Float2 m_Addpos = { 0.f,0.f };
+	bool m_ZeroDraw = false;//ƒ[ƒ‚Ì•\¦‚ğ‚·‚é‚©
+	int m_DrawNum = 5;
 public:
 	NumberManager()
 	{
-		time = 0;//ŠÔ‚Ìæ“¾
-		maxTime = -1;//Å‘åŠÔ
-		Power = 0.f;//—h‚ê‚Ì‹­‚³
+		m_Time = 0;//ŠÔ‚Ìæ“¾
+		m_MaxTime = -1;//Å‘åŠÔ
+		m_Power = 0.f;//—h‚ê‚Ì‹­‚³
 
-		Score = 0;
+		m_Score = 0;
 
-		Pos = { 0.f,0.f };
-		Size = { 0.f,0.f };
-		Addpos = { 0.f,0.f };
-		ZeroDraw = false;//ƒ[ƒ‚Ì•\¦‚ğ‚·‚é‚©
-		DrawNum = 5;
+		m_Pos = { 0.f,0.f };
+		m_Size = { 0.f,0.f };
+		m_Addpos = { 0.f,0.f };
+		m_ZeroDraw = false;//ƒ[ƒ‚Ì•\¦‚ğ‚·‚é‚©
+		m_DrawNum = 5;
 	}
 
 	void Init();
@@ -49,9 +49,9 @@ public:
 	void SetStatus(Float2 size = Float2(10.f, 10.f), Float2 pos = Float2(0.f, 0.f), bool cut = false);
 	void Shake(int max = 60, float P = 1.0f)
 	{
-		time = 0;
-		maxTime = max;
-		Power = P;
+		m_Time = 0;
+		m_MaxTime = max;
+		m_Power = P;
 	}
 	void SetNum(int num);
 };

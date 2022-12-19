@@ -26,6 +26,8 @@ class Wall :
 		int a, b, c, d;
 	};
 	maisuu Mai[CHiP_KAZU];
+
+	D3DXVECTOR4 m_Parameter = { 0.f,0.f,0.f,0.f };
 public:
 	void Init();
 	void Uninit();

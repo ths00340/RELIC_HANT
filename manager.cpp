@@ -23,7 +23,6 @@ void Manager::Init()
 	Renderer::Init();
 	Input::Init();
 	ResourceManager::Init();
-	Scene::Loads();
 	Audio::InitMaster();
 	common = NULL;
 	Input::SetPause(true);
@@ -31,8 +30,8 @@ void Manager::Init()
 
 	srand((unsigned int)timeGetTime());
 	SetScene<Logo_S>();
-	legtype = MOVE_TYPE::FREE;
-	wepon = WEPON_TYPE::BAZOOKA;
+	legtype = MOVE_TYPE::CAR;
+	wepon = WEPON_TYPE::SHOTGUN_1;
 }
 
 void Manager::Uninit()

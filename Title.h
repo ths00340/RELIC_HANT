@@ -6,7 +6,6 @@ class Title :
 	public Game
 {
 private:
-	ViewCamera* VCam;
 	GameObject* enemy;
 	GameObject* dodai;
 	Audio* BGM;

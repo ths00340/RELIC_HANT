@@ -5,6 +5,5 @@ class LoadingLogo :
 {
 public:
 	void Init();
-	void Uninit();
 	void Update();
 };

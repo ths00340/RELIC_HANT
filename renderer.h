@@ -25,11 +25,13 @@ struct MATERIAL
 struct LIGHT
 {
 	BOOL		Enable;
-	BOOL		Dummy[3];
+	BOOL		Dummy[3];//16byte‹«ŠE—p
 	D3DXVECTOR4	Direction;
 	D3DXVECTOR4 Position;
 	D3DXCOLOR	Diffuse;
 	D3DXCOLOR	Ambient;
+	D3DXMATRIX ViewMatrix;
+	D3DXMATRIX ProjectionMatrix;
 };
 
 class Renderer

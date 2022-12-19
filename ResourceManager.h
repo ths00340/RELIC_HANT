@@ -35,6 +35,7 @@ enum class SHADER_S
 	NORMAL_TOON,
 	NORMAL_FOG,
 	INVISIBLE_FAR,
+	LOD_SHADOW,
 	SHADER_E
 };
 
@@ -202,6 +203,12 @@ private:
 		{
 			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::INVISIBLE_FAR], &m_VertexLayout[(int)SHADER_S::INVISIBLE_FAR], "FarInvisibleVS.cso");
 			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::INVISIBLE_FAR], "FarInvisiblePS.cso");
+		}
+
+		//LOD_SHADOW
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LOD_SHADOW], &m_VertexLayout[(int)SHADER_S::LOD_SHADOW], "LODShadowVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LOD_SHADOW], "LODShadowPS.cso");
 		}
 	}
 

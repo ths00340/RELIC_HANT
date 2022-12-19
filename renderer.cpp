@@ -308,6 +308,7 @@ void Renderer::SetCameraPosition(D3DXVECTOR3 CameraPosition)
 
 void Renderer::SetParameter(D3DXVECTOR4 Parameter)
 {
+	m_DeviceContext->UpdateSubresource(m_ParameterBuffer, 0, NULL, &Parameter, 0, 0);
 }
 
 void Renderer::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)

@@ -119,15 +119,24 @@ void ShotGun_Physics::Draw()
 	D3DXMatrixScaling(&scl, m_scl.x, m_scl.y, m_scl.z);
 
 	if (cam->GetMode() == CamMode::TPP)
+	{
+		Float2 objaddrot = Float2(object->Getaddrot().x, object->Getaddrot().z);
+		objaddrot.x = (cosf(cam->GetAngle().y) * objaddrot.x) + (sinf(cam->GetAngle().y) * objaddrot.y);
+		objaddrot.y = (cosf(cam->GetAngle().y) * objaddrot.y) + (sinf(cam->GetAngle().y) * objaddrot.x);
+
 		D3DXMatrixRotationYawPitchRoll(&rot,
 			cam->GetAngle().y,
-			object->Getrot().x + object->Getaddrot().x + angle,
-			object->Getrot().z + object->Getaddrot().z);
+			object->Getrot().x + objaddrot.x + angle,
+			object->Getrot().z + objaddrot.y);//–Cg‚É‘Î‰‚µ‚Ä‚È‚¢‚Ì‚Å‘Î‰‚³‚¹‚é
+	}
 	else
+	{
 		D3DXMatrixRotationYawPitchRoll(&rot,
 			object->Getrot().y + object->Getaddrot().y,
 			object->Getrot().x + object->Getaddrot().x,
 			object->Getrot().z + object->Getaddrot().z);
+	}
+
 
 	Float3 TrueF3 = TOOL::GetUp(
 		Float3(object->Getrot().x + object->Getaddrot().x,

@@ -6,15 +6,17 @@ class Game :
 	public Scene
 {
 protected:
-	class Audio* bgm = nullptr;;
-	class Common* fade = nullptr;;
+	class Audio* bgm = nullptr;
+	class Common* fade = nullptr;
 	class Player* pl = nullptr;
+	class ViewCamera* VCam = nullptr;
 	bool Next = false;
 	BATTLE_DATA* B_Data = nullptr;
 public:
 	void Init();
 	void Uninit();
 	void Update();
+	void Draw();
 	void SetPlayer(Player* player);
 	void SetNext() { Next = true; }
 
@@ -36,4 +38,9 @@ public:
 	}
 
 	BATTLE_DATA* GetB_Data() { return B_Data; }
+
+#ifndef DEBUG
+	void DebugDraw();
+#endif // DEBUG
+
 };

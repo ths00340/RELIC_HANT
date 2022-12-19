@@ -16,6 +16,11 @@ cbuffer CameraBuffer : register(b5) //バッファの５番とする
 	float4 CameraPosition; //カメラ座標を受けとる変数
 }
 
+cbuffer ParameterBuffer : register(b6)
+{
+	float4 Parameter;
+}
+
 struct MATERIAL
 {
 	float4 Ambient;
@@ -39,6 +44,9 @@ struct LIGHT
 	float4 Position;
 	float4 Diffuse;
 	float4 Ambient;
+
+	matrix ViewMatrix; //追加 ライトカメラ行列
+	matrix ProjectionMatrix; //追加 ライトプロジェクション行列
 };
 
 cbuffer LightBuffer : register(b4)
@@ -61,4 +69,5 @@ struct PS_IN
 	float4 Normal		:NORMAL0;
 	float4 Diffuse		:COLOR0;
 	float2 TexCoord		:TEXCOORD0;
+	float4 ShadowPosition : POSITION1; //ライトカメラから見たピクセルの座標
 };

@@ -96,24 +96,24 @@ void Field::Init()
 			}
 		}
 
-		//for (int y = 1; y < (CHIP_Y); y++)
-		//	for (int x = 1; x < (CHIP_X + 1); x++)
-		//	{
-		//		int i = y * (CHIP_X + 1) + x;
-		//		Float3 vx, vz, vn;
-		//		vz = pVtx[i + 1].Position - pVtx[i - 1].Position;
-		//		vx = pVtx[i + CHIP_X].Position - pVtx[i - CHIP_X].Position;
+		for (int y = 1; y < (CHIP_Y); y++)
+			for (int x = 1; x < (CHIP_X + 1); x++)
+			{
+				int i = y * (CHIP_X + 1) + x;
+				Float3 vx, vz, vn;
+				vz = pVtx[i + 1].Position - pVtx[i - 1].Position;
+				vx = pVtx[i + CHIP_X].Position - pVtx[i - CHIP_X].Position;
 
-		//		D3DXVec3Cross(&vn, &vz, &vx);
-		//		D3DXVec3Normalize(&vn, &vn);
-		//		pVtx[i].Normal = vn;
+				D3DXVec3Cross(&vn, &vz, &vx);
+				D3DXVec3Normalize(&vn, &vn);
+				pVtx[i].Normal = vn;
 
-		//		vz = (pVtx[i + 1].Position + pVtx[i - 1].Position);
-		//		vx = (pVtx[i + CHIP_X].Position + pVtx[i - CHIP_X].Position);
+				vz = (pVtx[i + 1].Position + pVtx[i - 1].Position);
+				vx = (pVtx[i + CHIP_X].Position + pVtx[i - CHIP_X].Position);
 
-		//		float h = (vz.y + vx.y) * 0.25f;
-		//		pVtx[i].Position.y = h + ((TOOL::RandF() * 2.f));
-		//	}
+				float h = (vz.y + vx.y) * 0.25f;
+				pVtx[i].Position.y = h + ((TOOL::RandF() * 2.f));
+			}
 
 		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 	}

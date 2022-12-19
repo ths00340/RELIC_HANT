@@ -2,7 +2,6 @@
 #include "renderer.h"
 #include "manager.h"
 #include "Game.h"
-#include "Field.h"
 #include "ViewCamera.h"
 #include "Camera.h"
 #include "ChargeEffect.h"

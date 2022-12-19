@@ -3,6 +3,7 @@
 #include <list>
 #include <vector>
 #include <typeinfo>
+#include <thread>
 #include "GameObject.h"
 #include "bullet.h"
 #include "Enemy.h"
@@ -31,10 +32,11 @@
 #include "Fissure.h"
 #include "ShotGun_Physics.h"
 
-#define LAYER_NUM (5)
+#define LAYER_NUM (6)
 
 enum class OBJ_LAYER {
 	System,
+	NoCaring,
 	GameObject,
 	Enemy,
 	Billboard,
@@ -46,6 +48,7 @@ class Scene
 protected:
 	std::list<GameObject*> g_GameObject[LAYER_NUM];
 	D3D11_VIEWPORT view{ (FLOAT)SCREEN_WIDTH ,(FLOAT)SCREEN_HEIGHT,0.0f,1.0f,0,0 };
+
 
 public:
 	Scene() {
@@ -59,12 +62,15 @@ public:
 	virtual ~Scene() {};
 	virtual void Init()
 	{
+		isLoad = false;
 		view.Width = (FLOAT)SCREEN_WIDTH;
 		view.Height = (FLOAT)SCREEN_HEIGHT;
 		view.MinDepth = 0.0f;
 		view.MaxDepth = 1.0f;
 		view.TopLeftX = 0;
 		view.TopLeftY = 0;
+
+		TOOL::Display((char*)"使用できるスレッド数=%d\n", std::thread::hardware_concurrency());
 	};
 	virtual void Uninit()
 	{
@@ -80,40 +86,13 @@ public:
 			g_GameObject[i].clear();
 		}
 	}
-	virtual void Update()
-	{
-		for (int i = 0; i < LAYER_NUM; i++)
-		{
-			for (GameObject* object : g_GameObject[i])//範囲forループ
-			{
-				if (object->GetStop())
-					continue;
+	virtual void Update();
 
-				object->Update();
-
-				for (CComponent* com : object->GetComponent())
-					com->Update();
-
-				object->FixedUpdate();
-			}
-			g_GameObject[i].remove_if([](GameObject* object) {return object->Destroy(); });
-		}
-	}
 	virtual void Draw()
 	{
-		float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		for (int i = 0; i < LAYER_NUM; i++)
 		{
-			for (GameObject* object : g_GameObject[i])//範囲forループ
-			{
-				if (object->GetBlendState() != NULL)
-					Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
-
-				object->Draw();
-
-				for (CComponent* com : object->GetComponent())
-					com->Draw();
-			}
+			ObjectDraw(i);
 		}
 	}
 
@@ -242,7 +221,6 @@ public:
 	}
 
 	D3D11_VIEWPORT* GetView() { return &view; }
-
 	static void Loads()
 	{
 		Bullet::Load();
@@ -268,6 +246,8 @@ public:
 		NormalFade::Load();
 		Fissure::Load();
 		ShotGun_Physics::Load();
+
+		isLoad = true;
 	}
 	static void UnLoads()
 	{
@@ -278,5 +258,26 @@ public:
 		ShutterFade::UnLoad();
 		NormalFade::UnLoad();
 		Fissure::UnLoad();
+	}
+	static const bool Getisload() { return isLoad; }
+private:
+	static bool isLoad;
+	void ObjectDraw(int inLayer)
+	{
+		if (inLayer >= LAYER_NUM)
+			return;
+
+		float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+		for (GameObject* object : g_GameObject[inLayer])//範囲forループ
+		{
+			if (object->GetBlendState() != NULL)
+				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+			object->Draw();
+
+			for (CComponent* com : object->GetComponent())
+				com->Draw();
+		}
 	}
 };

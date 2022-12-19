@@ -139,7 +139,7 @@ void SphereShadow::Load()
 
 	m_Texture = ResourceManager::AddTex("asset/texture/Shadow.png");
 
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INVISIBLE_FAR);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LOD_SHADOW);
 }
 
 void SphereShadow::UnLoad()

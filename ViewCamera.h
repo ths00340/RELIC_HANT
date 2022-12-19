@@ -7,6 +7,7 @@ class ViewCamera :
 {
 private:
 	Camera* viewCam = NULL;
+	D3DXMATRIX m_ProjectionMatrix;
 public:
 	void Init();
 	void Uninit();
@@ -18,4 +19,6 @@ public:
 		viewCam = incam;
 	}
 	Camera* GetView() { return viewCam; };
+
+	bool CheckView(Float3 Position);
 };

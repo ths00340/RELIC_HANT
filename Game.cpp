@@ -1,20 +1,13 @@
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
-#include "audio.h"
 #include "Game.h"
-#include "Polygon2D.h"
-#include "Field.h"
-#include "Camera.h"
-#include "input.h"
-#include "model.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "bullet.h"
+#include "audio.h"
 #include "GameObject.h"
-#include "Skybox.h"
-#include "ViewCamera.h"
 #include "Common.h"
+#include "Camera.h"
+#include "ViewCamera.h"
+#include "Field.h"
 
 void Game::Init()
 {
@@ -27,9 +20,9 @@ void Game::Init()
 	view.TopLeftY = 0;
 
 	////カメラ→3D→2Dの流れ
-	AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
-	AddGameObject<Skybox>((int)OBJ_LAYER::GameObject);
-	AddGameObject<Field>((int)OBJ_LAYER::GameObject);
+	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
+	AddGameObject<Field>((int)OBJ_LAYER::NoCaring);
+	AddGameObject<Skybox>((int)OBJ_LAYER::NoCaring);
 	AddGameObject<Player>((int)OBJ_LAYER::GameObject);
 
 	for (int i = 0; i < 20; i++)
@@ -37,9 +30,11 @@ void Game::Init()
 		AddGameObject<Tree>((int)OBJ_LAYER::Billboard)->Set(Float3((TOOL::RandF() * 300.0f) - 150.0f, 7.0f, (TOOL::RandF() * 300.0f) - 150.0f));
 	}
 
+#ifndef MUTE
 	class Audio* bgm = AddGameObject<Audio>((int)OBJ_LAYER::System);
 	bgm->Load("asset\\BGM\\gameover.wav");
 	bgm->Play(true, 0.1f);
+#endif // MUTE
 
 	//AddGameObject<Polygon2D>(3);装備
 }
@@ -61,6 +56,42 @@ void Game::Update()
 		B_Data->Update();
 }
 
+void Game::Draw()
+{
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+
+	for (int i = 0; i < 2; i++)
+		for (GameObject* object : g_GameObject[i])
+		{
+			if (object->GetBlendState() != NULL)
+				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+			object->Draw();
+
+			for (CComponent* com : object->GetComponent())
+				com->Draw();
+		}
+
+	for (int i = 2; i < LAYER_NUM; i++)
+	{
+		for (GameObject* object : g_GameObject[i])//範囲forループ
+		{
+			if (VCam != nullptr)
+				if (!VCam->CheckView(object->Getpos()))
+					continue;
+
+			if (object->GetBlendState() != NULL)
+				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+			object->Draw();
+
+			for (CComponent* com : object->GetComponent())
+				com->Draw();
+		}
+	}
+}
+
 void Game::SetPlayer(Player* player)
 {
 	if (!pl)
@@ -68,5 +99,24 @@ void Game::SetPlayer(Player* player)
 		pl = player;
 		g_GameObject[(int)OBJ_LAYER::GameObject].push_back(player);
 		GetGameObject<ViewCamera>()->SetView(player->LoadComponent<Camera>());
+	}
+}
+
+void Game::DebugDraw()
+{
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+	for (int i = 0; i < LAYER_NUM; i++)
+	{
+		for (GameObject* object : g_GameObject[i])//範囲forループ
+		{
+			if (object->GetBlendState() != NULL)
+				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+			object->Draw();
+
+			for (CComponent* com : object->GetComponent())
+				com->Draw();
+		}
 	}
 }

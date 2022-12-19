@@ -24,6 +24,7 @@
 #include "Practice.h"
 #include "Wall.h"
 #include "Blur_Tex.h"
+#include "DebugDrawScene.h"
 
 class Result_S;
 
@@ -41,10 +42,12 @@ void Game_S::Init()
 
 	fade = NULL;
 
+	Manager::AddScene<DebugDrawScene>();
+
 	////カメラ→3D→2Dの流れ
-	AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
-	AddGameObject<Skybox>((int)OBJ_LAYER::GameObject);
-	AddGameObject<Field>((int)OBJ_LAYER::GameObject);
+	VCam=AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
+	AddGameObject<Skybox>((int)OBJ_LAYER::NoCaring);
+	AddGameObject<Field>((int)OBJ_LAYER::NoCaring);
 
 	//プレイヤーの設定読み込み
 	pl = AddGameObject<Player>((int)OBJ_LAYER::GameObject);
@@ -69,18 +72,18 @@ void Game_S::Init()
 	Input::SetPause(false);
 	Input::ShowPoint(false);
 
-	GameObject* out = AddGameObject<Wall>((int)OBJ_LAYER::GameObject);
+	GameObject* out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
 	out->SetPos({ 0.0f,50.0f,200.0f });
 
-	out = AddGameObject<Wall>((int)OBJ_LAYER::GameObject);
+	out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
 	out->SetRot({ 0.0f,TOOL::AToR(90),0.0f });
 	out->SetPos({ 200.0f,50.0f,0.0f });
 
-	out = AddGameObject<Wall>((int)OBJ_LAYER::GameObject);
+	out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
 	out->SetRot({ 0.0f,TOOL::AToR(180),0.0f });
 	out->SetPos({ 0.0f,50.0f,-200.0f });
 
-	out = AddGameObject<Wall>((int)OBJ_LAYER::GameObject);
+	out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
 	out->SetRot({ 0.0f,-TOOL::AToR(90),0.0f });
 	out->SetPos({ -200.0f,50.0f,0.0f });
 }
@@ -270,7 +273,7 @@ void Game_S::Draw()
 	else
 		Renderer::GetDeviceContext()->RSSetState(ResourceManager::GetFrame(FRAME_S::CULL_BACK));
 
-	Scene::Draw();
+	Game::Draw();
 }
 
 void Game_S::NextScene()

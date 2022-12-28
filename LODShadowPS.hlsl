@@ -13,5 +13,4 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	float fog = saturate(dist / 50.f);
 	outDiffuse.a = outDiffuse.a * (1.f - fog);
 	outDiffuse.a += step(0.001f, outDiffuse.a) * 0.05f;
-
 }

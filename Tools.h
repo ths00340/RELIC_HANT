@@ -117,7 +117,7 @@ public:
 	}
 
 	//角度から上の取得:クォータニオン
-	static Float3 GetUpQ(Qua inQ)
+	static Float3 GetUpQ(FloatQ inQ)
 	{
 		D3DXMATRIX rot;
 		D3DXMatrixRotationQuaternion(&rot, &inQ);
@@ -131,7 +131,7 @@ public:
 	}
 
 	//角度から横の取得:クォータニオン
-	static Float3 GetSideQ(Qua inQ)
+	static Float3 GetSideQ(FloatQ inQ)
 	{
 		D3DXMATRIX rot;
 		D3DXMatrixRotationQuaternion(&rot, &inQ);
@@ -145,7 +145,7 @@ public:
 	}
 
 	//角度から正面の取得:クォータニオン
-	static Float3 GetForwardQ(Qua inQ)
+	static Float3 GetForwardQ(FloatQ inQ)
 	{
 		D3DXMATRIX rot;
 		D3DXMatrixRotationQuaternion(&rot, &inQ);
@@ -360,7 +360,7 @@ public:
 	}
 
 	//球対線の当たり判定
-	static bool HitRaySphere(Float3 Start, Float3 Vel, Float3 CovPos, float r, Float3& HitPos)
+	static const bool HitRaySphere(Float3 Start, Float3 Vel, Float3 CovPos, float r, Float3& HitPos)
 	{
 		CovPos.x = CovPos.x - Start.x;
 		CovPos.y = CovPos.y - Start.y;
@@ -410,14 +410,14 @@ public:
 	}
 
 	//sizeをaftersizeにするためには何倍にすればいいのか
-	static float Magni_one(float size = 1.0f, float aftersize = 1.0f)
+	static const float Magni_one(float size = 1.0f, float aftersize = 1.0f)
 	{
 		float ret = aftersize / size;
 		return ret;
 	}
 
 	//sizeをaftersizeにするためには各方向に何倍にすればいいのか
-	static Float3 Magni_uni(Float3 size = Float3(1.0f, 1.0f, 1.0f), Float3 aftersize = Float3(1.0f, 1.0f, 1.0f))
+	static const Float3 Magni_uni(Float3 size = Float3(1.0f, 1.0f, 1.0f), Float3 aftersize = Float3(1.0f, 1.0f, 1.0f))
 	{
 		Float3 ret;
 		ret.x = aftersize.x / size.x;
@@ -427,7 +427,7 @@ public:
 	}
 
 	//inをminからmaxまでの間に制限する
-	static float Limit(float in = 0.0f, float max = 1.0f, float min = 0.0f) {
+	static const float Limit(float in = 0.0f, float max = 1.0f, float min = 0.0f) {
 		float ret = in;
 		ret = fminf(max, ret);
 		ret = fmaxf(min, ret);
@@ -435,12 +435,15 @@ public:
 	}
 
 	//inをxyz全てに振り分ける
-	static Float3 Uniform(float in = 0.0f) {
+	static const Float3 Uniform(float in = 0.0f) {
 		return Float3(in, in, in);
+	}
+	static const FloatQ UniformQ(float in = 0.0f) {
+		return FloatQ(in, in, in, 1.f);
 	}
 
 	//目標へのx軸を算出
-	static Float3 LookatX(Float3 me = Uniform(), Float3 target = Uniform())
+	static const Float3 LookatX(Float3 me = Uniform(), Float3 target = Uniform())
 	{
 		Float3 ret = Uniform();
 

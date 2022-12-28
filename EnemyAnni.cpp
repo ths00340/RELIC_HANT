@@ -4,7 +4,7 @@
 
 void EnemyAnni::Init()
 {
-	Game_S::Init();
+	Game::Init();
 	SetBattle<Enemy_Anni>();
 	for (int i = 0; i < 500; i++)
 	{

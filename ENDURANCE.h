@@ -1,7 +1,7 @@
 #pragma once
-#include "Game_S.h"
+#include "Game.h"
 class ENDURANCE :
-	public Game_S
+	public Game
 {
 public:
 	void Init();

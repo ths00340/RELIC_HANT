@@ -15,6 +15,7 @@
 #include <d3d11.h>
 #include <d3dx9.h>
 #include <d3dx11.h>
+#include <DirectXMath.h>
 #define DIRECTINPUT_VERSION 0x0800		// 警告対処
 #include "dinput.h"
 #include "mmsystem.h"
@@ -37,8 +38,9 @@ HWND GetWindow();
 HINSTANCE GetInstance();
 
 typedef D3DXCOLOR	COLOR;
+typedef D3DXQUATERNION FloatQ;
+typedef D3DXVECTOR4 Float4;
 typedef D3DXVECTOR3 Float3;
 typedef D3DXVECTOR2 Float2;
-typedef D3DXQUATERNION Qua;
 
 #define MUTE//コメントアウトするとミュート解除※デバッグ用

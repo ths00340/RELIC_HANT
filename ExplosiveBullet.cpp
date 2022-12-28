@@ -40,9 +40,9 @@ void ExplosiveBullet::Finish()
 void ExplosiveBullet::Init()
 {
 	AddComponent<Gravity>();
-	m_pos = Float3(-3.0f, 1.0f, 0.0f);
+	m_pos = Float3(-3.f, 1.f, 0.f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
-	m_rot = Float3(0.0f, 0.0f, 0.0f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
 	name = "ExplosiveBullet";

@@ -52,8 +52,6 @@ void Player::Init()
 	maxsize = m_model->Get_max();
 
 	m_pSta = AddComponent<Status>();
-	m_pSta->SetAutoHeal_ST(true, 20.f);
-	m_pSta->SetAutoHeal_HP(true, 10.0f);
 	Cam = AddComponent<Camera>();
 	Cam->SetRange(100.0f);
 
@@ -89,8 +87,6 @@ void Player::Init()
 	}
 
 	m_pSta->SetMAX(hp);
-	m_pSta->SetST(0);
-	m_pSta->SetHP(5);
 
 	AddComponent<Gravity>();
 	AddComponent<SphereShadow>();

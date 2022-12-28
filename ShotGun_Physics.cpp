@@ -43,7 +43,7 @@ void ShotGun_Physics::Update()
 	time++;
 	Scene* scene = Manager::GetScene();
 	angle = cam->GetAngle().x;
-	angle = TOOL::Limit(angle, 0.0f, -TOOL::AToR(60.0f));
+	angle = TOOL::Limit(angle, 0.f, -TOOL::AToR(60.f));
 
 	if (objS)
 	{
@@ -136,7 +136,6 @@ void ShotGun_Physics::Draw()
 			object->Getrot().x + object->Getaddrot().x,
 			object->Getrot().z + object->Getaddrot().z);
 	}
-
 
 	Float3 TrueF3 = TOOL::GetUp(
 		Float3(object->Getrot().x + object->Getaddrot().x,

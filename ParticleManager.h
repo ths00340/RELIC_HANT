@@ -38,7 +38,7 @@ public:
 	void Update();
 	void Draw();
 	void Set(Float3 pos = Float3(0.0f, 0.0f, 0.0f),
-		Float3 rot = Float3(0.0f, 0.0f, 0.0f),
+		Float3 rot = Float3(0.f, 0.f, 0.f),
 		float vel = 0.0f,
 		int particle_num = 1.0f,
 		float inGravity = 0.0f,

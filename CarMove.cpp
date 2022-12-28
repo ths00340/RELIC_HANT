@@ -37,20 +37,13 @@ void CarMove::Update()
 	if (Input::GetKeyPress('A'))
 	{
 		Rot += -TOOL::AToR(12 - (5.0f * object->Getscl().z));
-		if (Rot < -TOOL::AToR(120))
-		{
-			Rot = -TOOL::AToR(120);
-		}
 	}
 	if (Input::GetKeyPress('D'))
 	{
 		Rot += TOOL::AToR(12 - (5.0f * object->Getscl().z));
-
-		if (Rot > TOOL::AToR(120))
-		{
-			Rot = TOOL::AToR(120);
-		}
 	}
+
+	Rot = TOOL::Limit(Rot, TOOL::AToR(120.f), -TOOL::AToR(120.f));
 
 	//‰ñ“]‚µ‚Ä‚¢‚È‚¢ê‡‚ÍRot‚ğ‚O‚É
 	if (!Input::GetKeyPress('D') && !Input::GetKeyPress('A'))

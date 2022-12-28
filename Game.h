@@ -7,16 +7,34 @@ class Game :
 {
 protected:
 	class Audio* bgm = nullptr;
+	class Audio* ClearBGM = nullptr;
+	class Audio* OverBGM = nullptr;
+
 	class Common* fade = nullptr;
 	class Player* pl = nullptr;
 	class ViewCamera* VCam = nullptr;
-	bool Next = false;
+
 	BATTLE_DATA* B_Data = nullptr;
+	class Blur_Tex* tex = nullptr;
+
+	bool Next = false;
+	bool debug_com = false;
+	bool WireFrame = false;
+	bool Start = false;
+	bool Once = false;
+	bool Stop = false;
+
+	int cleartime = 0;
+
 public:
-	void Init();
-	void Uninit();
-	void Update();
-	void Draw();
+	virtual void Init();
+	virtual void Uninit();
+	virtual void Update();
+	virtual void Draw();
+	virtual void NextScene();
+	virtual void BGMSelect();
+	virtual void Clear();
+	virtual void GameOver();
 	void SetPlayer(Player* player);
 	void SetNext() { Next = true; }
 
@@ -42,5 +60,4 @@ public:
 #ifndef DEBUG
 	void DebugDraw();
 #endif // DEBUG
-
 };

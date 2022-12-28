@@ -11,10 +11,10 @@ void ParticleTest::Init()
 {
 	name = "ParticleTest";
 	time = 0;
-	m_pos = Float3(-3.0f, 1.0f, 0.0f);
+	m_pos = Float3(-3.f, 1.f, 0.f);
 	m_scl = Float3(0.15f, 0.15f, 0.15f);
 	DefaultSize = m_scl;
-	m_rot = Float3(0.0f, 0.0f, 0.0f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 	m_ang_vel = Float3
 	{
 		0.0f,//TOOL::RandF() * D3DX_PI * 0.025f ,

@@ -16,7 +16,7 @@ protected:
 	Float3 m_pos;//座標(親オブジェクトに相対的な位置)
 	Float3 m_rot;//角度(親オブジェクトに相対的な角度)
 	Float3 m_scl;//サイズ(親オブジェクトに相対的なサイズ)
-	float angle = 0.0f;
+	float angle = 0.f;
 	int dmg = 1;
 	int time = 0;//時間計測用
 	Float3 ShotAngle;//発射角度
@@ -28,14 +28,14 @@ protected:
 	float ReCast;
 public:
 	Wepon(GameObject* inobject) :CComponent(inobject) {
-		m_pos = { 0.0f,0.0f,0.0f };
-		m_rot = { 0.0f,0.0f,0.0f };
-		m_scl = { 1.0f,1.0f,1.0f };
+		m_pos = { 0.f,0.f,0.f };
+		m_rot = { 0.f,0.f,0.f };
+		m_scl = { 1.f,1.f,1.f };
 		angle = 0.f;
 		dmg = 1;
 		time = 0;
-		ShotAngle = { 0.0f,0.0f,0.0f };
-		shotpos = { 0.0f,0.0f,0.0f };
+		ShotAngle = { 0.f,0.f,0.f };
+		shotpos = { 0.f,0.f,0.f };
 		range = 60.f;
 		ReCast = 3.f;
 

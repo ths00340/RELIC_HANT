@@ -125,9 +125,9 @@ void Field::Init()
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pos = Float3(0.f, 0.f, 0.f);
+	m_scl = Float3(1.f, 1.f, 1.f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 }

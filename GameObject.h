@@ -14,9 +14,9 @@ protected:
 	Float3 m_pos;//座標
 	Float3 m_scl;//サイズ
 	Float3 m_rot;//回転
-	Float3 m_addrot = { 0.0f, 0.0f, 0.0f };//見た目の追加角度
-	Float3 m_addpos = { 0.0f, 0.0f, 0.0f };//見た目の追加位置
-	Float3 m_vec = { 0.0f, 0.0f, 0.0f };//加速度
+	Float3 m_addrot = { 0.f, 0.f, 0.f };//見た目の追加角度
+	Float3 m_addpos = { 0.f, 0.f, 0.f };//見た目の追加位置
+	Float3 m_vec = { 0.f, 0.f, 0.f };//加速度
 
 	//実際のサイズのための変数
 	Float3 minsize = { 0.0f, 0.0f, 0.0f };//最小座標
@@ -92,12 +92,12 @@ public:
 		D3DXMATRIX rot;
 		D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
 
-		Float3 up;
-		up.x = rot._21;
-		up.y = rot._22;
-		up.z = rot._23;
+		Float3 Up;
+		Up.x = rot._21;
+		Up.y = rot._22;
+		Up.z = rot._23;
 
-		return up;
+		return Up;
 	}
 	const Float3 GetSide()
 	{
@@ -224,7 +224,126 @@ public:
 		return name;
 	}
 
-	virtual void Damage(int dmg) {};
-	virtual void Finish() {};
+	virtual void Damage(int dmg) {};//ダメージを負った時の反応
+	virtual void Finish() {};//破壊された時の反応
 	virtual void PlayHit() {};
 };
+
+/*
+	//加算系
+	virtual void AddLocalRot(Float3 inRot) {
+		D3DXQUATERNION quat;
+		Float3 axis = GetUp();
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
+		m_rot *= quat;
+
+		axis = GetSide();
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
+		m_rot *= quat;
+
+		axis = GetForward();
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
+		m_rot *= quat;
+	}
+	virtual void AddLocalRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
+		D3DXQUATERNION quat;
+		Float3 axis = GetUp();
+		D3DXQuaternionRotationAxis(&quat, &axis, Y);
+		m_rot *= quat;
+
+		axis = GetSide();
+		D3DXQuaternionRotationAxis(&quat, &axis, X);
+		m_rot *= quat;
+
+		axis = GetForward();
+		D3DXQuaternionRotationAxis(&quat, &axis, Z);
+		m_rot *= quat;
+	}
+
+	virtual void AddWorldRot(Float3 inRot) {
+		D3DXQUATERNION quat;
+		Float3 axis = { 0.f,1.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
+		m_rot *= quat;
+
+		axis = { 1.f,0.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
+		m_rot *= quat;
+
+		axis = { 0.f,0.f,1.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
+		m_rot *= quat;
+	}
+	virtual void AddWorldRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
+		D3DXQUATERNION quat;
+		Float3 axis = { 0.f,1.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, Y);
+		m_rot *= quat;
+
+		axis = { 1.f,0.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, X);
+		m_rot *= quat;
+
+		axis = { 0.f,0.f,1.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, Z);
+		m_rot *= quat;
+	}
+
+	virtual void AddLocalAddRot(Float3 inRot) {
+		D3DXQUATERNION quat;
+		Float3 axis = GetUp();
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
+		m_addrot *= quat;
+
+		axis = GetSide();
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
+		m_addrot *= quat;
+
+		axis = GetForward();
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
+		m_addrot *= quat;
+	}
+	virtual void AddLocalAddRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
+		D3DXQUATERNION quat;
+		Float3 axis = GetUp();
+		D3DXQuaternionRotationAxis(&quat, &axis, Y);
+		m_addrot *= quat;
+
+		axis = GetSide();
+		D3DXQuaternionRotationAxis(&quat, &axis, X);
+		m_addrot *= quat;
+
+		axis = GetForward();
+		D3DXQuaternionRotationAxis(&quat, &axis, Z);
+		m_addrot *= quat;
+	}
+
+	virtual void AddWorldAddRot(Float3 inRot) {
+		D3DXQUATERNION quat;
+		Float3 axis = { 0.f,1.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
+		m_addrot *= quat;
+
+		axis = { 1.f,0.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
+		m_addrot *= quat;
+
+		axis = { 0.f,0.f,1.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
+		m_addrot *= quat;
+	}
+	virtual void AddWorldAddRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
+		D3DXQUATERNION quat;
+		Float3 axis = { 0.f,1.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, Y);
+		m_addrot *= quat;
+
+		axis = { 1.f,0.f,0.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, X);
+		m_addrot *= quat;
+
+		axis = { 0.f,0.f,1.f };
+		D3DXQuaternionRotationAxis(&quat, &axis, Z);
+		m_addrot *= quat;
+	}
+*/

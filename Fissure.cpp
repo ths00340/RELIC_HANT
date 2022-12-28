@@ -18,12 +18,12 @@ void Fissure::Init()
 {
 	flame = 0;
 	maxtime = 60;
-	alfa = 1.0f;
-	m_pos = Float3(0.0f, 0.0f, 0.0f);
+	alfa = 1.f;
+	m_pos = Float3(0.f, 0.f, 0.f);
 
-	m_pos = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pos = Float3(1.f, 1.f, 1.f);
+	m_scl = Float3(1.f, 1.f, 1.f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 	name = "Fissure";
 }
 

@@ -8,7 +8,7 @@ void main(in VS_IN In, out PS_IN Out)
 	Out.Position = mul(In.Position, wvp); //変換結果を出力する
 
 	Out.TexCoord = In.TexCoord;
-	
+
 	Out.Diffuse = In.Diffuse;
 	//ワールド変換した頂点座標を出力
 	Out.WorldPosition = mul(In.Position, World);

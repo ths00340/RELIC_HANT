@@ -21,9 +21,9 @@ void Skybox::Init()
 	Scene* scene = Manager::GetScene();
 	pl = scene->GetGameObject<Player>();
 
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_scl = D3DXVECTOR3(80.0f, 80.0f, 80.0f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pos = Float3(0.f, 0.f, 0.f);
+	m_scl = Float3(80.f, 80.f, 80.f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 }
 
 void Skybox::Uninit()

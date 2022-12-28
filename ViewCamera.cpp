@@ -46,9 +46,9 @@ bool ViewCamera::CheckView(Float3 Position)
 	Float3 vpos[4], wpos[4];
 
 	vpos[0] = { -1.2f, 1.2f,1.f };
-	vpos[1] = {  1.2f, 1.2f,1.f };
+	vpos[1] = { 1.2f, 1.2f,1.f };
 	vpos[2] = { -1.2f,-1.2f,1.f };
-	vpos[3] = {  1.2f,-1.2f,1.f };
+	vpos[3] = { 1.2f,-1.2f,1.f };
 
 	D3DXVec3TransformCoord(&wpos[0], &vpos[0], &invvp);
 	D3DXVec3TransformCoord(&wpos[1], &vpos[1], &invvp);

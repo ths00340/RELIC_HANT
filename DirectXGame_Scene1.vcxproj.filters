@@ -423,9 +423,6 @@
     <ClInclude Include="EnemyAnni.h">
       <Filter>ヘッダー ファイル\Scenes\MainScene\Mission</Filter>
     </ClInclude>
-    <ClInclude Include="Game_S.h">
-      <Filter>ヘッダー ファイル\Scenes\MainScene\Mission</Filter>
-    </ClInclude>
     <ClInclude Include="Boss01.h">
       <Filter>ヘッダー ファイル\Scenes\MainScene\Mission</Filter>
     </ClInclude>
@@ -525,8 +522,11 @@
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DebugDrawScene.h">
+    <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugDrawScene.h">
+      <Filter>ヘッダー ファイル\Scenes\SubScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -707,9 +707,6 @@
     <ClCompile Include="EnemyAnni.cpp">
       <Filter>ソース ファイル\Scene\Mission</Filter>
     </ClCompile>
-    <ClCompile Include="Game_S.cpp">
-      <Filter>ソース ファイル\Scene\Mission</Filter>
-    </ClCompile>
     <ClCompile Include="Boss01.cpp">
       <Filter>ソース ファイル\Scene\Mission</Filter>
     </ClCompile>
@@ -767,11 +764,11 @@
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\base</Filter>
     </ClCompile>
-    <ClCompile Include="Common.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DebugDrawScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Scene.h"
 #include "Result_S.h"
-#include "Game_S.h"
+#include "Game.h"
 #include "MainMenu.h"
 #include "model.h"
 #include "Common.h"

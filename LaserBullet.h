@@ -20,7 +20,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void Set(Float3 pos = Float3(0.0f, 0.0f, 0.0f), Float3 rot = Float3(0.0f, 0.0f, 0.0f), int dmg = 1, float range = 60.f);
+	void Set(Float3 pos = Float3(0.f, 0.f, 0.f), Float3 rot = Float3(0.f, 0.f, 0.f), int dmg = 1, float range = 60.f);
 	void Finish();
 	void SetScl(Float3 inscl) {
 		m_scl = inscl;

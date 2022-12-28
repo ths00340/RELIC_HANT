@@ -19,7 +19,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void Set(Float3 pos = Float3(0.0f, 0.0f, 0.0f), Float3 rot = Float3(0.0f, 0.0f, 0.0f), float vel = 0.0f, int dmg = 10, float dmgrange = 5.0f);
+	void Set(Float3 pos = Float3(0.0f, 0.0f, 0.0f), Float3 rot = Float3(0.f, 0.f, 0.f), float vel = 0.0f, int dmg = 10, float dmgrange = 5.0f);
 	static void Load();
 	ID3D11BlendState* GetBlendState()override { return blendState; }
 	void AddVel(Float3 add = { 0.f,0.f,0.f });

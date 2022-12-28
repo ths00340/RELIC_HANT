@@ -57,7 +57,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObject_Temp.h" />
-    <ClInclude Include="Game_S.h" />
     <ClInclude Include="Gatling.h" />
     <ClInclude Include="Gravity.h" />
     <ClInclude Include="HitBox.h" />
@@ -146,7 +145,6 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="Fissure.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Game_S.cpp" />
     <ClCompile Include="Gatling.cpp" />
     <ClCompile Include="Gravity.cpp" />
     <ClCompile Include="HitBox.cpp" />

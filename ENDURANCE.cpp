@@ -4,7 +4,7 @@
 
 void ENDURANCE::Init()
 {
-	Game_S::Init();
+	Game::Init();
 	SetBattle<InfinityEnemySpone>();
 	for (int i = 0; i < 500; i++)
 	{

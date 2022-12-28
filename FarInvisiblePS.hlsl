@@ -14,5 +14,4 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 
 	//if (outDiffuse.a <= 0.025f)
 	//	discard;
-
 }

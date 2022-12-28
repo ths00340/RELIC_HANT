@@ -1,7 +1,7 @@
 #pragma once
-#include "Game_S.h"
+#include "Game.h"
 class EnemyAnni :
-	public Game_S
+	public Game
 {
 public:
 	void Init();

@@ -28,10 +28,6 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	float specular = -dot(halfv, normal.xyz); //ハーフベクトルと法線の内積を計算
 	specular = saturate(specular); //サチュレートする
 
-	//specular = pow(specular, 30); //ここでは３０乗してみる
-
-	//outDiffuse.rgb += specular;//スペキュラ値をデフューズとして足しこむ
-
 	float rim = 1.0 + dot(eyev, normal.xyz); //視線と法線の内積を明るさに変換する
 	rim = pow(rim, 1) * 1.0f; //スペキュラと同じような処理を適当に行う。
 	rim = saturate(rim); //rimをサチュレートする

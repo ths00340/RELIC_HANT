@@ -20,7 +20,6 @@
 #include "Blur_Tex.h"
 #include "BulrS.h"
 
-class Game_S;
 NumberManager* a;
 
 void MainMenu::Init()
@@ -142,7 +141,7 @@ void MainMenu::Update()
 				switch (MissionNum)
 				{
 				case MISSION::PRACTICE:
-					Manager::SetScene<Game_S>();
+					Manager::SetScene<Game>();
 					break;
 				case MISSION::ENEMY_ANNI:
 					Manager::SetScene<EnemyAnni>();

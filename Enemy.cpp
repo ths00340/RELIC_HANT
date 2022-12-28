@@ -38,9 +38,9 @@ void Enemy::Init()
 	AddComponent<SphereShadow>();
 	AddComponent<Leg_01>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::SPHERE);
-	m_pos = D3DXVECTOR3(0.0f, 100.0f, 0.0f);
-	m_scl = D3DXVECTOR3(0.25f, 0.25f, 0.25f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pos = Float3(0.f, 100.f, 0.f);
+	m_scl = Float3(0.25f, 0.25f, 0.25f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 
 	cam->SetRange(320.0f + m_scl.z);
 #ifndef MUTE
@@ -180,20 +180,20 @@ void Enemy::Finish()
 
 	mana = scene->AddGameObject<ParticleManager>(1);
 	mana->SetModel(PARTICLE_S::ITEM2, BLEND_S::OBJ_TRANS);
-	mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 2.0f * m_scl.z, TOOL::RandF() * 15 + 5 + (50 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana->Set(m_pos, TOOL::Uniform(), 2.0f * m_scl.z, TOOL::RandF() * 15 + 5 + (50 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
 
 	mana = scene->AddGameObject<ParticleManager>(1);
 	mana->SetModel(PARTICLE_S::ITEM3, BLEND_S::OBJ_TRANS);
-	mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 3.0f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana->Set(m_pos, TOOL::Uniform(), 3.0f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
 
 	mana = scene->AddGameObject<ParticleManager>(1);
 	mana->SetModel(PARTICLE_S::GIA, BLEND_S::OBJ_OPAQUE);
-	mana->Set(m_pos, Float3(0.0f, 0.0f, 0.0f), 0.5f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana->Set(m_pos, TOOL::Uniform(), 0.5f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
 
 	mana = scene->AddGameObject<ParticleManager>(1);
 	mana->SetModel(PARTICLE_S::CUBE, BLEND_S::OBJ_TRANS);
 	mana->Set(m_pos,				//座標
-		Float3(0.0f, 0.0f, 0.0f),	//角度
+		TOOL::Uniform(),	//角度
 		2.0f * m_scl.z,				//サイズ
 		TOOL::RandF() * 15 + 5 + (50 * m_scl.z),//数
 		GRAVITY,					//重力値

@@ -32,7 +32,6 @@ void BATTLE_DATA::Update()
 
 void BATTLE_DATA::IsTimeLimit()
 {
-
 	if (Start && !Clear && !GameOver)
 		ptime += TOOL::SecDiv(1.0f);
 

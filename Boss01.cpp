@@ -4,7 +4,7 @@
 
 void Boss01::Init()
 {
-	Game_S::Init();
+	Game::Init();
 	SetBattle<BOSS_01>();
 	for (int i = 0; i < 500; i++)
 	{

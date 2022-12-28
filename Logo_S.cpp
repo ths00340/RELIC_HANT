@@ -37,20 +37,20 @@ void Logo_S::Update()
 
 	if (time > TOOL::FrameMulti(1.0f))
 	{
-		if(Scene::Getisload())
-		if (Manager::GetCommon() == NULL)
-		{
-			time = 0;
-			fade = Manager::SetCommon<Fade>();
-			fade->SetFadeObject<NormalFade>();
-			fade->Set(2.0f);
-		}
+		if (Scene::Getisload())
+			if (Manager::GetCommon() == NULL)
+			{
+				time = 0;
+				fade = Manager::SetCommon<Fade>();
+				fade->SetFadeObject<NormalFade>();
+				fade->Set(2.0f);
+			}
 	}
 
 	if (fade != NULL)
 		if (fade->GetIn())
 		{
-			Manager::SetScene<Title>();
+			Manager::SetScene<Game>();
 			fade = NULL;
 		}
 }

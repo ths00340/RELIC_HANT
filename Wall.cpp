@@ -12,9 +12,8 @@ void Wall::Init()
 	numVertex = (CHiP_Y + 1) * (CHiP_X + 1);
 	numIndex = ((4 + (2 * (CHiP_X - 1))) * CHiP_Y) + (2 * (CHiP_Y - 1));
 
-
 	VERTEX_3D Vertex[(CHiP_Y + 1) * (CHiP_X + 1)];
-	{	
+	{
 		//横には2回ループする
 		for (int y = 0; y < (CHiP_Y + 1); y++)
 		{
@@ -45,13 +44,11 @@ void Wall::Init()
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 
-
 	D3D11_SUBRESOURCE_DATA sd;
 	ZeroMemory(&sd, sizeof(sd));
 	sd.pSysMem = Vertex;
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
-
 
 	// インデックスバッファ生成
 	ZeroMemory(&bd, sizeof(bd));
@@ -104,9 +101,9 @@ void Wall::Init()
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INVISIBLE_FAR);
 
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pos = Float3(0.0f, 0.0f, 0.0f);
+	m_scl = Float3(1.0f, 1.0f, 1.0f);
+	m_rot = Float3(0.0f, 0.0f, 0.0f);
 
 	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 	m_Parameter = { 0.f,0.f,0.f,0.f };
@@ -157,7 +154,6 @@ void Wall::Draw()
 	ZeroMemory(&material, sizeof(material));
 	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	Renderer::SetMaterial(material);
-
 
 	//テクスチャ設定
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);

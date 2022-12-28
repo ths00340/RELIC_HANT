@@ -17,9 +17,9 @@ void Tree::Init()
 	name = "Tree";
 	maxsize = TOOL::Uniform(1.f);
 	minsize = TOOL::Uniform(-1.f);
-	m_pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_scl = D3DXVECTOR3(8.0f, 8.0f, 8.0f);
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pos = Float3(0.f, 0.f, 0.f);
+	m_scl = Float3(8.f, 8.f, 8.f);
+	m_rot = Float3(0.f, 0.f, 0.f);
 }
 
 void Tree::Uninit()
@@ -36,25 +36,25 @@ void Tree::Draw()
 	Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
 
-	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);
-	vertex[0].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[0].TexCoord = D3DXVECTOR2(0, 0);
+	vertex[0].Position = Float3(-1.0f, 1.0f, 0.0f);
+	vertex[0].Normal = Float3(0.f, 1.0f, 0.0f);
+	vertex[0].Diffuse = Float4(1.f, 1.0f, 1.0f, 1.0f);
+	vertex[0].TexCoord = Float2(0, 0);
 
-	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
-	vertex[1].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = D3DXVECTOR2(1, 0);
+	vertex[1].Position = Float3(1.0f, 1.0f, 0.0f);
+	vertex[1].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[1].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[1].TexCoord = Float2(1, 0);
 
-	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
-	vertex[2].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = D3DXVECTOR2(0, 1);
+	vertex[2].Position = Float3(-1.0f, -1.0f, 0.0f);
+	vertex[2].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[2].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[2].TexCoord = Float2(0, 1);
 
-	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
-	vertex[3].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = D3DXVECTOR2(1, 1);
+	vertex[3].Position = Float3(1.0f, -1.0f, 0.0f);
+	vertex[3].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[3].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[3].TexCoord = Float2(1, 1);
 
 	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 	//省略したら設定でDISCARDにしているため”昔書かれたことは無視される”
@@ -121,7 +121,7 @@ void Tree::Draw()
 
 	MATERIAL material;
 	ZeroMemory(&material, sizeof(material));
-	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	material.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
 	Renderer::SetMaterial(material);
 
 	//テクスチャ設定

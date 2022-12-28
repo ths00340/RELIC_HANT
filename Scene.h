@@ -49,7 +49,6 @@ protected:
 	std::list<GameObject*> g_GameObject[LAYER_NUM];
 	D3D11_VIEWPORT view{ (FLOAT)SCREEN_WIDTH ,(FLOAT)SCREEN_HEIGHT,0.0f,1.0f,0,0 };
 
-
 public:
 	Scene() {
 		view.Width = (FLOAT)SCREEN_WIDTH;

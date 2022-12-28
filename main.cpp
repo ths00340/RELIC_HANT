@@ -62,7 +62,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UpdateWindow(g_Window);
 
 	DWORD dwExecLastTime;
-	DWORD dwCurrentTime;	
+	DWORD dwCurrentTime;
 	timeBeginPeriod(1);
 	dwExecLastTime = timeGetTime();
 	dwCurrentTime = 0;

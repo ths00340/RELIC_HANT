@@ -39,7 +39,6 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 
 	float range = dot(Light.Direction.xyz, lightDir.xyz);
 
-
 	outDiffuse.rgb *=
 		In.Diffuse.rgb * light; //ñæÇÈÇ≥Ç∆êFÇèÊéZ
 	outDiffuse.a *=
@@ -50,5 +49,5 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	//float len = length((In.WorldPosition.xyz - CameraPosition.xyz));
 	float dist = distance(In.WorldPosition.xyz, CameraPosition.xyz);
 	float fog = saturate(dist / 30.f);
-	outDiffuse.rgb = outDiffuse.rgb * (1.f-fog) + (outDiffuse.rgb*float3(0.95f, 0.95f, 0.95f)) * fog;
+	outDiffuse.rgb = outDiffuse.rgb * (1.f - fog) + (outDiffuse.rgb * float3(0.95f, 0.95f, 0.95f)) * fog;
 }

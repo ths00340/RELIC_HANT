@@ -92,6 +92,8 @@ void Polygon2D::Draw()
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
+	Renderer::SetParameter(Paramarter);
+
 	// ポリゴン描画
 	Renderer::GetDeviceContext()->Draw(4, 0);
 }

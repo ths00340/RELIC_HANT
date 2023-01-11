@@ -76,7 +76,7 @@ void Gatling::Update()
 			randrot.y = ((TOOL::RandF() * TOOL::AToR(5.f)) - TOOL::AToR(2.5f)) * (1.f - fire_rate);
 			Bullet* blt = scene->AddGameObject<Bullet>((int)OBJ_LAYER::GameObject);
 			blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), 1, range);
-			blt->SetScl(TOOL::Uniform(4.0f * m_scl.z));
+			blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
 
 			shotnum++;
 		}

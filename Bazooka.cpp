@@ -85,7 +85,7 @@ void Bazooka::Update()
 
 			ExplosiveBullet* blt = scene->AddGameObject<ExplosiveBullet>((int)OBJ_LAYER::GameObject);
 			blt->Set(shotpos, ShotAngle, TOOL::SecDiv(30.0f), dmg, 15.f * object->Getscl().z);
-			blt->SetScl(TOOL::Uniform(4.0f * m_scl.z));
+			blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
 		}
 
 	Predicted(shotpos, TOOL::GetForward(ShotAngle) * TOOL::SecDiv(30));

@@ -48,7 +48,6 @@ void Bullet::Update()
 
 			{
 				Status* sta;
-				//enemy->SetDestroy();
 				SetDestroy();
 				enemy->PlayHit();
 				sta = enemy->LoadComponent<Status>();

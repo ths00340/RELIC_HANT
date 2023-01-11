@@ -528,6 +528,9 @@
     <ClInclude Include="DebugDrawScene.h">
       <Filter>ヘッダー ファイル\Scenes\SubScene</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio.cpp">
@@ -815,6 +818,30 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="LODShadowVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="mosaicPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="mosaicVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="VideoNoisePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="VideoNoiseVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="GlitchJaggyNoisePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="GlitchJaggyNoiseVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="GlitchNoisePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="GlitchNoiseVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

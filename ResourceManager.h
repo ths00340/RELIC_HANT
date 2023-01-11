@@ -29,14 +29,18 @@ enum class FRAME_S {
 //シェーダー種類
 enum class SHADER_S
 {
-	LIGHT_ON,
-	LIGHT_OFF,
-	LIGHT_LIM,
-	NORMAL_TOON,
-	NORMAL_FOG,
-	INVISIBLE_FAR,
-	LOD_SHADOW,
-	SHADER_E
+	LIGHT_ON, //光源有り
+	LIGHT_OFF,//光源なし
+	LIGHT_LIM,//リムライト
+	NORMAL_TOON,//プログラムでトゥーン
+	NORMAL_FOG, //通常フォグ
+	INVISIBLE_FAR,//距離による透明化
+	LOD_SHADOW,//テクスチャを透明に
+	MOSAIC,//モザイク
+	GLITCH_NOISE,//グリッチノイズ
+	JAGGY_NOISE,//ジャギー付きグリッチノイズ
+	VIDEO_NOISE,//ビデオ風ノイズ
+	SHADER_E//シェーダーの最大数
 };
 
 class ResourceManager
@@ -209,6 +213,30 @@ private:
 		{
 			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LOD_SHADOW], &m_VertexLayout[(int)SHADER_S::LOD_SHADOW], "LODShadowVS.cso");
 			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LOD_SHADOW], "LODShadowPS.cso");
+		}
+
+		//MOSAIC
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::MOSAIC], &m_VertexLayout[(int)SHADER_S::MOSAIC], "mosaicVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::MOSAIC], "mosaicPS.cso");
+		}
+
+		//GLITCH_NOISE
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::GLITCH_NOISE], &m_VertexLayout[(int)SHADER_S::GLITCH_NOISE], "GlitchNoiseVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::GLITCH_NOISE], "GlitchNoisePS.cso");
+		}
+
+		//JAGGY_NOISE
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::JAGGY_NOISE], &m_VertexLayout[(int)SHADER_S::JAGGY_NOISE], "GlitchJaggyNoiseVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::JAGGY_NOISE], "GlitchJaggyNoisePS.cso");
+		}
+
+		//LOD_SHADOW
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::VIDEO_NOISE], &m_VertexLayout[(int)SHADER_S::VIDEO_NOISE], "VideoNoiseVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::VIDEO_NOISE], "VideoNoisePS.cso");
 		}
 	}
 

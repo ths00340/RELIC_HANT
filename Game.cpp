@@ -79,6 +79,9 @@ void Game::Init()
 
 void Game::Uninit()
 {
+
+	Renderer::SetTime();
+
 	if (bgm != NULL)
 		bgm->StopAll();
 
@@ -296,7 +299,7 @@ void Game::Draw()
 		}
 	}
 
-	for (GameObject* object : g_GameObject[LAYER_NUM - 1])//UI‚ðœ‚­
+	for (GameObject* object : g_GameObject[LAYER_NUM - 1])//UI
 	{
 		if (object->GetBlendState() != NULL)
 			Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);

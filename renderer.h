@@ -37,6 +37,11 @@ struct LIGHT
 class Renderer
 {
 private:
+	//シェーダー送信用の時間
+	static D3DXVECTOR4 Time;
+
+	//バックグラウンドの色
+	static float ClearColor[4];
 
 	static D3D_FEATURE_LEVEL       m_FeatureLevel;
 
@@ -53,13 +58,27 @@ private:
 	static ID3D11Buffer* m_LightBuffer;
 	static ID3D11Buffer* m_CameraBuffer;
 	static ID3D11Buffer* m_ParameterBuffer;
+	static ID3D11Buffer* m_TimeBuffer;
 
 	static ID3D11DepthStencilState* m_DepthStateEnable;
 	static ID3D11DepthStencilState* m_DepthStateDisable;
 
+	//深度ステンシルビュー
+	static ID3D11DepthStencilView* m_ShadowDepthStencilView;
+
+	//深度テクスチャの入れ物
+	static ID3D11ShaderResourceView* m_ShadowDepthShaderResourceView;
+
+	//レンダーテクスチャ用ターゲットビュー
+	static ID3D11RenderTargetView* m_RenderTextureView;
+
+	//レンダーテクスチャの入れ物
+	static ID3D11ShaderResourceView* m_RenderTextureShaderResourceView;
+
 public:
 	static void Init();
 	static void Uninit();
+	static void Update();
 	static void Begin();
 	static void End();
 
@@ -79,4 +98,31 @@ public:
 
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
+
+	static ID3D11ShaderResourceView* GetShadowDepthTexture()
+	{
+		return m_ShadowDepthShaderResourceView;
+	}
+	static ID3D11ShaderResourceView* GetRenderTexture() {
+		return m_RenderTextureShaderResourceView;
+	};
+
+	//深度バッファ用Begin
+	static void BeginDepth()//新規関数追加
+	{
+		//シャドウバッファを深度バッファに設定し、内容を1で塗りつぶしておく
+		m_DeviceContext->OMSetRenderTargets(0, NULL, m_ShadowDepthStencilView);
+		m_DeviceContext->ClearDepthStencilView(m_ShadowDepthStencilView,
+			D3D11_CLEAR_DEPTH, 1.0f, 0);
+	}
+
+	//レンダーテクスチャ用Begin
+	static void  BeginTexture()
+	{
+		m_DeviceContext->OMSetRenderTargets(1, &m_RenderTextureView, m_DepthStencilView);
+		m_DeviceContext->ClearRenderTargetView(m_RenderTextureView, ClearColor);
+		m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	}
+
+	static void SetTime(float inTime = 0.f) { Time.w = inTime; }
 };

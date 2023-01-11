@@ -81,7 +81,7 @@ void ShotGun_Physics::Update()
 				randrot.y = ((TOOL::RandF() * TOOL::AToR(7.f)) - TOOL::AToR(3.5f));
 				Bullet* blt = scene->AddGameObject<Bullet>((int)OBJ_LAYER::GameObject);
 				blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), dmg, range);
-				blt->SetScl(TOOL::Uniform(4.0f * m_scl.z));
+				blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
 
 				if (object->LoadComponent<Camera>())
 					object->LoadComponent<Camera>()->SetShakePos(10, 0.25f);

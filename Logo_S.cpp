@@ -26,6 +26,7 @@ void Logo_S::Init()
 
 void Logo_S::Uninit()
 {
+	Renderer::SetTime();
 }
 
 void Logo_S::Update()

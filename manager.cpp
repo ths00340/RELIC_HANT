@@ -47,6 +47,7 @@ void Manager::Uninit()
 
 void Manager::Update()
 {
+	Renderer::Update();
 	Input::Update();
 
 	NowScene->Update();
@@ -69,6 +70,12 @@ void Manager::Update()
 
 void Manager::Draw()
 {
+	//DepthShadow::Begin();
+	//シーン
+
+	//RenderTexture::Begin();
+	//シーン
+
 	Renderer::Begin();
 
 	Renderer::GetDeviceContext()->RSSetViewports(1, NowScene->GetView());

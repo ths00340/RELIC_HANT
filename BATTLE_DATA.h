@@ -38,9 +38,16 @@ public:
 	//更新処理
 	virtual void Update();
 
-	virtual void Begin() {};//最初の動作
-	virtual void ClearObserver() {};//クリア条件の比較
-	virtual void IsTimeLimit();//時間の進行
+	//最初の動作
+	virtual void Begin() {};
+
+	//クリア条件の比較
+	virtual void ClearObserver() {};
+
+	//時間の進行
+	virtual void IsTimeLimit();
+
+	//シーン独自の追加行動
 	virtual void ExtraMove() {};
 
 	//クリアフラグの取得

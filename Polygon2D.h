@@ -19,6 +19,7 @@ protected:
 	Float2 uv = { 0.f,0.f };
 	Float2 wh = { 0.f,0.f };
 	COLOR  color = { 0.f,0.f,0.f,0.f };
+	Float4 Paramarter = { 0.f,0.f,0.f,0.f };
 	float  rot = 0.f;
 public:
 	virtual void Init();

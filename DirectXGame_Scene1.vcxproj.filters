@@ -531,6 +531,12 @@
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="AttitudeControl.h">
+      <Filter>ヘッダー ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="audio.cpp">
@@ -773,75 +779,135 @@
     <ClCompile Include="Common.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="AttitudeControl.cpp">
+      <Filter>ソース ファイル\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="common.hlsl">
+    <FxCompile Include="Shader\common.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="pixelLightingPS.hlsl">
+    <FxCompile Include="Shader\FarInvisiblePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="pixelLightingVS.hlsl">
+    <FxCompile Include="Shader\FarInvisibleVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="toonPS.hlsl">
+    <FxCompile Include="Shader\FogPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="toonVS.hlsl">
+    <FxCompile Include="Shader\FogVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="unlitTexturePS.hlsl">
+    <FxCompile Include="Shader\GlitchJaggyNoisePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="unlitTextureVS.hlsl">
+    <FxCompile Include="Shader\GlitchJaggyNoiseVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="vertexLightingPS.hlsl">
+    <FxCompile Include="Shader\GlitchNoisePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="vertexLightingVS.hlsl">
+    <FxCompile Include="Shader\GlitchNoiseVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="FogPS.hlsl">
+    <FxCompile Include="Shader\LODShadowPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="FogVS.hlsl">
+    <FxCompile Include="Shader\LODShadowVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="FarInvisiblePS.hlsl">
+    <FxCompile Include="Shader\mosaicPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="FarInvisibleVS.hlsl">
+    <FxCompile Include="Shader\mosaicVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="LODShadowPS.hlsl">
+    <FxCompile Include="Shader\pixelLightingPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="LODShadowVS.hlsl">
+    <FxCompile Include="Shader\pixelLightingVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="mosaicPS.hlsl">
+    <FxCompile Include="Shader\toonPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="mosaicVS.hlsl">
+    <FxCompile Include="Shader\toonVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="VideoNoisePS.hlsl">
+    <FxCompile Include="Shader\unlitTexturePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="VideoNoiseVS.hlsl">
+    <FxCompile Include="Shader\unlitTextureVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="GlitchJaggyNoisePS.hlsl">
+    <FxCompile Include="Shader\vertexLightingPS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="GlitchJaggyNoiseVS.hlsl">
+    <FxCompile Include="Shader\vertexLightingVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="GlitchNoisePS.hlsl">
+    <FxCompile Include="Shader\VideoNoisePS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="GlitchNoiseVS.hlsl">
+    <FxCompile Include="Shader\VideoNoiseVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\BrendTexturePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\BrendTextureVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DepthShadowMappingPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\DepthShadowMappingVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\edgePS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\edgeVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\envmapPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\envmapVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\MetamolPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\MetamolVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\normalMapingPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\normalMapingVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\normalPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\normalVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\PainterTool.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ScanPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\ScanVS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SkyPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\SkyVS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

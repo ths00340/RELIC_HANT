@@ -42,7 +42,7 @@ public:
 		return (180 / D3DX_PI) * i;
 	}
 
-	//０～１．０の間で帰ってくる乱数
+	//0-1.0fの間で帰ってくる乱数
 	static float RandF()
 	{
 		return (float)rand() / (float)RAND_MAX;
@@ -117,7 +117,7 @@ public:
 	}
 
 	//角度から上の取得:クォータニオン
-	static Float3 GetUpQ(FloatQ inQ)
+	static Float3 GetUp(FloatQ inQ)
 	{
 		D3DXMATRIX rot;
 		D3DXMatrixRotationQuaternion(&rot, &inQ);
@@ -131,7 +131,7 @@ public:
 	}
 
 	//角度から横の取得:クォータニオン
-	static Float3 GetSideQ(FloatQ inQ)
+	static Float3 GetSide(FloatQ inQ)
 	{
 		D3DXMATRIX rot;
 		D3DXMatrixRotationQuaternion(&rot, &inQ);
@@ -145,7 +145,7 @@ public:
 	}
 
 	//角度から正面の取得:クォータニオン
-	static Float3 GetForwardQ(FloatQ inQ)
+	static Float3 GetForward(FloatQ inQ)
 	{
 		D3DXMATRIX rot;
 		D3DXMatrixRotationQuaternion(&rot, &inQ);
@@ -161,14 +161,9 @@ public:
 	//1次ベジエ曲線（直線？）
 	static Float3 Float3_Larp(Float3 start, Float3 end, float t)
 	{
-		Float3 ret = ((1.0f - t) * start) + (t * end);
+		Float3 ret;
+		D3DXVec3Lerp(&ret, &start, &end, t);
 		return ret;
-	}
-
-	//ベクトルの長さの取得
-	static float VectorLength(Float3 inVec)
-	{
-		return sqrtf((inVec.x * inVec.x) + (inVec.y * inVec.y) + (inVec.z * inVec.z));
 	}
 
 	//指定した2点の直線距離
@@ -187,11 +182,8 @@ public:
 	//ベクトルの正規化
 	static Float3 VectorNormalize(Float3 inVec)
 	{
-		Float3 ret = Float3(0.0f, 0.0f, 0.0f);
-		ret.x = inVec.x / VectorLength(inVec);
-		ret.y = inVec.y / VectorLength(inVec);
-		ret.z = inVec.z / VectorLength(inVec);
-
+		Float3 ret;
+		D3DXVec3Normalize(&ret, &inVec);
 		return ret;
 	}
 
@@ -233,7 +225,7 @@ public:
 		return mole / deno;
 	}
 
-	//秒数をフレーム基準に変換
+	//numをフレーム基準に変換※num=1=60
 	static int FrameMulti(float num)
 	{
 		return num * 60;
@@ -409,6 +401,12 @@ public:
 		return objects;
 	}
 
+	//ベクトルの長さの取得
+	static float VectorLength(Float3 inVec)
+	{
+		return sqrtf((inVec.x * inVec.x) + (inVec.y * inVec.y) + (inVec.z * inVec.z));
+	}
+
 	//sizeをaftersizeにするためには何倍にすればいいのか
 	static const float Magni_one(float size = 1.0f, float aftersize = 1.0f)
 	{
@@ -438,6 +436,8 @@ public:
 	static const Float3 Uniform(float in = 0.0f) {
 		return Float3(in, in, in);
 	}
+
+	//inをxyzw全てに振り分ける
 	static const FloatQ UniformQ(float in = 0.0f) {
 		return FloatQ(in, in, in, 1.f);
 	}
@@ -460,8 +460,78 @@ public:
 		y1 = me.y - target.y;
 
 		rot = atan2f(y1, hypotf(z1, x1));
-		ret.x = rot;
+		ret.x = -rot;
 
+		return ret;
+	}
+
+	//inRotにinaddの角度を加算する※返り値はinRotに加算された値
+	static FloatQ AddLocalRotation(FloatQ inRot = FloatQ(0.f, 0.f, 0.f, 1.f), Float3 inadd = Float3(0.f, 0.f, 0.f))
+	{
+		D3DXQUATERNION quat;
+		FloatQ ret = inRot;
+		Float3 axis = GetUp(ret);
+
+		if (inadd.y != 0.f)
+		{
+			D3DXQuaternionRotationAxis(&quat, &axis, inadd.y);
+			ret *= quat;
+		}
+		if (inadd.y != 0.f)
+		{
+			axis = GetSide(ret);
+			D3DXQuaternionRotationAxis(&quat, &axis, inadd.x);
+			ret *= quat;
+		}
+		if (inadd.y != 0.f)
+		{
+			axis = GetForward(ret);
+			D3DXQuaternionRotationAxis(&quat, &axis, inadd.z);
+			ret *= quat;
+		}
+		return ret;
+	}
+
+	//inRotにXYZの角度を加算する※返り値はinRotに加算された値
+	static FloatQ AddLocalRotation(FloatQ inRot = FloatQ(0.f, 0.f, 0.f, 1.f), float X = 0.f, float Y = 0.f, float Z = 0.f)
+	{
+		D3DXQUATERNION quat;
+		Float3 axis;
+		FloatQ ret = inRot;
+		if (Y != 0.f)
+		{
+			axis = GetUp(ret);
+			D3DXQuaternionRotationAxis(&quat, &axis, Y);
+			ret *= quat;
+		}
+		if (X != 0.f)
+		{
+			axis = GetSide(ret);
+			D3DXQuaternionRotationAxis(&quat, &axis, X);
+			ret *= quat;
+		}
+
+		if (Z != 0.f)
+		{
+			axis = GetForward(ret);
+			D3DXQuaternionRotationAxis(&quat, &axis, Z);
+			ret *= quat;
+		}
+		return ret;
+	}
+
+	//Vector3型からQuaternion型へ
+	static FloatQ ConvertQ(Float3 inRot)
+	{
+		FloatQ ret;
+		D3DXQuaternionRotationYawPitchRoll(&ret, inRot.y, inRot.x, inRot.z);
+		return ret;
+	}
+
+	static FloatQ ConvertQ(float X, float Y, float Z)
+	{
+		FloatQ ret;
+		D3DXQuaternionRotationYawPitchRoll(&ret, Y, X, Z);
 		return ret;
 	}
 

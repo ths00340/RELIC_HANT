@@ -57,7 +57,7 @@ void ExplosiveBullet::Update()
 
 	Float3 nextpos = m_pos + m_vec;
 
-	m_rot.x = TOOL::LookatX(m_pos, nextpos).x;
+	m_rot.x = -TOOL::LookatX(m_pos, nextpos).x;
 
 	for (Enemy* enemy : enemyList)
 	{

@@ -51,7 +51,7 @@ void Logo_S::Update()
 	if (fade != NULL)
 		if (fade->GetIn())
 		{
-			Manager::SetScene<Game>();
+			Manager::SetScene<Title>();
 			fade = NULL;
 		}
 }

@@ -43,6 +43,9 @@ void CarMove::Update()
 		Rot += TOOL::AToR(12 - (5.0f * object->Getscl().z));
 	}
 
+	//if (Input::GetKeyTrigger(VK_SPACE))
+	//	object->LoadPos()->y = 100.f;
+
 	Rot = TOOL::Limit(Rot, TOOL::AToR(120.f), -TOOL::AToR(120.f));
 
 	//‰ρ“]‚µ‚Δ‚Ά‚Θ‚Άκ‡‚ΝRot‚π‚O‚Ι

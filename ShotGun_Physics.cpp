@@ -53,7 +53,7 @@ void ShotGun_Physics::Update()
 			ShotAngle = object->Getrot();
 
 		Float3 add = object->Getaddrot();
-		ShotAngle.x += angle + add.x;
+		ShotAngle.x += angle;// +add.x;
 
 		if (cam->GetMode() == CamMode::TPP)
 			ShotAngle.y = object->LoadComponent<Camera>()->GetAngle().y;
@@ -91,7 +91,7 @@ void ShotGun_Physics::Update()
 
 	Float3 ShotAngle = m_rot;
 	Float3 add = object->Getaddrot();
-	ShotAngle.x += angle + add.x;
+	ShotAngle.x += angle;// +add.x;
 
 	if (cam->GetMode() == CamMode::TPP)
 		ShotAngle.y = object->LoadComponent<Camera>()->GetAngle().y;

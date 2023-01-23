@@ -5,7 +5,7 @@
 void CreateLogo::Init()
 {
 	Polygon2D::Init();
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::JAGGY_NOISE);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::VIDEO_NOISE);
 	Paramarter = { 1.f,10.f,0.f,0.f };
 	LoadTex("asset/texture/SoloLogo.png");
 	color.a = 0.0f;

@@ -8,21 +8,24 @@
 #include "Tools.h"
 
 ///GameObject
+#include "GameObject.h"
 #include "Player.h"
 #include "ViewCamera.h"
 #include "Camera_.h"
+#include "NumberManager.h"
 
 ///Component
 #include "Status.h"
 #include "Camera.h"
-#include "GameObject.h"
 #include "CarMove.h"
 #include "Gravity.h"
 #include "SphereShadow.h"
 #include "Bazooka.h"
 #include "ExplodeDome.h"
 #include "NormalMove.h"
-#include "NumberManager.h"
+#include "AttitudeControl.h"
+
+
 
 static ViewCamera* ViewCam = NULL;
 static Camera* Cam = NULL;
@@ -91,6 +94,7 @@ void Player::Init()
 	AddComponent<Gravity>();
 	AddComponent<SphereShadow>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::CUBE);
+	AddComponent<AttitudeControl>();
 
 	scene = Manager::GetScene();
 	m_pos = D3DXVECTOR3(-0.0f, 0.25f, 0.0f);

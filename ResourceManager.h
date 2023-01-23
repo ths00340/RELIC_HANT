@@ -40,6 +40,13 @@ enum class SHADER_S
 	GLITCH_NOISE,//グリッチノイズ
 	JAGGY_NOISE,//ジャギー付きグリッチノイズ
 	VIDEO_NOISE,//ビデオ風ノイズ
+	EDGE,
+	METAMOL,
+	SCAN,
+	DEPTH_SHADOW,
+	NORMAL_MAPING,
+	NORMAL,
+	SIMPLE_SKY,
 	SHADER_E//シェーダーの最大数
 };
 
@@ -233,10 +240,52 @@ private:
 			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::JAGGY_NOISE], "GlitchJaggyNoisePS.cso");
 		}
 
-		//LOD_SHADOW
+		//VIDEO_NOISE
 		{
 			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::VIDEO_NOISE], &m_VertexLayout[(int)SHADER_S::VIDEO_NOISE], "VideoNoiseVS.cso");
 			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::VIDEO_NOISE], "VideoNoisePS.cso");
+		}
+
+		//EDGE
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::EDGE], &m_VertexLayout[(int)SHADER_S::EDGE], "VideoNoiseVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::EDGE], "VideoNoisePS.cso");
+		}
+
+		//METAMOL
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::METAMOL], &m_VertexLayout[(int)SHADER_S::METAMOL], "edgeVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::METAMOL], "edgePS.cso");
+		}
+
+		//SCAN
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::SCAN], &m_VertexLayout[(int)SHADER_S::SCAN], "ScanVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::SCAN], "ScanPS.cso");
+		}
+
+		//DEPTH_SHADOW
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::DEPTH_SHADOW], &m_VertexLayout[(int)SHADER_S::DEPTH_SHADOW], "DepthShadowMappingVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::DEPTH_SHADOW], "DepthShadowMappingPS.cso");
+		}
+
+		//NORMAL_MAPING
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::NORMAL_MAPING], &m_VertexLayout[(int)SHADER_S::NORMAL_MAPING], "normalMapingVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::NORMAL_MAPING], "normalMapingPS.cso");
+		}
+
+		//NORMAL
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::NORMAL], &m_VertexLayout[(int)SHADER_S::NORMAL], "normalVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::NORMAL], "normalPS.cso");
+		}
+
+		//SIMPLE_SKY
+		{
+			Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::SIMPLE_SKY], &m_VertexLayout[(int)SHADER_S::SIMPLE_SKY], "SkyVS.cso");
+			Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::SIMPLE_SKY], "SkyPS.cso");
 		}
 	}
 

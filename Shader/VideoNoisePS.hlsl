@@ -1,5 +1,6 @@
 //ピクセルシェーダー
 #include "common.hlsl" //必ずインクルード
+#include "PainterTool.hlsl"
 //
 //in は入力されてくるデーター
 //out は出力するデータ

@@ -11,8 +11,6 @@ void CreateLogo::Init()
 	color.a = 0.0f;
 	pos = Float2(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f);
 	size = Float2(800.f, 800.f);
-
-
 }
 
 void CreateLogo::Update()

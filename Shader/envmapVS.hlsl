@@ -21,11 +21,9 @@ void main(in VS_IN In, out PS_IN Out)
 	Out.Normal = worldNormal; //回転後の法線出力 In.Normalでなく回転後の法線を出力
 
 	//頂点色を出力
-	Out.Diffuse = In.Diffuse;										  
+	Out.Diffuse = In.Diffuse;
 	//テクスチャ座標を出力
 	Out.TexCoord = In.TexCoord;
-
-
 
 	//ワールド変換した頂点座標を出力
 	Out.WorldPosition = mul(In.Position, World);

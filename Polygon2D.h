@@ -9,6 +9,7 @@ class Polygon2D :public GameObject
 protected:
 	ID3D11Buffer* m_VertexBuffer = nullptr;//頂点バッファ
 	ID3D11ShaderResourceView* m_Texture = nullptr;//テクスチャー
+	ID3D11ShaderResourceView* m_AddTexture[7];//テクスチャー
 
 	ID3D11VertexShader* m_VertexShader = nullptr;	//
 	ID3D11PixelShader* m_PixelShader = nullptr;	//描画用プログラムを保存しておく用
@@ -68,4 +69,15 @@ public:
 	float* LoadRot2D() { return &rot; }
 
 	void LoadTex(const char* filename);
+	void SetTexture(ID3D11ShaderResourceView* Resource)
+	{
+		m_Texture = Resource;
+	}
+	void SetShader(enum class SHADER_S type);
+
+	void SetAddTexture(ID3D11ShaderResourceView* AddResource, int num)
+	{
+		if (num < 7 && num >= 0)
+			m_AddTexture[num] = AddResource;
+	}
 };

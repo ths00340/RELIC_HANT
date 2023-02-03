@@ -8,6 +8,7 @@ void main(in VS_IN In, out PS_IN Out)
 	normal = float4(In.Normal.xyz, 0.0);
 	worldNormal = mul(normal, World);
 	worldNormal = normalize(worldNormal);
+	worldNormal.w = 1.f;
 
 	//光源処理
 	float light = -dot(Light.Direction.xyz, worldNormal.xyz);
@@ -21,4 +22,6 @@ void main(in VS_IN In, out PS_IN Out)
 	lightwvp = mul(World, Light.ViewMatrix);//ワールド行列＊ライトビュー行列
 	lightwvp = mul(lightwvp, Light.ProjectionMatrix);//さらに＊ライトプロジェクション行列
 	Out.ShadowPosition = mul(In.Position, lightwvp);//ライトカメラからみた頂点座標出力
+
+	Out.WorldPosition = mul(In.Position, World);
 }

@@ -8,6 +8,7 @@
 #include "Result_S.h"
 #include "ResultBackGrownd.h"
 #include "Blinking_Space.h"
+#include "TextureDrawScene.h"
 
 void Result_S::Init()
 {
@@ -19,6 +20,8 @@ void Result_S::Init()
 	view.TopLeftY = 0;
 
 	fade = NULL;
+
+	Manager::AddScene<TextureDrawScene>();
 
 	//Input::SetPause(true);
 	//Input::ShowPoint(true);

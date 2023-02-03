@@ -6,6 +6,7 @@
 #include "Stage02.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
+#include "Leg_01.h"
 
 void InfinityEnemySpone::Init()
 {

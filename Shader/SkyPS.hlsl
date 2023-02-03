@@ -5,16 +5,19 @@
 //in は入力されてくるデーター
 //out は出力するデータ
 //
-void main(in PS_IN In, out float4 outDiffuse : SV_Target)
+void main(in PS_IN In, out PS_OUT Out)
 {
     int Grid = 40;
     float StarSize = 0.05f;
     float Luminance = 1000.f;//光の強さ
     float3 SatellitePos = Light.Position;
     float4 TopColor, UnderColor, MoonColor;
-    TopColor =   float4(0.686f,0.933f,0.933f,1.f);//float4(0.058f, 0.07f, 0.149f, 1.f);
-    UnderColor = float4(0.878f,1.f,1.f,1.f);//float4(0.203f, 0.239f, 0.45f, 1.f);
-    MoonColor =   float4(0.968f, 0.972f, 0.941f, 1.f);
+    TopColor = float4(0.686f, 0.933f, 0.933f, 1.f);// float4(0.058f, 0.07f, 0.149f, 1.f);//夜
+    UnderColor = float4(0.878f, 1.f, 1.f, 1.f);      //float4(0.203f, 0.239f, 0.45f, 1.f);//夜
+    MoonColor = float4(0.968f, 0.972f, 0.941f, 1.f);
+    Out.Normal = float4(1.f, 0.f, 0.f, 1.f);
+    //float4(0.686f,0.933f,0.933f,1.f);  //昼
+    //float4(0.878f,1.f,1.f,1.f);        //昼
 
     //描画したいピクセルのローカル座標を正規化
     float3 dir = normalize(In.WorldPosition);
@@ -54,21 +57,21 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 
             //"点"と"現在描画しようとしているピクセルとの距離"を利用して星を描画するかどうかを計算
             //step(t,x) はxがtより大きい場合1を返す
-            float interpolation = 1 - step(rand(p)*StarSize, length(diff));
-            outDiffuse = lerp(color, randColor, interpolation);
+            float interpolation = 1 - step(rand(p) * StarSize, length(diff));
+            Out.Diffuse = lerp(color, randColor, interpolation);
         }
     }
 
 
     //整えたUVのY軸方向の座標を利用して色をグラデーションさせる
-    outDiffuse += lerp(UnderColor, TopColor, dir.y +0.75f);
+    Out.Diffuse += lerp(UnderColor, TopColor, dir.y + 0.75f);
     //月
     {
         float3 dir2 = normalize(SatellitePos); //太陽の位置ベクトル正規化
         float angle = dot(dir2, dir); //太陽の位置ベクトル　と　描画されるピクセルの位置ベクトル　の内積
         //pow(x,y)はxをy乗する　
         //0 < max(0, angle) < 1 なので　_SunStrengthを大きくするほど計算結果は0に近づく
-        float3 c = outDiffuse + (MoonColor * pow(max(0, angle), Luminance)*1.f);
-        outDiffuse.rgb = c;
+        float3 c = Out.Diffuse + (MoonColor * pow(max(0, angle), Luminance) * 1.f);
+        Out.Diffuse.rgb = c;
     }
 }

@@ -1,13 +1,13 @@
 #pragma once
 #include "Game.h"
-class Logo_S :
+class TextureDrawScene :
 	public Game
 {
 private:
-	int time = 0;
+	class Display* DrawTexture;
 public:
 	void Init();
-	void Uninit();
-	void Update();
+	void Uninit() {};
+	void Update() {};
 	void Draw();
 };

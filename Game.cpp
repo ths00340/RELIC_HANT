@@ -8,16 +8,24 @@
 #include "Game.h"
 #include "Practice.h"
 #include "Fade.h"
+#include "TextureDrawScene.h"
+#include "DebugDrawScene.h"
 
 ///GameObject
 #include "audio.h"
 #include "GameObject.h"
+#include "Player.h"
 #include "DebugCamMove.h"
 #include "Camera.h"
 #include "ViewCamera.h"
 #include "Field.h"
 #include "Wall.h"
 #include "Blur_Tex.h"
+#include "Skybox.h"
+
+//Conponent
+#include "Status.h"
+#include "HitBox.h"
 
 void Game::Init()
 {
@@ -31,7 +39,7 @@ void Game::Init()
 
 	fade = NULL;
 
-	//Manager::AddScene<DebugDrawScene>();
+	Manager::AddScene<TextureDrawScene>();
 
 	////カメラ→3D→2Dの流れ
 	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
@@ -79,7 +87,6 @@ void Game::Init()
 
 void Game::Uninit()
 {
-
 	Renderer::SetTime();
 
 	if (bgm != NULL)
@@ -210,10 +217,10 @@ void Game::Update()
 			bgm->Stop();
 #endif//MUTE
 			cleartime++;
-			if (cleartime >= TOOL::FrameMulti(5.f))
+			if (cleartime >= TOOL::FrameMulti(3.f))
 			{
 				tex->SetDraw(true);
-				tex->SetMax(TOOL::FrameMulti(3.f));
+				tex->SetMax(TOOL::FrameMulti(2.f));
 				Next = false;
 			}
 		}
@@ -308,6 +315,46 @@ void Game::Draw()
 
 		for (CComponent* com : object->GetComponent())
 			com->Draw();
+	}
+}
+
+void Game::NoUIDraw()
+{
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	if (WireFrame)
+		Renderer::GetDeviceContext()->RSSetState(ResourceManager::GetFrame(FRAME_S::WIRE_FRAME));
+	else
+		Renderer::GetDeviceContext()->RSSetState(ResourceManager::GetFrame(FRAME_S::CULL_BACK));
+
+	for (int i = 0; i < 2; i++)//システム系
+		for (GameObject* object : g_GameObject[i])
+		{
+			if (object->GetBlendState() != NULL)
+				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+			object->Draw();
+
+			for (CComponent* com : object->GetComponent())
+				com->Draw();
+		}
+
+	for (int i = 2; i < LAYER_NUM - 2; i++)//視推台カリング
+	{
+		for (GameObject* object : g_GameObject[i])
+		{
+			if (VCam != nullptr)
+				if (!VCam->CheckView(object->Getpos()))
+					continue;
+
+			if (object->GetBlendState() != NULL)
+				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+
+			object->Draw();
+
+			for (CComponent* com : object->GetComponent())
+				com->Draw();
+		}
 	}
 }
 

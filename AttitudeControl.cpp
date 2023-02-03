@@ -16,7 +16,7 @@ void AttitudeControl::Update()
 	Float3 Look = TOOL::LookatX(PPos, FixedPos);
 
 	if (!TOOL::CanHit(FixedPos, PPos, 0.05f))
-		object->LoadAddRot()->x = TOOL::LookatX(PPos,FixedPos).x;
+		object->LoadAddRot()->x = TOOL::LookatX(PPos, FixedPos).x;
 
 	FixedPos = PPos;
 }

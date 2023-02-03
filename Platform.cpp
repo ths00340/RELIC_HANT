@@ -47,6 +47,10 @@ void Platform::Draw()
 	D3DXMatrixTranslation(&trans, m_pos.x, m_pos.y, m_pos.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
+
+	ID3D11ShaderResourceView* DepthTexture = Renderer::GetShadowDepthTexture();
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &DepthTexture);
+
 	m_model->Draw();
 }
 

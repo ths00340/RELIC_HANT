@@ -23,7 +23,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	envTexCoord.x = -refv.x * 0.5 + 0.5f;
 	envTexCoord.y = -refv.y * 0.5 + 0.5f;
 
-		//テクスチャのピクセル色を取得
+	//テクスチャのピクセル色を取得
 	outDiffuse =
 		g_Texture.Sample(g_SamplerState, In.TexCoord);
 	float4 envTex = g_TextureEnv.SampleBias(g_SamplerState, envTexCoord, Parameter.z);
@@ -39,5 +39,3 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	outDiffuse.g = max(outDiffuse.g, 0.05f);
 	outDiffuse.b = max(outDiffuse.b, 0.05f);
 }
-
-

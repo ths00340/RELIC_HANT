@@ -15,9 +15,12 @@
 #include "Title2D.h"
 #include "Dodai.h"
 #include "Blinking_Space.h"
+#include "Enemy.h"
+#include "TextureDrawScene.h"
 
 void Title::Init()
 {
+	Manager::AddScene<TextureDrawScene>();
 	view.Width = (FLOAT)SCREEN_WIDTH;
 	view.Height = (FLOAT)SCREEN_HEIGHT;
 	view.MinDepth = 0.0f;

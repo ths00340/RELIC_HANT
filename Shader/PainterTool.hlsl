@@ -15,7 +15,6 @@ float2 rand2(float2 uv)
 	return -1.0 + 2.0 * frac(sin(st) * 43758.5453123);
 }
 
-
 float2 rand2(float2 st, int seed)
 {
 	float2 s = float2(dot(st, float2(127.1, 311.7)) + seed, dot(st, float2(269.5, 183.3)) + seed);
@@ -126,16 +125,16 @@ float noise(float2 st)
 	return lerp(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
 }
 
-float noise(float2 uv,float time)
+float noise(float2 uv, float time)
 {
 	// Splited integer and float values.
 	float2 i = floor(uv);
 	float2 f = fract(uv);
 
-	float a = animation(rand(i + float2(0.0, 0.0)),time);
-	float b = animation(rand(i + float2(1.0, 0.0)),time);
-	float c = animation(rand(i + float2(0.0, 1.0)),time);
-	float d = animation(rand(i + float2(1.0, 1.0)),time);
+	float a = animation(rand(i + float2(0.0, 0.0)), time);
+	float b = animation(rand(i + float2(1.0, 0.0)), time);
+	float c = animation(rand(i + float2(0.0, 1.0)), time);
+	float d = animation(rand(i + float2(1.0, 1.0)), time);
 
 	// -2.0f^3 + 3.0f^2
 	float2 u = f * f * (3.0 - 2.0 * f);
@@ -190,14 +189,12 @@ float fBm(float2 uv, float time)
 	//
 	// Loop of octaves
 	for (int i = 0; i < 5; i++) {
-		value += amplitude * noise(st,time);
+		value += amplitude * noise(st, time);
 		st *= 2.;
 		amplitude *= .5;
 	}
 	return value;
 }
-
-
 
 //‰~1
 float disc(float2 uv, float size) {
@@ -293,50 +290,6 @@ float grid(float2 st) {
 	return r1 + r2 + r3;
 }
 
-
-float3 GerstnerWave(float2 amp, float freq, float steep, float speed, float noise, float2 dir, float2 v, float time, int seed)
-{
-	float3 p;
-	float2 d = normalize(dir.xy);
-	float q = steep;
-
-	seed *= 3;
-	v += noise2(v * noise + time, seed) * 1.26f;
-	float f = dot(d, v) * freq + time * speed;
-	p.xz = q * amp * d.xy * cos(f);
-	p.y = amp * sin(f);
-
-	return p;
-}
-
-float3 GerstnerWave_Cross(float2 amp, float freq, float steep, float speed, float noise, float2 dir, float2 v, float time, int seed)
-{
-	float3 p;
-	float2 d = normalize(dir.xy);
-	float q = steep;
-
-	float noise_strength = 1.26f;
-	seed *= 3;
-
-	float3 p1;
-	float3 p2;
-	float2 d1 = normalize(dir.xy);
-	float2 d2 = float2(-d.y, d.x);
-
-	float2 v1 = v + noise2(v * noise + time * d * 10.0, seed) * noise_strength;
-	float2 v2 = v + noise2(v * noise + time * d * 10.0, seed + 12) * noise_strength;
-	float2 f1 = dot(d1, v1) * freq + time * speed;
-	float2 f2 = dot(d2, v2) * freq + time * speed;
-	p1.xz = q * amp * d1.xy * cos(f1);
-	p1.y = amp * sin(f1);
-	p2.xz = q * amp * d2.xy * cos(f2);
-	p2.y = amp * sin(f2);
-
-	p = lerp(p1, p2, noise2(v * 0.5f + time, seed) * 0.5 + 0.5);
-
-	return p;
-}
-
 float fbm(float2 st, int seed) {
 	float val = 0.0;
 	float a = 0.5;
@@ -349,8 +302,21 @@ float fbm(float2 st, int seed) {
 	return val;
 }
 
-float3 GetSkyColor(float3 dir, float3 c) {
-	dir.y = max(0.0, dir.y);
-	float et = 1.0 - dir.y;
-	return (1.0 - c) * et + c;
+float3 Vec3Cross(float3 a, float3 b)
+{
+	float3 ret;
+	float A, B;
+	A = a.y * b.z;
+	B = a.z * b.y;
+	ret.x = A - B;
+
+	A = a.z * b.x;
+	B = a.x * b.z;
+	ret.y = A - B;
+
+	A = a.x * b.y;
+	B = a.y * b.x;
+	ret.z = A - B;
+
+	return ret;
 }

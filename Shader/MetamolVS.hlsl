@@ -8,27 +8,27 @@
 
 void main(in VS_IN In, out PS_IN Out)
 {
-	float Time = _SinTime.w*1.2f;
+	float Time = _SinTime.w * 1.f;
 	float Hight = 2.5f;
 	float4 Pos = In.Position;
 	float4 fbmPos = Pos / 10.f;
 	fbmPos = (fbmPos + 1.f) * 0.5f;
 	float2 fbmPosXZ = fbmPos.xz;
 
-	float offsetY = fBm(fbmPosXZ, Time) * Hight;
+	float offsetY = fBm(fbmPosXZ, Time);
 	offsetY = (2.f * offsetY) - 1.f;
+	offsetY *= Hight;
 	Pos.y += offsetY;
 
-	float3 texX = 2.f * (fBm((fbmPosXZ + float2( 0.05f, 0.f)), Time) * Hight) - 1.f;
-	float3 texx = 2.f * (fBm((fbmPosXZ + float2(-0.05f, 0.f)), Time) * Hight) - 1.f;
-	float3 texZ = 2.f * (fBm((fbmPosXZ + float2(0.f,  0.05f)), Time) * Hight) - 1.f;
-	float3 texz = 2.f * (fBm((fbmPosXZ + float2(0.f, -0.05f)), Time) * Hight) - 1.f;
+	float texX = (2.f * fBm((fbmPosXZ + float2(0.1f, 0.f)), Time) - 1.f) * Hight;
+	float texx = (2.f * fBm((fbmPosXZ + float2(-0.1f, 0.f)), Time) - 1.f) * Hight;
+	float texZ = (2.f * fBm((fbmPosXZ + float2(0.f, 0.1f)), Time) - 1.f) * Hight;
+	float texz = (2.f * fBm((fbmPosXZ + float2(0.f, -0.1f)), Time) - 1.f) * Hight;
 
-	float3 du = { 1, 0, offsetY * (texX.x - texx.x) };
-	float3 dv = { 0, 1, offsetY * (texZ.x - texz.x) };
+	float3 du = { 1,2.f * (texX - texx), 0 };
+	float3 dv = { 0,2.f * (texZ - texz), 1 };
 
-
-	float4 Normal = float4(normalize(cross(du, dv)) * 0.5 + 0.5, 0.f);
+	float4 Normal = float4(-normalize(Vec3Cross(du, dv)), 0.f);
 
 	//１頂点分のデータを受け取り、処理して、出力する
 	//頂点変換処理 この処理は必ず必要
@@ -36,6 +36,7 @@ void main(in VS_IN In, out PS_IN Out)
 	normal = float4(Normal.xyz, 0.0);//法線ベクトルのwを0としてコピー（平行移動しないため)
 	worldNormal = mul(normal, World); //法線をワールド行列で回転する
 	worldNormal = normalize(worldNormal); //回転後の法線を正規化する
+	worldNormal.w = 1.f;
 	Out.Normal = worldNormal; //回転後の法線出力 In.Normalでなく回転後の法線を出力
 
 	matrix wvp; //行列変数を作成

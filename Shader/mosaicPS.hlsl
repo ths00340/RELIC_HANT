@@ -11,8 +11,8 @@ SamplerState g_SamplerState : register(s0);//テクスチャサンプ
 
 void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 {
-	float2 uv=In.TexCoord;
-	uv = floor(uv * 30.f) / 30.f+0.001f;
+	float2 uv = In.TexCoord;
+	uv = floor(uv * 30.f) / 30.f + 0.001f;
 	//このピクセルに使われるテクスチャの色を取得
 	outDiffuse = g_Texture.Sample(g_SamplerState, uv);
 

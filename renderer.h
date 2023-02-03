@@ -4,6 +4,14 @@
 //==============================================================================
 #pragma once
 
+enum class RENDER_
+{
+	DIFFUSE,//通常色
+	NORMAL, //法線
+	NUM,//最大数
+};
+
+
 struct VERTEX_3D
 {
 	D3DXVECTOR3 Position;
@@ -70,10 +78,16 @@ private:
 	static ID3D11ShaderResourceView* m_ShadowDepthShaderResourceView;
 
 	//レンダーテクスチャ用ターゲットビュー
-	static ID3D11RenderTargetView* m_RenderTextureView;
+	static ID3D11RenderTargetView* m_RenderTextureView[(int)RENDER_::NUM];
 
 	//レンダーテクスチャの入れ物
-	static ID3D11ShaderResourceView* m_RenderTextureShaderResourceView;
+	static ID3D11ShaderResourceView* m_RenderTextureShaderResourceView[(int)RENDER_::NUM];
+
+	//深度ステンシルビュー
+	static ID3D11DepthStencilView* m_RenderDepthStencilView;
+
+	//深度テクスチャの入れ物
+	static ID3D11ShaderResourceView* m_RenderDepthShaderResourceView;
 
 public:
 	static void Init();
@@ -103,8 +117,18 @@ public:
 	{
 		return m_ShadowDepthShaderResourceView;
 	}
-	static ID3D11ShaderResourceView* GetRenderTexture() {
+
+	static ID3D11ShaderResourceView* GetRenderDepthTexture()
+	{
+		return m_RenderDepthShaderResourceView;
+	}
+
+	static ID3D11ShaderResourceView** GetRenderTexture() {
 		return m_RenderTextureShaderResourceView;
+	};
+
+	static ID3D11ShaderResourceView* GetRenderTexture(RENDER_ LAYER) {
+		return m_RenderTextureShaderResourceView[(int)LAYER];
 	};
 
 	//深度バッファ用Begin
@@ -119,9 +143,13 @@ public:
 	//レンダーテクスチャ用Begin
 	static void  BeginTexture()
 	{
-		m_DeviceContext->OMSetRenderTargets(1, &m_RenderTextureView, m_DepthStencilView);
-		m_DeviceContext->ClearRenderTargetView(m_RenderTextureView, ClearColor);
-		m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+		m_DeviceContext->OMSetRenderTargets((int)RENDER_::NUM, m_RenderTextureView, m_RenderDepthStencilView);
+
+		for (int i = 0; i < (int)RENDER_::NUM; i++)
+		m_DeviceContext->ClearRenderTargetView(m_RenderTextureView[i], ClearColor);
+
+		m_DeviceContext->ClearDepthStencilView(m_RenderDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 
 	static void SetTime(float inTime = 0.f) { Time.w = inTime; }

@@ -6,6 +6,7 @@
 #include "Stage03.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
+#include "ShotGun_Physics.h"
 
 void BOSS_01::Init()
 {

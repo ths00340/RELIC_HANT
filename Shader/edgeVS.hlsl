@@ -5,7 +5,8 @@
 //out は出力するデータ
 //
 Texture2D g_Texture : register(t0);
-Texture2D g_DepthTexture : register(t1);
+Texture2D g_NormalTexture : register(t1);
+Texture2D g_DepthTexture : register(t2);
 
 void main(in VS_IN In, out PS_EdgeInput Out)
 {
@@ -79,6 +80,5 @@ void main(in VS_IN In, out PS_EdgeInput Out)
 
 		//左下のピクセル
 		Out.tex8.zw = tex + float2(-offset / texSize.x, offset / texSize.y);
-
 	}
 }

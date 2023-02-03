@@ -6,6 +6,8 @@
 #include "Stage03.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
+#include "ShotGun_Physics.h"
+#include "Leg_01.h"
 
 void BOSS_01_InEn::Init()
 {

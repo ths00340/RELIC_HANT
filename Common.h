@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "FadeParent.h"
 class Common :public Scene
 {
 protected:

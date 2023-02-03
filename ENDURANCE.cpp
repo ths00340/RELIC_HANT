@@ -1,6 +1,9 @@
 #include "manager.h"
+#include "audio.h"
 #include "InfinityEnemySpone.h"
 #include "ENDURANCE.h"
+#include "Tree.h"
+#include "SphereShadow.h"
 
 void ENDURANCE::Init()
 {

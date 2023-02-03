@@ -14,7 +14,7 @@ void main(in VS_IN In, out PS_IN Out)
 
 	Out.Diffuse = In.Diffuse;
 	Out.TexCoord = In.TexCoord; //テクスチャ座標を出力
-	
+
 	matrix lightwvp;
 	lightwvp = mul(World, Light.ViewMatrix);//ワールド行列＊ライトビュー行列
 	lightwvp = mul(lightwvp, Light.ProjectionMatrix);//さらに＊ライトプロジェクション行列

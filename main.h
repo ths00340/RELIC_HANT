@@ -43,4 +43,4 @@ typedef D3DXVECTOR4 Float4;
 typedef D3DXVECTOR3 Float3;
 typedef D3DXVECTOR2 Float2;
 
-#define MUTE//コメントアウトするとミュート解除※デバッグ用
+//#define MUTE//コメントアウトするとミュート解除※デバッグ用

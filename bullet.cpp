@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "Status.h"
 #include "ParticleManager.h"
+#include "Explosion.h"
 
 Model* Bullet::m_model;
 

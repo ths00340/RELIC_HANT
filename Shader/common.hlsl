@@ -21,7 +21,6 @@ struct LIGHT
 	matrix ProjectionMatrix; //追加 ライトプロジェクション行列
 };
 
-
 cbuffer WorldBuffer : register(b0)
 {
 	matrix World;
@@ -96,4 +95,10 @@ struct PS_EdgeInput {
 	float4 tex6 : TEXCOORD6;
 	float4 tex7 : TEXCOORD7;
 	float4 tex8 : TEXCOORD8;
+};
+
+struct PS_OUT
+{
+	float4 Diffuse :SV_Target0;//通常
+	float4 Normal:SV_Target1;//法線
 };

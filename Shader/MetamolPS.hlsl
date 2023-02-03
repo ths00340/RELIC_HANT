@@ -51,8 +51,8 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 		In.ShadowPosition.y = -In.ShadowPosition.y * 0.5 + 0.5; //
 
 			//シャドウマップテクスチャより、ライトカメラからピクセルまでの距離（深度値）を取得
-		float depth = g_TextureShadowDepth.Sample(g_SamplerState,In.ShadowPosition.xy);
-		outDiffuse.rgb = lerp(outDiffuse.rgb, outDiffuse.rgb * 0.5f,step(depth, In.ShadowPosition.z - 0.001));
+		float depth = g_TextureShadowDepth.Sample(g_SamplerState, In.ShadowPosition.xy);
+		outDiffuse.rgb = lerp(outDiffuse.rgb, outDiffuse.rgb * 0.5f, step(depth, In.ShadowPosition.z - 0.001));
 	}
 
 	//光源計算

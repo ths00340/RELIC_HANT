@@ -1,6 +1,9 @@
 #include "manager.h"
+#include "audio.h"
 #include "BOSS_01_InEn.h"
 #include "Boss01_2.h"
+#include "Tree.h"
+#include "SphereShadow.h"
 
 void Boss01_2::Init()
 {

@@ -15,5 +15,4 @@ void main(in VS_IN In, out PS_IN Out)
 	//受け取ったこの頂点のデフューズをそのまま出力
 	Out.Diffuse = In.Diffuse;
 	Out.TexCoord = In.TexCoord;
-
 }

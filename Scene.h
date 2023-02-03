@@ -4,33 +4,10 @@
 #include <vector>
 #include <typeinfo>
 #include <thread>
-#include "GameObject.h"
-#include "bullet.h"
-#include "Enemy.h"
-#include "ParticleManager.h"
-#include "ParticleTest.h"
-#include "Skybox.h"
-#include "Explosion.h"
-#include "Player.h"
-#include "Polygon2D.h"
-#include "Tree.h"
-#include "Platform.h"
+#include "Tools.h"
 #include "renderer.h"
-#include "Leg_01.h"
-#include "SphereShadow.h"
-#include "Bazooka.h"
-#include "ExplosiveBullet.h"
-#include "HitBox.h"
-#include "CarWheel.h"
-#include "ExplodeDome.h"
-#include "ChargeLaser.h"
-#include "LaserBullet.h"
-#include "ChargeEffect.h"
-#include "Gatling.h"
-#include "ShutterFade.h"
-#include "NormalFade.h"
-#include "Fissure.h"
-#include "ShotGun_Physics.h"
+#include "GameObject.h"
+#include "Player.h"
 
 #define LAYER_NUM (6)
 
@@ -94,6 +71,19 @@ public:
 			ObjectDraw(i);
 		}
 	}
+	virtual void ShadowDraw() {
+		for (int i = 1; i < (int)LAYER_NUM-2; i++)
+		{
+			ObjectDraw(i);
+		}
+	};
+
+	virtual void NoUIDraw() {
+		for (int i = 0; i < (int)LAYER_NUM - 2; i++)
+		{
+			ObjectDraw(i);
+		}
+	};
 
 	template <typename T>//テンプレート関数
 	T* AddGameObject(int Layer)
@@ -220,44 +210,8 @@ public:
 	}
 
 	D3D11_VIEWPORT* GetView() { return &view; }
-	static void Loads()
-	{
-		Bullet::Load();
-		ParticleManager::Load();
-		Player::Load();
-		Enemy::Load();
-		Skybox::Load();
-		Explosion::Load();
-		Tree::Load();
-		Platform::Load();
-		Leg_01::Load();
-		SphereShadow::Load();
-		Bazooka::Load();
-		ExplosiveBullet::Load();
-		HitBox::Load();
-		CarWheel::Load();
-		ExplodeDome::Load();
-		ChargeLaser::Load();
-		LaserBullet::Load();
-		ChargeEffect::Load();
-		Gatling::Load();
-		ShutterFade::Load();
-		NormalFade::Load();
-		Fissure::Load();
-		ShotGun_Physics::Load();
-
-		isLoad = true;
-	}
-	static void UnLoads()
-	{
-		Explosion::UnLoad();
-		Tree::UnLoad();
-		SphereShadow::UnLoad();
-		ChargeEffect::UnLoad();
-		ShutterFade::UnLoad();
-		NormalFade::UnLoad();
-		Fissure::UnLoad();
-	}
+	static void Loads();
+	static void UnLoads();
 	static const bool Getisload() { return isLoad; }
 private:
 	static bool isLoad;

@@ -3,10 +3,10 @@
 
 struct VERTEX_3D;
 
-#define CHIP_X (100)
-#define CHIP_Y (100)
-#define CHIP_SIZE_X (10)
-#define CHIP_SIZE_Y (10)
+#define CHIP_X (250)
+#define CHIP_Y (250)
+#define CHIP_SIZE_X (2.5)
+#define CHIP_SIZE_Y (2.5)
 
 #define CHIP_KAZU (CHIP_X*CHIP_Y)
 

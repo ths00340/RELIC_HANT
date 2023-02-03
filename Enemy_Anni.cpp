@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Enemy_Anni.h"
 #include "Stage01.h"
+#include "Leg_01.h"
 
 void Enemy_Anni::Init()
 {

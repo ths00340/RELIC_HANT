@@ -11,7 +11,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	float4 normal = normalize(In.Normal);
 	//法線マッピング
 	{
-		float4 normalmap = g_TextureNormal.Sample(g_SamplerState, In.TexCoord+ _SinTime.xy);
+		float4 normalmap = g_TextureNormal.Sample(g_SamplerState, In.TexCoord + _SinTime.xy);
 		normalmap = normalmap * 2.f - 1.f;
 		normal.x = -normalmap.r;
 		normal.y = normalmap.b;
@@ -28,7 +28,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	eyev = normalize(eyev); //正規化する
 
 	//日向での色＝普通のテクスチャ＊頂点色を作成しておく
-	outDiffuse = float4(0.f,0.5f,1.f,1.f);
+	outDiffuse = float4(0.f, 0.5f, 1.f, 1.f);
 
 	//環境マッピング
 	//{
@@ -36,8 +36,7 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	//	outDiffuse.rgb += envTex;
 	//}
 
-	outDiffuse *= In.Diffuse*light; //明るさと色を乗算
-
+	outDiffuse *= In.Diffuse * light; //明るさと色を乗算
 
 	//シャドウマッピング
 	{
@@ -45,8 +44,6 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 		In.ShadowPosition.x = In.ShadowPosition.x * 0.5 + 0.5; //テクスチャ座標に変換
 		In.ShadowPosition.y = -In.ShadowPosition.y * 0.5 + 0.5; //
 	}
-
-
 
 	//シャドウマッピング
 	{

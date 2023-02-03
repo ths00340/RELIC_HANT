@@ -13,6 +13,7 @@
 #include "ViewCamera.h"
 #include "Camera_.h"
 #include "NumberManager.h"
+#include "Enemy.h"
 
 ///Component
 #include "Status.h"
@@ -24,8 +25,12 @@
 #include "ExplodeDome.h"
 #include "NormalMove.h"
 #include "AttitudeControl.h"
-
-
+#include "ShotGun_Physics.h"
+#include "Gatling.h"
+#include "ChargeLaser.h"
+#include "CarWheel.h"
+#include "Leg_01.h"
+#include "HitBox.h"
 
 static ViewCamera* ViewCam = NULL;
 static Camera* Cam = NULL;

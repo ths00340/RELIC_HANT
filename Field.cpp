@@ -112,7 +112,7 @@ void Field::Init()
 				vx = (pVtx[i + CHIP_X].Position + pVtx[i - CHIP_X].Position);
 
 				float h = (vz.y + vx.y) * 0.25f;
-				pVtx[i].Position.y = h + ((TOOL::RandF() * 2.f));
+				pVtx[i].Position.y = h + ((TOOL::RandF() * 0.5f));
 			}
 
 		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
@@ -120,10 +120,10 @@ void Field::Init()
 
 	//テクスチャ読み込み
 
-	m_Texture = ResourceManager::AddTex("asset/texture/ground_grass_3264_4062_Small.jpg");
+	m_Texture = ResourceManager::AddTex("asset/texture/sand.jpg");
 
 	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
 
 	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(1.f, 1.f, 1.f);
@@ -170,6 +170,9 @@ void Field::Draw()
 
 	//テクスチャ設定
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);
+
+	ID3D11ShaderResourceView* DepthTexture = Renderer::GetShadowDepthTexture();
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1,&DepthTexture);
 
 	//プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

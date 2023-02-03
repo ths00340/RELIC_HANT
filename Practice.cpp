@@ -6,6 +6,8 @@
 #include "SousaH.h"
 #include "Blinking_Space.h"
 #include "MissionTex.h"
+#include "Status.h"
+#include "Player.h"
 
 void Practice::Init()
 {

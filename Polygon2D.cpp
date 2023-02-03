@@ -88,6 +88,22 @@ void Polygon2D::Draw()
 
 	// テクスチャ設定
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &m_AddTexture[0]);
+	Renderer::GetDeviceContext()->PSSetShaderResources(2, 1, &m_AddTexture[1]);
+	Renderer::GetDeviceContext()->PSSetShaderResources(3, 1, &m_AddTexture[2]);
+	Renderer::GetDeviceContext()->PSSetShaderResources(4, 1, &m_AddTexture[3]);
+	Renderer::GetDeviceContext()->PSSetShaderResources(5, 1, &m_AddTexture[4]);
+	Renderer::GetDeviceContext()->PSSetShaderResources(6, 1, &m_AddTexture[5]);
+	Renderer::GetDeviceContext()->PSSetShaderResources(7, 1, &m_AddTexture[6]);
+
+	Renderer::GetDeviceContext()->VSSetShaderResources(0, 1, &m_Texture);
+	Renderer::GetDeviceContext()->VSSetShaderResources(1, 1, &m_AddTexture[0]);
+	Renderer::GetDeviceContext()->VSSetShaderResources(2, 1, &m_AddTexture[1]);
+	Renderer::GetDeviceContext()->VSSetShaderResources(3, 1, &m_AddTexture[2]);
+	Renderer::GetDeviceContext()->VSSetShaderResources(4, 1, &m_AddTexture[3]);
+	Renderer::GetDeviceContext()->VSSetShaderResources(5, 1, &m_AddTexture[4]);
+	Renderer::GetDeviceContext()->VSSetShaderResources(6, 1, &m_AddTexture[5]);
+	Renderer::GetDeviceContext()->VSSetShaderResources(7, 1, &m_AddTexture[6]);
 
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -101,4 +117,9 @@ void Polygon2D::Draw()
 void Polygon2D::LoadTex(const char* filename)
 {
 	m_Texture = ResourceManager::AddTex(filename);
+}
+
+void Polygon2D::SetShader(SHADER_S type)
+{
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, type);
 }

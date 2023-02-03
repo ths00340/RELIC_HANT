@@ -15,6 +15,7 @@
 #include "HitBox.h"
 #include "Gravity.h"
 #include "SphereShadow.h"
+#include "ExplodeDome.h"
 
 Model* Enemy::m_model;
 ID3D11VertexShader* Enemy::m_VertexShader;

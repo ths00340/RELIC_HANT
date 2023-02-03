@@ -1,17 +1,12 @@
-//thsozai ==>前回までの状態　ZIP　　パスワード　nabe
-
-//BlinnPhongLightingPS.hlsl
-//BlinnPhongLightingVS.hlsl
-
 #include "common.hlsl"
 
 Texture2D g_Texture : register(t0);
 SamplerState g_SamplerState : register(s0);
 
-void main(in PS_IN In, out float4 outDiffuse : SV_Target)
+void main(in PS_IN In, out PS_OUT Out)
 {
 	float RangeMax = 0.8f;
-
+	Out.Normal = In.Normal;
 	//ピクセルの法線を正規化
 	float4 normal = normalize(In.Normal);
 	//光源計算をする
@@ -34,14 +29,14 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	specular = pow(specular, 20); //ここでは３０乗してみる
 
 		//テクスチャのピクセル色を取得
-	outDiffuse =
+	Out.Diffuse =
 		g_Texture.Sample(g_SamplerState, In.TexCoord);
 
 	float range = dot(Light.Direction.xyz, lightDir.xyz);
 
-	outDiffuse.rgb *=
+	Out.Diffuse.rgb *=
 		In.Diffuse.rgb * light; //明るさと色を乗算
-	outDiffuse.a *=
+	Out.Diffuse.a *=
 		In.Diffuse.a; //α別計算
 
 	//フォグ
@@ -49,5 +44,5 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	//float len = length((In.WorldPosition.xyz - CameraPosition.xyz));
 	float dist = distance(In.WorldPosition.xyz, CameraPosition.xyz);
 	float fog = saturate(dist / 30.f);
-	outDiffuse.rgb = outDiffuse.rgb * (1.f - fog) + (outDiffuse.rgb * float3(0.95f, 0.95f, 0.95f)) * fog;
+	Out.Diffuse.rgb = Out.Diffuse.rgb * (1.f - fog) + (Out.Diffuse.rgb * float3(0.95f, 0.95f, 0.95f)) * fog;
 }

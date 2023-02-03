@@ -7,6 +7,7 @@
 #include <iterator>
 #include <typeinfo>
 #include "CComponent.h"
+#include "Bazooka.h"
 
 class GameObject
 {

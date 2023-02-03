@@ -43,6 +43,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="CreateLogo.h" />
     <ClInclude Include="DebugDrawScene.h" />
+    <ClInclude Include="Display.h" />
     <ClInclude Include="Dodai.h" />
     <ClInclude Include="Drive.h" />
     <ClInclude Include="DriveSystem.h" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Status.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="DebugCamMove.h" />
+    <ClInclude Include="TextureDrawScene.h" />
     <ClInclude Include="TimeFrame.h" />
     <ClInclude Include="Timer2D.h" />
     <ClInclude Include="TimeStr.h" />
@@ -137,6 +139,7 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="CreateLogo.cpp" />
     <ClCompile Include="DebugDrawScene.cpp" />
+    <ClCompile Include="Display.cpp" />
     <ClCompile Include="Dodai.cpp" />
     <ClCompile Include="ENDURANCE.cpp" />
     <ClCompile Include="EnemyAnni.cpp" />
@@ -190,6 +193,7 @@
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="DebugCamMove.cpp" />
+    <ClCompile Include="TextureDrawScene.cpp" />
     <ClCompile Include="TimeFrame.cpp" />
     <ClCompile Include="Timer2D.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -327,6 +331,10 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\FogVS.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>

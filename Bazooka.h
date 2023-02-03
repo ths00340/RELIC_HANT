@@ -7,8 +7,8 @@
 class Bazooka :
 	public Wepon
 {
-	static Model* model;//–Cg
-	static Model* hit;//’…’e—\‘ªƒ‚ƒfƒ‹
+	static class Model* model;//–Cg
+	static class Model* hit;//’…’e—\‘ªƒ‚ƒfƒ‹
 
 	static ID3D11VertexShader* m_VertexShader;
 	static ID3D11PixelShader* m_PixelShader;

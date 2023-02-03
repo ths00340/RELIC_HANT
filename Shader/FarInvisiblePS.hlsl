@@ -13,5 +13,5 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	outDiffuse.a = outDiffuse.a * (1.f - fog);
 	outDiffuse.a += step(0.001f, outDiffuse.a) * max(outDiffuse.a, 0.05f);
 
-	//clip(outDiffuse.a - 0.025f);
+	clip(outDiffuse.a - 0.025f);
 }

@@ -10,6 +10,7 @@
 #include "Common.h"
 #include "audio.h"
 #include "Title.h"
+#include "TextureDrawScene.h"
 
 Scene* Manager::NowScene;
 Common* Manager::common;
@@ -70,16 +71,45 @@ void Manager::Update()
 
 void Manager::Draw()
 {
-	//DepthShadow::Begin();
-	//シーン
+	Renderer::GetDeviceContext()->RSSetViewports(1, NowScene->GetView());
 
-	//RenderTexture::Begin();
-	//シーン
+	Float3 SunPos = { -5.f,10.f,-5.f };
+
+	LIGHT light;
+	light.Enable = true;
+	light.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light.Position = { SunPos.x,SunPos.y,SunPos.z,0.f };
+	Float3 dir = Float3(0.f, 0.f, 0.f) - Float3(light.Position.x, light.Position.y, light.Position.z);
+	light.Direction = D3DXVECTOR4(dir.x, dir.y, dir.z, 0.0f);
+	D3DXVec4Normalize(&light.Direction, &light.Direction);
+
+	D3DXVECTOR3 eye, up, at;
+	eye = SunPos;
+	at = { 0.0f, 0.0f, 0.0f };
+	up = { 0.0f, 1.0f, 0.0f };
+
+	D3DXMatrixLookAtLH(&light.ViewMatrix, &eye, &at, &up);
+	//ライトカメラのプロジェクション行列を作成
+	D3DXMatrixPerspectiveFovLH(&light.ProjectionMatrix, 1.0f,
+		1.f, 10.0f, 1200.0f);
+
+	//ライト情報をセット
+	Renderer::SetLight(light);
+	//*******１パス目 シャドウバッファの作成*******
+	Renderer::BeginDepth();
+	
+	Renderer::SetViewMatrix(&light.ViewMatrix);
+	Renderer::SetProjectionMatrix(&light.ProjectionMatrix);
+	NowScene->ShadowDraw();
+	//影用シーン描画
+
+	Renderer::BeginTexture();
+	//レンダーテクスチャシーン描画//マルチレンダーになるかも…
+	NowScene->NoUIDraw();
 
 	Renderer::Begin();
-
-	Renderer::GetDeviceContext()->RSSetViewports(1, NowScene->GetView());
-	NowScene->Draw();
+	//NowScene->Draw();
 	for (Scene* sce : addScene)
 	{
 		Renderer::GetDeviceContext()->RSSetViewports(1, sce->GetView());

@@ -31,6 +31,7 @@ public:
 	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();
+	virtual void NoUIDraw();
 	virtual void NextScene();
 	virtual void BGMSelect();
 	virtual void Clear();

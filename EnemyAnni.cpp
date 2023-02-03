@@ -1,6 +1,9 @@
 #include "manager.h"
+#include "audio.h"
 #include "Enemy_Anni.h"
 #include "EnemyAnni.h"
+#include "Tree.h"
+#include "SphereShadow.h"
 
 void EnemyAnni::Init()
 {

@@ -9,6 +9,9 @@
 #include "Logo_S.h"
 #include "NormalFade.h"
 #include "ShutterFade.h"
+#include "ViewCamera.h"
+#include "TextureDrawScene.h"
+//#include "TestLogo.h"
 
 #include <thread>
 
@@ -17,6 +20,8 @@ void Logo_S::Init()
 	Scene::Init();
 	time = 0;
 	fade = NULL;
+	Manager::AddScene<TextureDrawScene>();
+	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
 
 	std::thread th1(Scene::Loads);
 	th1.detach();
@@ -54,4 +59,9 @@ void Logo_S::Update()
 			Manager::SetScene<Title>();
 			fade = NULL;
 		}
+}
+
+void Logo_S::Draw()
+{
+	Game::Draw();
 }

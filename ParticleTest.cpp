@@ -17,17 +17,15 @@ void ParticleTest::Init()
 	m_rot = Float3(0.f, 0.f, 0.f);
 	m_ang_vel = Float3
 	{
-		0.0f,//TOOL::RandF() * D3DX_PI * 0.025f ,
+		0.0f,
 		TOOL::RandF() * D3DX_PI * 0.025f ,
-		0.0f//TOOL::RandF() * D3DX_PI * 0.025f
+		0.0f
 	};
 	m_vel = Float3(
 		TOOL::RandF() * (10.0f / 60.0f) - (5.0f / 60.0f),
 		TOOL::RandF() * 10.0f / 60.0f,
 		TOOL::RandF() * (10.0f / 60.0f) - (5.0f / 60.0f)
 	);
-
-	m_model = ResourceManager::AddModel("asset\\models\\Item02.obj");
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
 }
 

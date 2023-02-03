@@ -6,7 +6,6 @@ void main(in VS_IN In, out PS_IN Out)
 	wvp = mul(World, View);
 	wvp = mul(wvp, Projection);
 
-
 	float4 worldNormal, normal; //ローカル変数を作成
 	normal = float4(In.Normal.xyz, 0.0);//法線ベクトルのwを0としてコピー（平行移動しないため)
 	worldNormal = mul(normal, World); //法線をワールド行列で回転する
@@ -20,12 +19,9 @@ void main(in VS_IN In, out PS_IN Out)
 	Out.Diffuse *= Light.Diffuse;
 	Out.Diffuse.a = In.Diffuse.a; //αは頂点の物をそのまま出力
 
-
-
 	Out.TexCoord = In.TexCoord;
 	Out.Position = mul(In.Position, wvp);
 
 	//ワールド変換した頂点座標を出力
 	Out.WorldPosition = mul(In.Position, World);
-	
 }

@@ -134,6 +134,9 @@ void Fissure::Load()
 
 void Fissure::UnLoad()
 {
-	m_Texture->Release();
-	m_VertexBuffer->Release();
+	if (m_Texture != nullptr)
+		m_Texture->Release();
+
+	if (m_VertexBuffer != nullptr)
+		m_VertexBuffer->Release();
 }

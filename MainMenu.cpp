@@ -12,6 +12,8 @@
 #include "ENDURANCE.h"
 #include "Boss01.h"
 #include "Boss01_2.h"
+#include "TextureDrawScene.h"
+#include "DebugDrawScene.h"
 
 ///GameObject
 #include "NumberManager.h"
@@ -19,6 +21,10 @@
 #include "MenuTitle.h"
 #include "Blur_Tex.h"
 #include "BulrS.h"
+#include "Player.h"
+
+//Component
+#include "Status.h"
 
 NumberManager* a;
 
@@ -33,6 +39,9 @@ void MainMenu::Init()
 	view.TopLeftY = 0;
 	Platform* abc;
 	fade = NULL;
+
+	Manager::AddScene<TextureDrawScene>();
+	//Manager::AddScene<DebugDrawScene>();
 
 	menuCam = AddGameObject<Camera_>((int)OBJ_LAYER::System);
 	abc = AddGameObject<Platform>((int)OBJ_LAYER::GameObject);

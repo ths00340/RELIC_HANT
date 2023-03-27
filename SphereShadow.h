@@ -2,6 +2,8 @@
 // Filename: SphereShadow.h
 // Description: コンポーネントクラスを継承した影クラスの定義
 //==============================================================================
+
+//地形に対応していないので今は使えない
 #pragma once
 #include "CComponent.h"
 class SphereShadow :
@@ -9,11 +11,11 @@ class SphereShadow :
 {
 private:
 	static ID3D11Buffer* m_VertexBuffer;
-	static ID3D11ShaderResourceView* m_Texture;
+	ID3D11ShaderResourceView* m_Texture;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 
 	Float3 m_pos;
 	Float3 m_rot;

@@ -5,16 +5,20 @@
 #include "ShutterFade.h"
 
 ID3D11Buffer* ShutterFade::m_VertexBuffer;//頂点バッファ
-ID3D11ShaderResourceView* ShutterFade::m_Texture;//テクスチャー
-ID3D11VertexShader* ShutterFade::m_VertexShader;	//
-ID3D11PixelShader* ShutterFade::m_PixelShader;	//描画用プログラムを保存しておく用
-ID3D11InputLayout* ShutterFade::m_VertexLayout;	//
-ID3D11BlendState* ShutterFade::blendState;
 
 void ShutterFade::Init()
 {
+	m_Texture = ResourceManager::AddTex("asset/texture/FadeTexShutter.png");
+
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
+
 	FadeParent::Init();
 	pos = Float2(SCREEN_WIDTH * 0.5f, -SCREEN_HEIGHT * 0.5f);
+
+	name = "ShutterFade";
 #ifndef MUTE
 	shutter = Manager::GetCommon()->AddGameObject<Audio>((int)OBJ_LAYER::System);
 	shutter->Load("asset\\SE\\shutter.wav");
@@ -121,19 +125,11 @@ void ShutterFade::Load()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 	//テクスチャ読み込み
-	m_Texture = ResourceManager::AddTex("asset/texture/FadeTexShutter.png");
-
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
+	ResourceManager::AddTex("asset/texture/FadeTexShutter.png");
 }
 
 void ShutterFade::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

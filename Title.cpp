@@ -62,8 +62,9 @@ void Title::Update()
 	dodai->LoadRot()->y += TOOL::AToR(0.5f);
 
 	Game::Update();
+
 	{//ƒV[ƒ“‘JˆÚŒn
-		if (Input::GetKeyTrigger(VK_SPACE))
+		if (Input::GetKeyTrigger(DIK_SPACE))
 		{
 			if (Manager::GetCommon() == NULL)
 			{

@@ -41,6 +41,8 @@ void Game::Init()
 
 	Manager::AddScene<TextureDrawScene>();
 
+	m_pDefaultBlend = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+
 	////カメラ→3D→2Dの流れ
 	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
 	AddGameObject<Skybox>((int)OBJ_LAYER::NoCaring);
@@ -66,7 +68,7 @@ void Game::Init()
 #endif // !MUTE
 	debug_com = false;
 
-	Input::SetPause(false);
+	//Input::SetPause(false);
 	Input::ShowPoint(false);
 
 	GameObject* out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
@@ -92,11 +94,11 @@ void Game::Uninit()
 	if (bgm != NULL)
 		bgm->StopAll();
 
-	if (!Input::GetPause())
-	{
-		Input::SetPause(true);
-		Input::ShowPoint(true);
-	}
+	//if (!Input::GetPause())
+	//{
+	//	Input::SetPause(true);
+	//	Input::ShowPoint(true);
+	//}
 
 	Renderer::GetDeviceContext()->RSSetState(ResourceManager::GetFrame(FRAME_S::CULL_BACK));
 
@@ -143,7 +145,7 @@ void Game::Update()
 	//デバック用
 	if (debug_com)
 	{
-		if (Input::GetKeyTrigger(VK_F1)) {
+		if (Input::GetKeyTrigger(DIK_F1)) {
 			if (GetGameObject<DebugCamMove>() == NULL)
 			{
 				if (Manager::GetScene()->GetGameObject<Player>())
@@ -153,7 +155,7 @@ void Game::Update()
 				GetGameObject<DebugCamMove>()->SetDestroy();
 		}
 
-		if (Input::GetKeyTrigger(VK_F2)) {
+		if (Input::GetKeyTrigger(DIK_F2)) {
 			for (GameObject* obj : GetGameObjCmp<HitBox>())
 			{
 				HitBox* hit = obj->LoadComponent<HitBox>();
@@ -164,13 +166,13 @@ void Game::Update()
 			}
 		}
 
-		if (Input::GetKeyTrigger(VK_F3)) {
+		if (Input::GetKeyTrigger(DIK_F3)) {
 			if (!WireFrame)
 				WireFrame = true;
 			else
 				WireFrame = false;
 		}
-		if (Input::GetKeyTrigger(VK_F4)) {
+		if (Input::GetKeyTrigger(DIK_F4)) {
 			if (!Stop)
 				Stop = true;
 			else
@@ -243,27 +245,12 @@ void Game::Update()
 	}
 
 	//デバックモード起動
-	if (Input::GetKeyPress(VK_RSHIFT) && Input::GetKeyTrigger(VK_F12))
+	if (Input::GetKeyPress(DIK_RSHIFT) && Input::GetKeyTrigger(DIK_F12))
 	{
 		if (debug_com)
 			debug_com = false;
 		else
 			debug_com = true;
-	}
-
-	//マウスカーソルの表示
-	if (Input::GetKeyTrigger(VK_TAB))
-	{
-		if (Input::GetPause())
-		{
-			Input::SetPause(false);
-			Input::ShowPoint(false);
-		}
-		else
-		{
-			Input::SetPause(true);
-			Input::ShowPoint(true);
-		}
 	}
 }
 
@@ -279,8 +266,12 @@ void Game::Draw()
 	for (int i = 0; i < 2; i++)//システム系
 		for (GameObject* object : g_GameObject[i])
 		{
-			if (object->GetBlendState() != NULL)
+			if (object->GetBlendState() != nullptr)
 				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+			else
+			{
+				Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
+			}
 
 			object->Draw();
 
@@ -296,8 +287,12 @@ void Game::Draw()
 				if (!VCam->CheckView(object->Getpos()))
 					continue;
 
-			if (object->GetBlendState() != NULL)
+			if (object->GetBlendState() != nullptr)
 				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+			else
+			{
+				Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
+			}
 
 			object->Draw();
 
@@ -308,8 +303,12 @@ void Game::Draw()
 
 	for (GameObject* object : g_GameObject[LAYER_NUM - 1])//UI
 	{
-		if (object->GetBlendState() != NULL)
+		if (object->GetBlendState() != nullptr)
 			Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+		else
+		{
+			Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
+		}
 
 		object->Draw();
 
@@ -330,8 +329,12 @@ void Game::NoUIDraw()
 	for (int i = 0; i < 2; i++)//システム系
 		for (GameObject* object : g_GameObject[i])
 		{
-			if (object->GetBlendState() != NULL)
+			if (object->GetBlendState() != nullptr)
 				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+			else
+			{
+				Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
+			}
 
 			object->Draw();
 
@@ -347,8 +350,12 @@ void Game::NoUIDraw()
 				if (!VCam->CheckView(object->Getpos()))
 					continue;
 
-			if (object->GetBlendState() != NULL)
+			if (object->GetBlendState() != nullptr)
 				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
+			else
+			{
+				Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
+			}
 
 			object->Draw();
 

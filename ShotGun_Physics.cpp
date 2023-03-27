@@ -9,15 +9,13 @@
 #include "bullet.h"
 #include "ShotGun_Physics.h"
 
-Model* ShotGun_Physics::model;
-Model* ShotGun_Physics::barrel;
-Model* ShotGun_Physics::predictionLine;
-ID3D11VertexShader* ShotGun_Physics::m_VertexShader;
-ID3D11PixelShader* ShotGun_Physics::m_PixelShader;
-ID3D11InputLayout* ShotGun_Physics::m_VertexLayout;
-
 void ShotGun_Physics::Init()
 {
+	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
+	barrel = ResourceManager::AddModel("asset\\models\\Tullet06.obj");
+	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 	fire_time = TOOL::FrameMulti(0.45f);
 #ifndef MUTE
 	shot = Manager::GetScene()->AddGameObject<Audio>((int)OBJ_LAYER::System);
@@ -171,9 +169,7 @@ void ShotGun_Physics::Draw()
 
 void ShotGun_Physics::Load()
 {
-	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
-	barrel = ResourceManager::AddModel("asset\\models\\Tullet06.obj");
-	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
+	ResourceManager::AddModel("asset\\models\\Tullet06.obj");
+	ResourceManager::AddModel("asset\\models\\laser01.obj");
 }

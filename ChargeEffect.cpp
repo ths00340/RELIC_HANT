@@ -6,15 +6,14 @@
 #include "Camera.h"
 #include "ChargeEffect.h"
 
-ID3D11VertexShader* ChargeEffect::m_VertexShader;
-ID3D11PixelShader* ChargeEffect::m_PixelShader;
-ID3D11InputLayout* ChargeEffect::m_VertexLayout;
-ID3D11ShaderResourceView* ChargeEffect::m_Texture;
 ID3D11Buffer* ChargeEffect::m_VertexBuffer;
-ID3D11BlendState* ChargeEffect::blendState;
 
 void ChargeEffect::Init()
 {
+	m_Texture = ResourceManager::AddTex("asset/texture/charge_bru.png");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 	m_pos = Float3(0.f, 0.f, 0.f);
 
 	m_pos = Float3(0.f, 0.f, 0.f);
@@ -152,17 +151,11 @@ void ChargeEffect::Load()
 	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
 
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
-	m_Texture = ResourceManager::AddTex("asset/texture/charge_bru.png");
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+	ResourceManager::AddTex("asset/texture/charge_bru.png");
 }
 
 void ChargeEffect::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

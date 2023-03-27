@@ -8,13 +8,6 @@
 #include "Status.h"
 #include "Fissure.h"
 
-Model* ExplodeDome::m_model;
-
-ID3D11VertexShader* ExplodeDome::m_VertexShader = NULL;
-ID3D11PixelShader* ExplodeDome::m_PixelShader = NULL;
-ID3D11InputLayout* ExplodeDome::m_VertexLayout = NULL;
-ID3D11BlendState* ExplodeDome::blendState = NULL;
-
 void ExplodeDome::Finish()
 {
 	Scene* scene = Manager::GetScene();
@@ -38,13 +31,14 @@ void ExplodeDome::Finish()
 
 void ExplodeDome::Load()
 {
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	m_model = ResourceManager::AddModel("asset\\models\\bomdome.obj");
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\bomdome.obj");
 }
 
 void ExplodeDome::Init()
 {
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	m_model = ResourceManager::AddModel("asset\\models\\bomdome.obj");
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
 	m_pos = TOOL::Uniform();

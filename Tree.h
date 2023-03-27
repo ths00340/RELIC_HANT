@@ -1,3 +1,8 @@
+//==============================================================================
+// Filename: Tree.h
+// Description :GameObjectクラスを継承したビルボード用の木クラスの定義
+//==============================================================================
+//デファードレンダリングの関係で非表示
 #pragma once
 #include "GameObject.h"
 class Tree :
@@ -5,12 +10,12 @@ class Tree :
 {
 private:
 	static ID3D11Buffer* m_VertexBuffer;
-	static ID3D11ShaderResourceView* m_Texture;
+	ID3D11ShaderResourceView* m_Texture;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
-	static ID3D11BlendState* blendState;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* blendState;
 public:
 	void Init();
 	void Uninit();

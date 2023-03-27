@@ -5,12 +5,12 @@
 #include "NormalFade.h"
 
 ID3D11Buffer* NormalFade::m_VertexBuffer;//頂点バッファ
-ID3D11ShaderResourceView* NormalFade::m_Texture;//テクスチャー
 
 void NormalFade::Init()
 {
 	FadeParent::Init();
 
+	m_Texture = ResourceManager::AddTex("asset/texture/dark.png");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
@@ -115,22 +115,12 @@ void NormalFade::Load()
 	sd.pSysMem = vertex;
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
-	//テクスチャ読み込み
-	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset/texture/dark.png",
-		NULL,
-		NULL,
-		&m_Texture,
-		NULL);
 
-	assert(m_Texture);
+	ResourceManager::AddTex("asset/texture/dark.png");
 }
 
 void NormalFade::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

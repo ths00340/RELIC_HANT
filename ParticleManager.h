@@ -1,3 +1,9 @@
+//==============================================================================
+// Filename: ParticleManager.h
+// Description: GameObjectクラスを継承したオブジェクトパーティクル管理クラスの定義
+//==============================================================================
+
+//インスタンシングで表示できるようにする
 #pragma once
 
 #include <list>
@@ -21,11 +27,11 @@ class ParticleManager :
 	public GameObject
 {
 private:
-	static Model* m_model[(int)PARTICLE_S::END];
+	Model* m_model[(int)PARTICLE_S::END];
 	std::list<ParticleTest*> Particle;
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 
 	Float3 m_vel;
 	Float3 startpos;

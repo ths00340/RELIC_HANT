@@ -23,4 +23,3 @@ void Display::Init()
 	color = COLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	rot = 0.0f;
 }
-

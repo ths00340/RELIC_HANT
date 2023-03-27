@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Game.h
+// Description :Sceneクラスを継承したゲームシーンクラスの定義
+//==============================================================================
 #pragma once
 #include "Scene.h"
 #include "BATTLE_DATA.h"
@@ -14,6 +18,7 @@ protected:
 	class Player* pl = nullptr;
 	class ViewCamera* VCam = nullptr;
 
+	ID3D11BlendState* m_pDefaultBlend = nullptr;
 	BATTLE_DATA* B_Data = nullptr;
 	class Blur_Tex* tex = nullptr;
 

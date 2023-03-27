@@ -13,15 +13,11 @@
 #include "ParticleManager.h"
 #include "Explosion.h"
 
-Model* Bullet::m_model;
-
-ID3D11VertexShader* Bullet::m_VertexShader = NULL;
-ID3D11PixelShader* Bullet::m_PixelShader = NULL;
-ID3D11InputLayout* Bullet::m_VertexLayout = NULL;
-ID3D11BlendState* Bullet::blendState = NULL;
-
 void Bullet::Init()
 {
+	m_model = ResourceManager::AddModel("asset\\models\\bul.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 	m_pos = Float3(-3.0f, 1.0f, 0.0f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
 	m_rot = Float3(0.0f, 0.0f, 0.0f);
@@ -100,7 +96,5 @@ void Bullet::Set(Float3 pos, Float3 rot, float vel, int dmg, float maxrange)
 
 void Bullet::Load()
 {
-	m_model = ResourceManager::AddModel("asset\\models\\bul.obj");
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\bul.obj");
 }

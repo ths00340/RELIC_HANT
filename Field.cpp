@@ -120,10 +120,10 @@ void Field::Init()
 
 	//テクスチャ読み込み
 
-	m_Texture = ResourceManager::AddTex("asset/texture/sand.jpg");
+	m_Texture = ResourceManager::AddTex("asset/texture/ground_grass_3264_4062_Small.jpg");
 
 	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
 	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(1.f, 1.f, 1.f);
@@ -172,7 +172,7 @@ void Field::Draw()
 	Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_Texture);
 
 	ID3D11ShaderResourceView* DepthTexture = Renderer::GetShadowDepthTexture();
-	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1,&DepthTexture);
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &DepthTexture);
 
 	//プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -215,14 +215,14 @@ float Field::GetHeight(Float3 inPos)
 		Float3 v10;
 		v10 = pos0 - pos1;
 		D3DXVec3Cross(&n, &v10, &v12);
-		TOOL::Display((char*)"左上ｪ！\n");
+		//TOOL::Display((char*)"左上ｪ！\n");
 	}
 	else
 	{
 		Float3 v13;
 		v13 = pos1 - pos3;
 		D3DXVec3Cross(&n, &v12, &v13);
-		TOOL::Display((char*)"右下ｧ！\n");
+		//TOOL::Display((char*)"右下ｧ！\n");
 	}
 
 	py = -((inPos.x - pos1.x) * n.x

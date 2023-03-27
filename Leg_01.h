@@ -10,12 +10,12 @@ class Leg_01 :
 	public Drive
 {
 private:
-	static Model* flont;
-	static Model* Back;
+	Model* flont;
+	Model* Back;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 	Float3 addpos;
 
 public:
@@ -38,5 +38,5 @@ public:
 	void SetMove(bool Move = false) { move = Move; }
 	bool GetMove() { return move; }
 
-	static Model* GetModel() { return flont; }
+	Model* GetModel() { return flont; }
 };

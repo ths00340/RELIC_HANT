@@ -1,5 +1,6 @@
 #include "main.h"
 #include "renderer.h"
+#include "Win_Window.h"
 #include <io.h>
 
 D3D_FEATURE_LEVEL       Renderer::m_FeatureLevel = D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_11_0;
@@ -42,6 +43,27 @@ void Renderer::Init()
 {
 	HRESULT hr = S_OK;
 
+	IDXGIFactory1* factory;
+	CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void**)(&factory));
+
+	IDXGIAdapter1* adapter;
+	int GPUnum = 0;
+	SIZE_T GPUpow = 0;
+
+	for (int i = 0; factory->EnumAdapters1(i, &adapter) != DXGI_ERROR_NOT_FOUND; i++)
+	{
+		DXGI_ADAPTER_DESC desc;
+		adapter->GetDesc(&desc);
+		if (GPUpow < desc.DedicatedVideoMemory)
+		{
+			GPUpow = desc.DedicatedVideoMemory;
+			GPUnum = i;
+		}
+	}
+	factory->EnumAdapters1(GPUnum, &adapter);
+
+	factory->Release();
+
 	// デバイス、スワップチェーン作成
 	DXGI_SWAP_CHAIN_DESC swapChainDesc{};
 	swapChainDesc.BufferCount = 1;
@@ -51,13 +73,13 @@ void Renderer::Init()
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.OutputWindow = GetWindow();
+	swapChainDesc.OutputWindow = WinGetWindowHandle();
 	swapChainDesc.SampleDesc.Count = 1;//MSAA設定
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.Windowed = TRUE;
 
-	hr = D3D11CreateDeviceAndSwapChain(NULL,
-		D3D_DRIVER_TYPE_HARDWARE,
+	hr = D3D11CreateDeviceAndSwapChain(adapter,//自動選択
+		D3D_DRIVER_TYPE_UNKNOWN,//セットで変更
 		NULL,
 		0,
 		NULL,
@@ -254,6 +276,7 @@ void Renderer::Init()
 	material.Shininess = 1.0f;
 	SetMaterial(material);
 
+	int MipLV = 6;
 	{
 		//シャドウバッファ作成
 		ID3D11Texture2D* depthTexture[2] = { NULL };
@@ -261,7 +284,7 @@ void Renderer::Init()
 		ZeroMemory(&td, sizeof(td));
 		td.Width = swapChainDesc.BufferDesc.Width; //バックバッファのサイズを受けつぐ
 		td.Height = swapChainDesc.BufferDesc.Height;
-		td.MipLevels = 1;
+		td.MipLevels = MipLV;
 		td.ArraySize = 1;
 		td.Format = DXGI_FORMAT_R32_TYPELESS;//32bitの自由な形式のデータとする
 		td.SampleDesc = swapChainDesc.SampleDesc;
@@ -295,14 +318,13 @@ void Renderer::Init()
 			D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
 			SRVDesc.Format = DXGI_FORMAT_R32_FLOAT;//ピクセルフォーマットは32BitFLOAT型
 			SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-			SRVDesc.Texture2D.MipLevels = 1;
+			SRVDesc.Texture2D.MipLevels = MipLV;
 			hr = m_Device->CreateShaderResourceView(depthTexture[0], &SRVDesc,
 				&m_ShadowDepthShaderResourceView);
 			if (FAILED(hr))
 			{
 				//失敗時の処理の記入
 			}
-
 		}
 
 		//カメラから見た深度
@@ -330,7 +352,7 @@ void Renderer::Init()
 			D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
 			SRVDesc.Format = DXGI_FORMAT_R32_FLOAT;//ピクセルフォーマットは32BitFLOAT型
 			SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-			SRVDesc.Texture2D.MipLevels = 1;
+			SRVDesc.Texture2D.MipLevels = MipLV;
 			hr = m_Device->CreateShaderResourceView(depthTexture[1], &SRVDesc,
 				&m_RenderDepthShaderResourceView);
 			if (FAILED(hr))
@@ -338,7 +360,6 @@ void Renderer::Init()
 				//失敗時の処理の記入
 			}
 		}
-
 	}
 
 	{
@@ -349,14 +370,13 @@ void Renderer::Init()
 		ZeroMemory(&texDesc, sizeof(texDesc));
 		texDesc.Width = swapChainDesc.BufferDesc.Width; //バックバッファのサイズを受けつぐ
 		texDesc.Height = swapChainDesc.BufferDesc.Height;
-		texDesc.MipLevels = 1;
+		texDesc.MipLevels = MipLV;
 		texDesc.ArraySize = 1;
 		texDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		texDesc.Usage = D3D11_USAGE_DEFAULT;
 		texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 		texDesc.CPUAccessFlags = 0;
 		texDesc.SampleDesc = swapChainDesc.SampleDesc;
-
 
 		for (int i = 0; i < (int)RENDER_::NUM; i++)
 		{
@@ -384,7 +404,7 @@ void Renderer::Init()
 			memset(&srvDesc, 0, sizeof(srvDesc));
 			srvDesc.Format = rtvDesc.Format;
 			srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-			srvDesc.Texture2D.MipLevels = 1;
+			srvDesc.Texture2D.MipLevels = MipLV;
 
 			//シェーダーリソースビューの生成
 			hr = m_Device->CreateShaderResourceView(mpTex[i], &srvDesc, &m_RenderTextureShaderResourceView[i]);

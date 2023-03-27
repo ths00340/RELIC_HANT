@@ -4,9 +4,11 @@
 #include "Enemy_Anni.h"
 #include "Stage01.h"
 #include "Leg_01.h"
+#include "TargetCom.h"
 
 void Enemy_Anni::Init()
 {
+	BATTLE_DATA::Init();
 	sce = Manager::GetScene();
 	mtex = sce->AddGameObject<Stage01>((int)OBJ_LAYER::UI);
 	EnemyNum = 20;
@@ -15,14 +17,17 @@ void Enemy_Anni::Init()
 		Enemy* en = NULL;
 		en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
 		en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
-		en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
+		Leg_01* _enLeg = en->LoadComponent<Leg_01>();
+		en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(_enLeg->GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
 		en->LoadComponent<Status>()->SetMAX(20);
+		en->AddComponent<TargetCom>();
 	}
 	Start = false;
 }
 
 void Enemy_Anni::Begin()
 {
+	//‰‰o‚ÌI—¹”»•Êˆ—
 	if (mtex->GetEnd())
 	{
 		sce->SetAllStop(false);
@@ -37,8 +42,8 @@ void Enemy_Anni::Begin()
 
 void Enemy_Anni::ClearObserver()
 {
-	EnemyNum = sce->GetList((int)OBJ_LAYER::Enemy).size();
-	if (EnemyNum <= 0)
+	TOOL::Display((char*)"TargetList size %d\n", TargetList->GetListCount());
+	if (TargetList->Empty())
 	{
 		Clear = true;
 	}

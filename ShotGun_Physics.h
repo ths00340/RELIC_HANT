@@ -8,13 +8,13 @@ class ShotGun_Physics :
 	public Wepon
 {
 private:
-	static Model* model;//本体
-	static Model* barrel;//バレル
-	static Model* predictionLine;//予測線
+	Model* model;//本体
+	Model* barrel;//バレル
+	Model* predictionLine;//予測線
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 
 	int fire_time = 0;
 

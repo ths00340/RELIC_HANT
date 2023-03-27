@@ -4,7 +4,7 @@ Texture2D g_TextureShadowDepth : register(t1);//シャドウマップ
 SamplerState g_SamplerState : register(s0);
 void main(in PS_IN In, out PS_OUT Out)
 {
-	Out.Normal =In.Normal;
+	Out.Normal = In.Normal;
 	//日向での色＝普通のテクスチャ＊頂点色を作成しておく
 	Out.Diffuse = g_Texture.Sample(g_SamplerState, In.TexCoord);
 	//Out.Diffuse *= In.Diffuse;

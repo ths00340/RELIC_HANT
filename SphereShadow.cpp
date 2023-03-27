@@ -6,16 +6,13 @@
 #include "Game.h"
 #include "SphereShadow.h"
 
-ID3D11VertexShader* SphereShadow::m_VertexShader;
-ID3D11PixelShader* SphereShadow::m_PixelShader;
-ID3D11InputLayout* SphereShadow::m_VertexLayout;
-ID3D11ShaderResourceView* SphereShadow::m_Texture;
 ID3D11Buffer* SphereShadow::m_VertexBuffer;
-
-static float maxheight = 10.0f;
 
 void SphereShadow::Init()
 {
+	m_Texture = ResourceManager::AddTex("asset/texture/Shadow.png");
+
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 }
 
 void SphereShadow::Uninit()
@@ -31,7 +28,7 @@ void SphereShadow::Update()
 	m_pos += vec;
 
 	float growpos = fabsf(object->Getmin().y) * object->Getscl().y;
-	float size = growpos + maxheight;
+	float size = growpos + 10.f;
 	size = (size - fabsf(object->Getpos().y)) / size;
 
 	size = TOOL::Limit(size, 1.0f, 0.0f);
@@ -137,16 +134,11 @@ void SphereShadow::Load()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 
-	m_Texture = ResourceManager::AddTex("asset/texture/Shadow.png");
-
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::AddTex("asset/texture/Shadow.png");
 }
 
 void SphereShadow::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

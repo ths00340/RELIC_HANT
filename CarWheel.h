@@ -8,11 +8,11 @@ class CarWheel :
 	public Drive
 {
 private:
-	static Model* model;
+	Model* model;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 	Float3 addpos1;
 	Float3 addpos2;
 	Float3 wheel;
@@ -38,5 +38,5 @@ public:
 	bool GetMove() { return move; }
 	void AddMove(float in) { angle += in; }
 
-	static Model* GetModel() { return model; }
+	Model* GetModel() { return model; }
 };

@@ -7,13 +7,15 @@
 #include "model.h"
 #include "CarWheel.h"
 
-Model* CarWheel::model;
-ID3D11VertexShader* CarWheel::m_VertexShader;
-ID3D11PixelShader* CarWheel::m_PixelShader;
-ID3D11InputLayout* CarWheel::m_VertexLayout;
-
 void CarWheel::Init()
 {
+	model = ResourceManager::AddModel("asset\\models\\taiya01.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+
+	wheel.z = 0.f;
+	wheel.y = 0.f;
+	oldPos = { 0.f,0.f,0.f };
 }
 
 void CarWheel::Uninit()
@@ -90,7 +92,5 @@ void CarWheel::Draw()
 
 void CarWheel::Load()
 {
-	model = ResourceManager::AddModel("asset\\models\\taiya01.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::AddModel("asset\\models\\taiya01.obj");
 }

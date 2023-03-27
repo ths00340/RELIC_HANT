@@ -13,13 +13,6 @@
 #include "Camera.h"
 #include "ExplodeDome.h"
 
-Model* ExplosiveBullet::m_model;
-
-ID3D11VertexShader* ExplosiveBullet::m_VertexShader = NULL;
-ID3D11PixelShader* ExplosiveBullet::m_PixelShader = NULL;
-ID3D11InputLayout* ExplosiveBullet::m_VertexLayout = NULL;
-ID3D11BlendState* ExplosiveBullet::blendState = NULL;
-
 void ExplosiveBullet::Finish()
 {
 	float maxshake = 120.f;
@@ -39,6 +32,9 @@ void ExplosiveBullet::Finish()
 
 void ExplosiveBullet::Init()
 {
+	m_model = ResourceManager::AddModel("asset\\models\\Bazooka_bul.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 	AddComponent<Gravity>();
 	m_pos = Float3(-3.f, 1.f, 0.f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
@@ -118,9 +114,7 @@ void ExplosiveBullet::Set(Float3 pos, Float3 rot, float vel, int dmg, float dmgr
 
 void ExplosiveBullet::Load()
 {
-	m_model = ResourceManager::AddModel("asset\\models\\Bazooka_bul.obj");
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\Bazooka_bul.obj");
 }
 
 void ExplosiveBullet::AddVel(Float3 add)

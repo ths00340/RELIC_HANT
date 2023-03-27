@@ -8,18 +8,17 @@
 #include "Player.h"
 #include "Skybox.h"
 
-Model* Skybox::m_model;
-Player* pl;
-ID3D11VertexShader* Skybox::m_VertexShader;
-ID3D11PixelShader* Skybox::m_PixelShader;
-ID3D11InputLayout* Skybox::m_VertexLayout;
-ID3D11BlendState* Skybox::blendState;
-
 void Skybox::Init()
 {
+	m_model = ResourceManager::AddModel("asset\\models\\Skybox_001.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+
 	name = "Skybox";
 	Scene* scene = Manager::GetScene();
-	pl = scene->GetGameObject<Player>();
+	m_pPl = scene->GetGameObject<Player>();
 
 	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(80.f, 80.f, 80.f);
@@ -32,16 +31,14 @@ void Skybox::Uninit()
 
 void Skybox::Update()
 {
-	if (pl != NULL)
-		m_pos = pl->Getpos();
+	if (m_pPl != NULL)
+		m_pos = m_pPl->Getpos();
 	else
 	{
 		Scene* scene = Manager::GetScene();
 		if (scene != NULL)
-			pl = scene->GetGameObject<Player>();
+			m_pPl = scene->GetGameObject<Player>();
 	}
-
-	m_rot.y += D3DX_PI * 0.0001f;
 }
 
 void Skybox::Draw()
@@ -64,9 +61,5 @@ void Skybox::Draw()
 
 void Skybox::Load()
 {
-	m_model = ResourceManager::AddModel("asset\\models\\Skybox_001.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\Skybox_001.obj");
 }

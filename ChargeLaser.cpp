@@ -9,14 +9,12 @@
 #include "LaserBullet.h"
 #include "ChargeEffect.h"
 
-Model* ChargeLaser::model;
-Model* ChargeLaser::predictionLine;
-ID3D11VertexShader* ChargeLaser::m_VertexShader;
-ID3D11PixelShader* ChargeLaser::m_PixelShader;
-ID3D11InputLayout* ChargeLaser::m_VertexLayout;
-
 void ChargeLaser::Init()
 {
+	model = ResourceManager::AddModel("asset\\models\\laserTullet.obj");
+	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 	charge_rate = TOOL::FrameMulti(0.8f);
 	TOOL::Display((char*)"チャージフレーム%d\n", charge_rate);
 
@@ -47,7 +45,7 @@ void ChargeLaser::Update()
 		ShotAngle = object->Getrot();
 
 	Float3 add = object->Getaddrot();
-	ShotAngle.x += angle + add.x;
+	ShotAngle.x += angle;// +add.x;
 
 	if (cam->GetMode() == CamMode::TPP)
 		ShotAngle.y = object->LoadComponent<Camera>()->GetAngle().y;
@@ -147,8 +145,6 @@ void ChargeLaser::Draw()
 
 void ChargeLaser::Load()
 {
-	model = ResourceManager::AddModel("asset\\models\\laserTullet.obj");
-	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::AddModel("asset\\models\\laserTullet.obj");
+	ResourceManager::AddModel("asset\\models\\laser01.obj");
 }

@@ -6,14 +6,12 @@
 #include "Camera.h"
 #include "ViewCamera.h"
 
-Model* Platform::m_model;
-ID3D11VertexShader* Platform::m_VertexShader;
-ID3D11PixelShader* Platform::m_PixelShader;
-ID3D11InputLayout* Platform::m_VertexLayout;
-ID3D11BlendState* Platform::blendState;
-
 void Platform::Init()
 {
+	m_model = ResourceManager::AddModel("asset\\models\\settingroom.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 	name = "Plarform";
 	AddComponent<Camera>();
 	m_pos = Float3(0.f, 0.f, 0.f);
@@ -56,8 +54,5 @@ void Platform::Draw()
 
 void Platform::Load()
 {
-	m_model = ResourceManager::AddModel("asset\\models\\settingroom.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\settingroom.obj");
 }

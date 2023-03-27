@@ -17,55 +17,72 @@
 #include "SphereShadow.h"
 #include "ExplodeDome.h"
 
-Model* Enemy::m_model;
-ID3D11VertexShader* Enemy::m_VertexShader;
-ID3D11PixelShader* Enemy::m_PixelShader;
-ID3D11InputLayout* Enemy::m_VertexLayout;
-ID3D11BlendState* Enemy::blendState = NULL;
-
 void Enemy::Init()
 {
+	//モデルの呼び出し
+	m_model = ResourceManager::AddModel("asset\\models\\CamBot_E01.obj");
+
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+
+	//ブレンドステートの設定1
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+
+	//名前の登録
 	name = "Enemy";
-	minsize = m_model->Get_min();
-	maxsize = m_model->Get_max();
+
+	//オブジェクトの実際のサイズの登録
+	minsize = m_model->Get_min();//最小ポイント
+	maxsize = m_model->Get_max();//最大ポイント
+
+	//カメラコンポーネントの登録
 	Camera* cam;
-	time = 0;
 	cam = AddComponent<Camera>();
 	cam->SetMode(CamMode::FPP);
+	//カメラの視認距離の登録
+	cam->SetRange(320.0f);
+
+	//ステータスコンポーネントの登録
 	status = AddComponent<Status>();
 	status->SetMAX(10);
 	status->SetBreak(true);
+	time = 0;
+
+	//その他コンポーネントの登録&初期設定
 	AddComponent<Gravity>();
-	AddComponent<SphereShadow>();
 	AddComponent<Leg_01>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::SPHERE);
+
+	//オブジェクトの初期設定
 	m_pos = Float3(0.f, 100.f, 0.f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
 	m_rot = Float3(0.f, 0.f, 0.f);
 
-	cam->SetRange(320.0f + m_scl.z);
 #ifndef MUTE
 	hit = Manager::GetScene()->AddGameObject<Audio>(2);
 	hit->Load("asset\\SE\\hit01.wav");
 #endif //MUTE
 
+	//プレイヤーの探索
 	Scene* scene = Manager::GetScene();
 	if (scene != NULL)
 		tag = scene->GetGameObject<Player>();
 
+	//移動速度をここで乱数で計算
 	spd = TOOL::RandF() * 20.0f + 10.f;
 }
 
 void Enemy::Uninit()
 {
 #ifndef MUTE
-	hit->SetDeath();
+	if (hit)
+		hit->SetDeath();
 #endif //MUTE
 }
 
 void Enemy::Update()
 {
-	Camera* cam;
+	Camera* cam = NULL;
 	cam = LoadComponent<Camera>();
 	if (m_pos.y <= fabsf(m_model->Get_min().y * m_scl.y))
 	{
@@ -141,11 +158,7 @@ void Enemy::Draw()
 
 void Enemy::Load()
 {
-	m_model = ResourceManager::AddModel("asset\\models\\CamBot_E01.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\CamBot_E01.obj");
 }
 
 void Enemy::Damage(int dmg)

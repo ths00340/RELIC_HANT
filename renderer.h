@@ -11,7 +11,6 @@ enum class RENDER_
 	NUM,//最大数
 };
 
-
 struct VERTEX_3D
 {
 	D3DXVECTOR3 Position;
@@ -143,11 +142,10 @@ public:
 	//レンダーテクスチャ用Begin
 	static void  BeginTexture()
 	{
-
 		m_DeviceContext->OMSetRenderTargets((int)RENDER_::NUM, m_RenderTextureView, m_RenderDepthStencilView);
 
 		for (int i = 0; i < (int)RENDER_::NUM; i++)
-		m_DeviceContext->ClearRenderTargetView(m_RenderTextureView[i], ClearColor);
+			m_DeviceContext->ClearRenderTargetView(m_RenderTextureView[i], ClearColor);
 
 		m_DeviceContext->ClearDepthStencilView(m_RenderDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}

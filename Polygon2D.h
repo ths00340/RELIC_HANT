@@ -9,7 +9,7 @@ class Polygon2D :public GameObject
 protected:
 	ID3D11Buffer* m_VertexBuffer = nullptr;//頂点バッファ
 	ID3D11ShaderResourceView* m_Texture = nullptr;//テクスチャー
-	ID3D11ShaderResourceView* m_AddTexture[7];//テクスチャー
+	ID3D11ShaderResourceView* m_AddTexture[7] = { nullptr };//テクスチャー
 
 	ID3D11VertexShader* m_VertexShader = nullptr;	//
 	ID3D11PixelShader* m_PixelShader = nullptr;	//描画用プログラムを保存しておく用

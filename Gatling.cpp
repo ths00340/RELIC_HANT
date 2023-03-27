@@ -9,17 +9,15 @@
 #include "bullet.h"
 #include "Gatling.h"
 
-Model* Gatling::model;
-Model* Gatling::barrel;
-Model* Gatling::predictionLine;
-ID3D11VertexShader* Gatling::m_VertexShader;
-ID3D11PixelShader* Gatling::m_PixelShader;
-ID3D11InputLayout* Gatling::m_VertexLayout;
-
 void Gatling::Init()
 {
-	fire_time = TOOL::FrameMulti(0.35f);
-	roll_max = TOOL::AToR(30);
+	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
+	barrel = ResourceManager::AddModel("asset\\models\\Tullet05barrel.obj");
+	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	fire_time = TOOL::FrameMulti(0.15f);
+	roll_max = TOOL::AToR(60);
 
 #ifndef MUTE
 	shot = Manager::GetScene()->AddGameObject<Audio>((int)OBJ_LAYER::System);
@@ -37,6 +35,7 @@ void Gatling::Update()
 	m_scl = object->Getscl();
 	time++;
 	Scene* scene = Manager::GetScene();
+
 	angle = cam->GetAngle().x;
 	angle = TOOL::Limit(angle, 0.0f, -TOOL::AToR(60.0f));
 
@@ -177,9 +176,7 @@ void Gatling::Draw()
 
 void Gatling::Load()
 {
-	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
-	barrel = ResourceManager::AddModel("asset\\models\\Tullet05barrel.obj");
-	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
+	ResourceManager::AddModel("asset\\models\\Tullet05barrel.obj");
+	ResourceManager::AddModel("asset\\models\\laser01.obj");
 }

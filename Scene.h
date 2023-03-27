@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Scene.h
+// Description :マネージャーの管理用継承元クラスの定義
+//==============================================================================
 #pragma once
 
 #include <list>
@@ -50,7 +54,7 @@ public:
 	};
 	virtual void Uninit()
 	{
-		for (int i = 0; i < LAYER_NUM; i++)
+		for (int i = LAYER_NUM - 1; i >= 0; i--)
 		{
 			for (GameObject* object : g_GameObject[i])
 			{
@@ -72,7 +76,7 @@ public:
 		}
 	}
 	virtual void ShadowDraw() {
-		for (int i = 1; i < (int)LAYER_NUM-2; i++)
+		for (int i = 1; i < (int)LAYER_NUM - 2; i++)
 		{
 			ObjectDraw(i);
 		}
@@ -85,10 +89,17 @@ public:
 		}
 	};
 
+	virtual void UIDraw() {
+		for (int i = (int)LAYER_NUM - 2; i < (int)LAYER_NUM; i++)
+		{
+			ObjectDraw(i);
+		}
+	};
+
 	template <typename T>//テンプレート関数
 	T* AddGameObject(int Layer)
 	{
-		T* gameObject = new T();
+		T* gameObject = DBG_NEW T();
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_back(gameObject);
@@ -98,7 +109,7 @@ public:
 	template <typename T>//テンプレート関数
 	T* AddFlontGameObject(int Layer)
 	{
-		T* gameObject = new T();
+		T* gameObject = DBG_NEW T();
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_front(gameObject);
@@ -186,9 +197,6 @@ public:
 	std::vector<GameObject*> GetGameObjCmp()
 	{
 		std::vector<GameObject*>objects;
-
-		objects.clear();
-
 		for (int i = 0; i < LAYER_NUM; i++)
 			for (GameObject* object : g_GameObject[i])
 			{

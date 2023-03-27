@@ -468,7 +468,7 @@
     <ClInclude Include="Stage02.h">
       <Filter>ヘッダー ファイル\GameObject\UIs\MTex</Filter>
     </ClInclude>
-    <ClInclude Include="ResultBackGrownd.h">
+    <ClInclude Include="ResultBackGround.h">
       <Filter>ヘッダー ファイル\GameObject\UIs</Filter>
     </ClInclude>
     <ClInclude Include="Blinking_Space.h">
@@ -563,6 +563,27 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="cInputOperation.h">
+      <Filter>ヘッダー ファイル\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Win_Window.h">
+      <Filter>ヘッダー ファイル\base</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetCom.h">
+      <Filter>ヘッダー ファイル\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -773,7 +794,7 @@
     <ClCompile Include="Stage02.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="ResultBackGrownd.cpp">
+    <ClCompile Include="ResultBackGround.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Blinking_Space.cpp">
@@ -814,6 +835,15 @@
     </ClCompile>
     <ClCompile Include="Display.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cInputOperation.cpp">
+      <Filter>ソース ファイル\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Win_Window.cpp">
+      <Filter>ソース ファイル\base</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetCom.cpp">
+      <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -942,6 +972,12 @@
     </FxCompile>
     <FxCompile Include="Shader\vertexLightingVS.hlsl">
       <Filter>Shader\Share</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RimLightingPS.hlsl">
+      <Filter>Shader\Model</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\RimLightingVS.hlsl">
+      <Filter>Shader\Model</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

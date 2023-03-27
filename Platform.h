@@ -1,14 +1,20 @@
+//==============================================================================
+// Filename: Platform.h
+// Description :GameObjectクラスを継承した障害物クラス
+//==============================================================================
+
+//今は使われていない
 #pragma once
 #include "GameObject.h"
 class Platform :
 	public GameObject
 {
-	static Model* m_model;
+	Model* m_model;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
-	static ID3D11BlendState* blendState;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* blendState;
 public:
 	void Init();
 	void Uninit();

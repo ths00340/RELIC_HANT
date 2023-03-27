@@ -7,15 +7,15 @@
 #include "Camera.h"
 #include "Fissure.h"
 
-ID3D11VertexShader* Fissure::m_VertexShader;
-ID3D11PixelShader* Fissure::m_PixelShader;
-ID3D11InputLayout* Fissure::m_VertexLayout;
-ID3D11ShaderResourceView* Fissure::m_Texture;
 ID3D11Buffer* Fissure::m_VertexBuffer;
-ID3D11BlendState* Fissure::blendState;
 
 void Fissure::Init()
 {
+	m_Texture = ResourceManager::AddTex("asset/texture/Fis.png");
+
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 	flame = 0;
 	maxtime = 60;
 	alfa = 1.f;
@@ -125,18 +125,11 @@ void Fissure::Load()
 
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
-	m_Texture = ResourceManager::AddTex("asset/texture/Fis.png");
-
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+	ResourceManager::AddTex("asset/texture/Fis.png");
 }
 
 void Fissure::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

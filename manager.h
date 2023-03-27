@@ -73,7 +73,7 @@ public:
 			DeleteAddScenes();
 		}
 
-		NowScene = new T();
+		NowScene = DBG_NEW T();
 		NowScene->Init();
 	};
 
@@ -83,7 +83,7 @@ public:
 	{
 		if (common == NULL)
 		{
-			common = new T();
+			common = DBG_NEW T();
 			common->Init();
 		}
 
@@ -111,7 +111,7 @@ public:
 	template<typename T>
 	static T* AddScene()
 	{
-		T* scene = new T();
+		T* scene = DBG_NEW T();
 		scene->Init();
 		addScene.push_back(scene);
 		return scene;

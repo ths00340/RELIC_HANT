@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Player.h
+// Description :GameObjectクラスを継承したプレイヤー用クラスの定義
+//==============================================================================
 #pragma once
 #include "GameObject.h"
 #include "Wepon.h"
@@ -11,12 +15,12 @@ class Model;
 class Player :public GameObject
 {
 private:
-	static Model* m_model;//モデルポインタ
+	Model* m_model;//モデルポインタ
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
-	static ID3D11BlendState* blendState;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* blendState;
 
 	//発射音用オーディオポインタ※コンポーネントに移動させるため削除予定
 	class Audio* m_pShotSE = nullptr;
@@ -39,6 +43,12 @@ private:
 	//MP表示用UIオブジェクトポインタ
 	NumberManager* m_pMp = nullptr;
 
+	class Camera* m_pCam = nullptr;
+
+	class Scene* m_pScene = nullptr;
+
+	class cInputOperation* m_pInput;
+
 	//車体の細かな振動用変数
 	float m_Idol = 0.0f;
 public:
@@ -56,7 +66,6 @@ public:
 		m_Idol = 0.0f;
 	}
 
-	static void Load();//静的メモリの設定
 	void Init();//初期化
 	void Uninit();//後処理用関数
 	void Update();//更新処理

@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: ResourceManager.h
+// Description: リソース管理クラスの定義
+//==============================================================================
 #pragma once
 #include <unordered_map>
 #include <iostream>
@@ -91,7 +95,7 @@ public:
 		{
 			//モデルのロードと登録
 			Modelname.insert(nametype::value_type(Filename, models.size()));
-			model = new Model();
+			model = DBG_NEW Model();
 			model->Load(Filename);
 			models.push_back(model);
 		}
@@ -100,7 +104,7 @@ public:
 			if (Modelname.insert(nametype::value_type(Filename, models.size())).second)//新しいモデルだった場合
 			{
 				//モデルのロードと登録
-				model = new Model();
+				model = DBG_NEW Model();
 				model->Load(Filename);
 				models.push_back(model);
 			}
@@ -233,6 +237,19 @@ public:
 			delete(model);
 		}
 		models.erase(models.begin(), models.end());
+		Modelname.clear();
+	}
+
+	//管理されているモデルの一括開放
+	static void DeleteTextures()
+	{
+		for (ID3D11ShaderResourceView* texture : Texture)
+		{
+			texture->Release();
+			texture = nullptr;
+		}
+		Texture.erase(Texture.begin(), Texture.end());
+		TextureName.clear();
 	}
 
 	//ステートの一括開放
@@ -242,13 +259,13 @@ public:
 			B_State[i]->Release();
 
 		for (int i = 0; i < (int)FRAME_S::FRAME_E; i++)
-			rs[i];
+			rs[i]->Release();
 
 		for (int i = 0; i < (int)SHADER_S::SHADER_E; i++)
 		{
-			m_VertexShader[i];
-			m_PixelShader[i];
-			m_VertexLayout[i];
+			m_VertexShader[i]->Release();
+			m_PixelShader[i]->Release();
+			m_VertexLayout[i]->Release();
 		}
 	}
 

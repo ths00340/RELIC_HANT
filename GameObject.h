@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: GameObject.h
+// Description :オブジェクトを管理するための継承元クラスの定義
+//==============================================================================
 #pragma once
 #include "main.h"
 #include <algorithm>
@@ -32,7 +36,7 @@ protected:
 	const char* name = "NoName";//タグ
 
 private:
-	static ID3D11BlendState* blendState;
+	ID3D11BlendState* blendState = nullptr;
 	GameObject* me;//自分指定//いるかは分からん
 public:
 	GameObject() {
@@ -148,7 +152,7 @@ public:
 	template <typename T>
 	T* AddComponent()
 	{
-		T* cmp = new T(this);
+		T* cmp = DBG_NEW T(this);
 		cmp->Init();
 		Component.push_back(cmp);
 		return cmp;
@@ -157,7 +161,7 @@ public:
 	template <typename T>
 	T* AddFlontComponent()
 	{
-		T* cmp = new T(this);
+		T* cmp = DBG_NEW T(this);
 		cmp->Init();
 		Component.push_front(cmp);
 		return cmp;
@@ -202,8 +206,8 @@ public:
 		{
 			if (typeid(*comp) == typeid(T))//型を調べる
 			{
-				delete comp;
 				Component.remove(comp);
+				delete comp;
 				return true;
 			}
 		}
@@ -212,10 +216,17 @@ public:
 
 	bool RemoveComponents()
 	{
-		std::list<CComponent*>::iterator it = Component.begin();
-		for (; it != Component.end(); ++it) {
-			delete* it;
+		//std::list<CComponent*>::iterator it = Component.begin();
+		//for (; it != Component.end(); ++it) {
+		//
+		//	delete* it;
+		//}
+		for (CComponent* it : Component)
+		{
+			it->Uninit();
+			delete it;
 		}
+
 		Component.clear();
 		return true;
 	}
@@ -229,122 +240,3 @@ public:
 	virtual void Finish() {};//破壊された時の反応
 	virtual void PlayHit() {};
 };
-
-/*
-	//加算系
-	virtual void AddLocalRot(Float3 inRot) {
-		D3DXQUATERNION quat;
-		Float3 axis = GetUp();
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
-		m_rot *= quat;
-
-		axis = GetSide();
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
-		m_rot *= quat;
-
-		axis = GetForward();
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
-		m_rot *= quat;
-	}
-	virtual void AddLocalRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
-		D3DXQUATERNION quat;
-		Float3 axis = GetUp();
-		D3DXQuaternionRotationAxis(&quat, &axis, Y);
-		m_rot *= quat;
-
-		axis = GetSide();
-		D3DXQuaternionRotationAxis(&quat, &axis, X);
-		m_rot *= quat;
-
-		axis = GetForward();
-		D3DXQuaternionRotationAxis(&quat, &axis, Z);
-		m_rot *= quat;
-	}
-
-	virtual void AddWorldRot(Float3 inRot) {
-		D3DXQUATERNION quat;
-		Float3 axis = { 0.f,1.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
-		m_rot *= quat;
-
-		axis = { 1.f,0.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
-		m_rot *= quat;
-
-		axis = { 0.f,0.f,1.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
-		m_rot *= quat;
-	}
-	virtual void AddWorldRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
-		D3DXQUATERNION quat;
-		Float3 axis = { 0.f,1.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, Y);
-		m_rot *= quat;
-
-		axis = { 1.f,0.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, X);
-		m_rot *= quat;
-
-		axis = { 0.f,0.f,1.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, Z);
-		m_rot *= quat;
-	}
-
-	virtual void AddLocalAddRot(Float3 inRot) {
-		D3DXQUATERNION quat;
-		Float3 axis = GetUp();
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
-		m_addrot *= quat;
-
-		axis = GetSide();
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
-		m_addrot *= quat;
-
-		axis = GetForward();
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
-		m_addrot *= quat;
-	}
-	virtual void AddLocalAddRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
-		D3DXQUATERNION quat;
-		Float3 axis = GetUp();
-		D3DXQuaternionRotationAxis(&quat, &axis, Y);
-		m_addrot *= quat;
-
-		axis = GetSide();
-		D3DXQuaternionRotationAxis(&quat, &axis, X);
-		m_addrot *= quat;
-
-		axis = GetForward();
-		D3DXQuaternionRotationAxis(&quat, &axis, Z);
-		m_addrot *= quat;
-	}
-
-	virtual void AddWorldAddRot(Float3 inRot) {
-		D3DXQUATERNION quat;
-		Float3 axis = { 0.f,1.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.y);
-		m_addrot *= quat;
-
-		axis = { 1.f,0.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.x);
-		m_addrot *= quat;
-
-		axis = { 0.f,0.f,1.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, inRot.z);
-		m_addrot *= quat;
-	}
-	virtual void AddWorldAddRot(float X = 0.f, float Y = 0.f, float Z = 0.f) {
-		D3DXQUATERNION quat;
-		Float3 axis = { 0.f,1.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, Y);
-		m_addrot *= quat;
-
-		axis = { 1.f,0.f,0.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, X);
-		m_addrot *= quat;
-
-		axis = { 0.f,0.f,1.f };
-		D3DXQuaternionRotationAxis(&quat, &axis, Z);
-		m_addrot *= quat;
-	}
-*/

@@ -21,6 +21,7 @@ void main(in VS_IN In, out PS_EdgeInput Out)
 	g_Texture.GetDimensions(0, texSize.x, texSize.y, level);
 	Out.Position = In.Position;
 	float2 tex = In.TexCoord;
+	texSize *= 2.f;
 
 	float offset = 1.0f;
 	//ñ@ê¸

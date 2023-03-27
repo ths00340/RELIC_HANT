@@ -11,6 +11,7 @@ class CarMove :
 private:
 	float Rot = 0.0f;
 	float zlimit = 0.0f;
+	class cInputOperation* m_pInput;
 public:
 	CarMove(GameObject* inobject) :DriveSystem(inobject) {
 		Rot = 0.0f;

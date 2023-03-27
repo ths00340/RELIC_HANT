@@ -4,16 +4,18 @@
 #include "ViewCamera.h"
 #include "Camera.h"
 #include "Tree.h"
-
-ID3D11VertexShader* Tree::m_VertexShader;
-ID3D11PixelShader* Tree::m_PixelShader;
-ID3D11InputLayout* Tree::m_VertexLayout;
-ID3D11ShaderResourceView* Tree::m_Texture;
 ID3D11Buffer* Tree::m_VertexBuffer;
-ID3D11BlendState* Tree::blendState;
 
 void Tree::Init()
 {
+	//テクスチャ読み込み
+	m_Texture = ResourceManager::AddTex("asset/texture/Tree01.png");
+
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+
 	name = "Tree";
 	maxsize = TOOL::Uniform(1.f);
 	minsize = TOOL::Uniform(-1.f);
@@ -151,19 +153,11 @@ void Tree::Load()
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
 	//テクスチャ読み込み
-	m_Texture = ResourceManager::AddTex("asset/texture/Tree01.png");
-
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+	ResourceManager::AddTex("asset/texture/Tree01.png");
 }
 
 void Tree::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

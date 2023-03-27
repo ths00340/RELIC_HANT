@@ -20,13 +20,13 @@ void TextureDrawScene::Init()
 	{
 		DrawTexture->SetAddTexture(Renderer::GetRenderTexture((RENDER_)i), i - 1);
 	}
-	DrawTexture->SetAddTexture(Renderer::GetRenderDepthTexture(), (int)RENDER_::NUM-1);
+	DrawTexture->SetAddTexture(Renderer::GetRenderDepthTexture(), (int)RENDER_::NUM - 1);
 
 	DrawTexture->SetShader(SHADER_S::EDGE);
 }
 
 void TextureDrawScene::Draw()
 {
-	Manager::GetScene()->Draw();
 	Game::Draw();
+	Manager::GetScene()->UIDraw();
 }

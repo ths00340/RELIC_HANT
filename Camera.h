@@ -1,6 +1,6 @@
 //==============================================================================
 // Filename: Camera.h
-// Description: コンポーネントクラス継承したカメラクラスの定義
+// Description: コンポーネントクラスを継承したカメラクラスの定義
 //==============================================================================
 #pragma once
 #include <typeinfo>
@@ -24,6 +24,7 @@ private:
 	float ViewAng;//視野角
 	GameObject* tag = NULL;//ターゲットオブジェクト
 	float Range;//取得範囲
+	class cInputOperation* m_pInput;
 
 	/// 揺れ用変数
 	int  time = 0;

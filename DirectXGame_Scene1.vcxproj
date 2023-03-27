@@ -64,6 +64,7 @@
     <ClInclude Include="HitBox.h" />
     <ClInclude Include="InfinityEnemySpone.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="cInputOperation.h" />
     <ClInclude Include="LaserBullet.h" />
     <ClInclude Include="Leg_01.h" />
     <ClInclude Include="LoadingLogo.h" />
@@ -90,7 +91,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="ResultBackGrownd.h" />
+    <ClInclude Include="ResultBackGround.h" />
     <ClInclude Include="Result_S.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Enemy.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Status.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="DebugCamMove.h" />
+    <ClInclude Include="TargetCom.h" />
     <ClInclude Include="TextureDrawScene.h" />
     <ClInclude Include="TimeFrame.h" />
     <ClInclude Include="Timer2D.h" />
@@ -117,6 +119,7 @@
     <ClInclude Include="ViewCamera.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Wepon.h" />
+    <ClInclude Include="Win_Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AttitudeControl.cpp" />
@@ -155,6 +158,7 @@
     <ClCompile Include="HitBox.cpp" />
     <ClCompile Include="InfinityEnemySpone.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="cInputOperation.cpp" />
     <ClCompile Include="LaserBullet.cpp" />
     <ClCompile Include="Leg_01.cpp" />
     <ClCompile Include="LoadingLogo.cpp" />
@@ -179,7 +183,7 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="ResultBackGrownd.cpp" />
+    <ClCompile Include="ResultBackGround.cpp" />
     <ClCompile Include="Result_S.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShotGun_Physics.cpp" />
@@ -193,6 +197,7 @@
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="DebugCamMove.cpp" />
+    <ClCompile Include="TargetCom.cpp" />
     <ClCompile Include="TextureDrawScene.cpp" />
     <ClCompile Include="TimeFrame.cpp" />
     <ClCompile Include="Timer2D.cpp" />
@@ -202,6 +207,7 @@
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="ViewCamera.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Win_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\BrendTexturePS.hlsl">
@@ -515,6 +521,26 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Shader\pixelLightingVS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shader\RimLightingPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Shader\RimLightingVS.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).cso</ObjectFileOutput>

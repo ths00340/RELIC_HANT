@@ -1,3 +1,9 @@
+//==============================================================================
+// Filename: Explosion.h
+// Description: GameObjectクラスを継承したビルボード火花エフェクトクラスの定義
+//==============================================================================
+
+//現在デファードレンダリングの関係で非表示
 #pragma once
 #include "GameObject.h"
 class Explosion :
@@ -5,12 +11,12 @@ class Explosion :
 {
 private:
 	static ID3D11Buffer* m_VertexBuffer;
-	static ID3D11ShaderResourceView* m_Texture;
+	ID3D11ShaderResourceView* m_Texture;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
-	static ID3D11BlendState* blendState;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* blendState;
 	int m_Count = 0;
 	Float3 tagpos;
 	int maxcount = 9;

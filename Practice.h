@@ -7,8 +7,6 @@
 class Practice :
 	public BATTLE_DATA
 {
-	bool Once = true;
-	float ClTime = 0.0f;//I—¹—p•Ï”
 public:
 	void Init();
 	void Begin();

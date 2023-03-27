@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Wall.h
+// Description :GameObjectクラスを継承した範囲外明示化クラスの定義
+//==============================================================================
 #pragma once
 #include "GameObject.h"
 
@@ -15,7 +19,7 @@ class Wall :
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	ID3D11Buffer* m_IndexBuffer = NULL;	// インデックスバッファ
 	ID3D11ShaderResourceView* m_Texture = NULL;
-	ID3D11BlendState* blendState;
+	ID3D11BlendState* blendState = nullptr;
 	ID3D11VertexShader* m_VertexShader = NULL;
 	ID3D11PixelShader* m_PixelShader = NULL;
 	ID3D11InputLayout* m_VertexLayout = NULL;

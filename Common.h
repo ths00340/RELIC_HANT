@@ -1,3 +1,7 @@
+//==============================================================================
+// Filename: Common.h
+// Description :Sceneクラスを継承したフェード用シーンクラスの定義
+//==============================================================================
 #pragma once
 #include "Scene.h"
 #include "FadeParent.h"
@@ -9,7 +13,7 @@ protected:
 	bool OutFade = false;//終わったタイミングでTrue
 	int time = 0;
 	int DestroyTime = 60;
-	FadeParent* fade;
+	FadeParent* fade = nullptr;
 public:
 	virtual void Init() = 0;
 	virtual void Uninit() = 0;
@@ -38,7 +42,7 @@ public:
 		if (fade != NULL)
 			return fade;
 
-		T* gameObject = new T();
+		T* gameObject = DBG_NEW T();
 		FadeParent* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[(int)OBJ_LAYER::UI].push_back(gameObject);

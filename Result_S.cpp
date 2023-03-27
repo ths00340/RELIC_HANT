@@ -6,7 +6,7 @@
 #include "input.h"
 #include "Fade.h"
 #include "Result_S.h"
-#include "ResultBackGrownd.h"
+#include "ResultBackGround.h"
 #include "Blinking_Space.h"
 #include "TextureDrawScene.h"
 
@@ -25,7 +25,7 @@ void Result_S::Init()
 
 	//Input::SetPause(true);
 	//Input::ShowPoint(true);
-	AddGameObject<ResultBackGrownd>((int)OBJ_LAYER::UI);
+	AddGameObject<ResultBackGround>((int)OBJ_LAYER::UI);
 	AddGameObject<Blinking_Space>((int)OBJ_LAYER::UI);
 #ifndef MUTE
 	bgm = AddGameObject<Audio>((int)OBJ_LAYER::System);
@@ -46,7 +46,7 @@ void Result_S::Update()
 {
 	Scene::Update();
 
-	if (Input::GetKeyTrigger(VK_SPACE))
+	if (Input::GetKeyTrigger(DIK_SPACE))
 		Next = true;
 
 	if (Next)

@@ -7,12 +7,12 @@
 class Bazooka :
 	public Wepon
 {
-	static class Model* model;//–Cg
-	static class Model* hit;//’…’e—\‘ªƒ‚ƒfƒ‹
+	class Model* model;//–Cg
+	class Model* hit;//’…’e—\‘ªƒ‚ƒfƒ‹
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 
 	int fire_rate = 0;//”­ËƒŒ[ƒg
 

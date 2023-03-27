@@ -11,15 +11,11 @@
 #include "LaserBullet.h"
 #include "ParticleManager.h"
 
-Model* LaserBullet::m_model;
-
-ID3D11VertexShader* LaserBullet::m_VertexShader = NULL;
-ID3D11PixelShader* LaserBullet::m_PixelShader = NULL;
-ID3D11InputLayout* LaserBullet::m_VertexLayout = NULL;
-ID3D11BlendState* LaserBullet::blendState = NULL;
-
 void LaserBullet::Init()
 {
+	m_model = ResourceManager::AddModel("asset\\models\\laser02.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 	m_pos = Float3(-3.f, 1.f, 0.f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
 	m_rot = Float3(0.f, 0.f, 0.f);
@@ -100,7 +96,5 @@ void LaserBullet::Finish()
 
 void LaserBullet::Load()
 {
-	m_model = ResourceManager::AddModel("asset\\models\\laser02.obj");
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+	ResourceManager::AddModel("asset\\models\\laser02.obj");
 }

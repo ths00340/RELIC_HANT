@@ -142,8 +142,8 @@ void ResourceManager::StartUp()
 
 	//LIGHT_LIM
 	{
-		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LIGHT_LIM], &m_VertexLayout[(int)SHADER_S::LIGHT_LIM], "pixelLightingVS.cso");
-		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LIGHT_LIM], "pixelLightingPS.cso");
+		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LIGHT_LIM], &m_VertexLayout[(int)SHADER_S::LIGHT_LIM], "RimLightingVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LIGHT_LIM], "RimLightingPS.cso");
 	}
 
 	//NORMAL_TOON
@@ -245,5 +245,6 @@ void ResourceManager::Init()
 void ResourceManager::Uninit()
 {
 	DeleteModels();
+	DeleteTextures();
 	ReleaseState();
 }

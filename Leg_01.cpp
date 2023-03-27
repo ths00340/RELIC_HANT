@@ -7,14 +7,12 @@
 #include "model.h"
 #include "Leg_01.h"
 
-Model* Leg_01::flont;
-Model* Leg_01::Back;
-ID3D11VertexShader* Leg_01::m_VertexShader;
-ID3D11PixelShader* Leg_01::m_PixelShader;
-ID3D11InputLayout* Leg_01::m_VertexLayout;
-
 void Leg_01::Init()
 {
+	flont = ResourceManager::AddModel("asset\\models\\Bot01_Leg_Flont.obj");
+	Back = ResourceManager::AddModel("asset\\models\\Bot01_Leg_Back.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 }
 
 void Leg_01::Uninit()
@@ -75,8 +73,6 @@ void Leg_01::Draw()
 
 void Leg_01::Load()
 {
-	flont = ResourceManager::AddModel("asset\\models\\Bot01_Leg_Flont.obj");
-	Back = ResourceManager::AddModel("asset\\models\\Bot01_Leg_Back.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::AddModel("asset\\models\\Bot01_Leg_Flont.obj");
+	ResourceManager::AddModel("asset\\models\\Bot01_Leg_Back.obj");
 }

@@ -38,6 +38,6 @@ void main(in PS_EdgeInput In, out float4 outDiffuse : SV_Target)
 		outDiffuse = float4(0.f, 0.f, 0.f, 1.f);//ÉGÉbÉW
 	}
 	else {
-		outDiffuse = float4(0.f, 0.f, 0.f, 0.f);
+		outDiffuse = g_Texture.Sample(g_SamplerState, In.tex0);
 	}
 }

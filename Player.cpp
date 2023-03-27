@@ -31,37 +31,24 @@
 #include "CarWheel.h"
 #include "Leg_01.h"
 #include "HitBox.h"
-
-static ViewCamera* ViewCam = NULL;
-static Camera* Cam = NULL;
-Scene* scene;
-
-ID3D11VertexShader* Player::m_VertexShader;
-ID3D11PixelShader* Player::m_PixelShader;
-ID3D11InputLayout* Player::m_VertexLayout;
-Model* Player::m_model;
-static Float3 Fixdpos;
-
-ID3D11BlendState* Player::blendState;
-
-void Player::Load()
-{
-	m_model = ResourceManager::AddModel("asset\\models\\hummer_ho.obj");
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
-}
+#include "cInputOperation.h"
 
 void Player::Init()
 {
 	name = "Player";
 
+	m_model = ResourceManager::AddModel("asset\\models\\hummer_ho.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_TOON);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
+
 	int hp = 100;
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
 
+	m_pInput = AddComponent<cInputOperation>();
 	m_pSta = AddComponent<Status>();
-	Cam = AddComponent<Camera>();
-	Cam->SetRange(100.0f);
+	m_pCam = AddComponent<Camera>();
+	m_pCam->SetRange(100.0f);
 
 	switch (Manager::GetWepontype())
 	{
@@ -97,23 +84,22 @@ void Player::Init()
 	m_pSta->SetMAX(hp);
 
 	AddComponent<Gravity>();
-	AddComponent<SphereShadow>();
+	//AddComponent<SphereShadow>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::CUBE);
 	AddComponent<AttitudeControl>();
 
-	scene = Manager::GetScene();
+	m_pScene = Manager::GetScene();
 	m_pos = D3DXVECTOR3(-0.0f, 0.25f, 0.0f);
 	m_scl = TOOL::Uniform(0.125f);
 	m_rot = TOOL::Uniform();
-	Fixdpos = m_pos;
-	scene = Manager::GetScene();
-	ViewCam = scene->GetGameObject<ViewCamera>();
+	m_pScene = Manager::GetScene();
+	ViewCamera* pViewCam = m_pScene->GetGameObject<ViewCamera>();
 
-	m_pShotSE = scene->AddGameObject<Audio>(0);
+	m_pShotSE = m_pScene->AddGameObject<Audio>(0);
 	m_pShotSE->Load("asset\\SE\\ShotSound_2.wav");
 
-	if (ViewCam != NULL)
-		ViewCam->SetView(Cam);
+	if (pViewCam != NULL)
+		pViewCam->SetView(m_pCam);
 }
 
 void Player::Uninit() {}
@@ -131,39 +117,43 @@ void Player::Update()
 		m_Idol = 0;
 
 	m_pSta->AddWheel(Input::MouseWheel());
-	if (Input::IsMouseRightTriggered())
-		if (Cam)
-		{
-			Cam->FlontTarget<Enemy>();
-		}
 
-	if (!m_Destoroy)
-		m_pSta->SetShot(Input::IsMouseLeftPressed());
+	if (m_pInput)
+	{
+		if (m_pInput->GetAds())
+			if (m_pCam)
+			{
+				m_pCam->FlontTarget<Enemy>();
+			}
+
+		if (!m_Destoroy)
+			m_pSta->SetShot(m_pInput->GetShot());
+	}
 
 	//デバック用処理
 	{
-		if (Input::GetKeyTrigger(VK_F5))
+		if (Input::GetKeyTrigger(DIK_F5))
 			DeleteWepon();
 
-		if (Input::GetKeyTrigger('1'))
+		if (Input::GetKeyTrigger(DIK_1))
 			SetWepon<Bazooka>();
 
-		if (Input::GetKeyTrigger('2'))
+		if (Input::GetKeyTrigger(DIK_2))
 			SetWepon<ChargeLaser>();
 
-		if (Input::GetKeyTrigger('3'))
+		if (Input::GetKeyTrigger(DIK_3))
 			SetWepon<Gatling>();
 
-		if (Input::GetKeyTrigger('4'))
+		if (Input::GetKeyTrigger(DIK_4))
 			SetWepon<ShotGun_Physics>();
 
-		if (Input::GetKeyTrigger('5'))
+		if (Input::GetKeyTrigger(DIK_5))
 			SetDrive<CarWheel>();
 
-		if (Input::GetKeyTrigger('6'))
+		if (Input::GetKeyTrigger(DIK_6))
 			SetDrive<Leg_01>();
 
-		if (Input::GetKeyTrigger('K'))
+		if (Input::GetKeyTrigger(DIK_K))
 			m_pSta->SetHP(5);
 	}
 
@@ -233,8 +223,8 @@ void Player::Draw()
 
 void Player::Damage(int dmg)
 {
-	if (Cam)
-		Cam->SetShakeRot(15, TOOL::AToR(3.f));
+	if (m_pCam)
+		m_pCam->SetShakeRot(15, TOOL::AToR(3.f));
 
 	if (m_pSta)
 		m_pSta->AddHP(-dmg);
@@ -251,7 +241,7 @@ void Player::Finish()
 	float maxshake = 60.f;
 	Scene* scene = Manager::GetScene();
 	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, 7.5, 0.2f, 0);
-	Cam->SetShakePos();
+	m_pCam->SetShakePos();
 
 	SetDestroy();
 }
@@ -288,9 +278,9 @@ void Player::FixedUpdate()
 {
 	GameObject::FixedUpdate();
 
-	GameObject* obj = Cam->GetTarget();
+	GameObject* obj = m_pCam->GetTarget();
 
 	if (obj != NULL)
 		if (obj->GetDestory())
-			Cam->FlontTarget<Enemy>();
+			m_pCam->FlontTarget<Enemy>();
 }

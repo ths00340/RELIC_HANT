@@ -11,6 +11,11 @@ void BATTLE_DATA::Uninit()
 		delete Endurance;
 		Endurance = NULL;
 	}
+	if (TargetList != nullptr)
+	{
+		delete TargetList;
+		TargetList = nullptr;
+	}
 }
 
 void BATTLE_DATA::Update()
@@ -18,38 +23,32 @@ void BATTLE_DATA::Update()
 	if (!Start)
 	{
 		Begin();
+		return;
 	}
 
 	ExtraMove();
 
 	ClearObserver();
 
+	//§ŒÀŽžŠÔ‚ª‚ ‚é‚È‚ç
 	if (timer)
 	{
+		//ŽžŠÔ‚ÌI—¹”»’è
 		IsTimeLimit();
 	}
 }
 
 void BATTLE_DATA::IsTimeLimit()
 {
-	if (Start && !Clear && !GameOver)
+	if (!Clear && !GameOver)
 		ptime += TOOL::SecDiv(1.0f);
 
 	if (ptime > 1.f)
 	{
 		*Endurance -= 1;
 		ptime = ptime - 1.f;
-		//TOOL::Display((char*)"§ŒÀŽžŠÔ:%d/Hour %d/Min %d/Sec\n", Endurance->Hour, Endurance->Min, Endurance->Sec);
 	}
 	timer->SetTime(Endurance->Min, Endurance->Sec);
-}
-
-GameObject* BATTLE_DATA::GetTarget()
-{
-	if (Target)
-		return Target;
-	else
-		return nullptr;
 }
 
 TimeStr* BATTLE_DATA::GetTime()

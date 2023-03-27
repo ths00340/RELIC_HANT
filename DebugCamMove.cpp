@@ -32,34 +32,33 @@ void DebugCamMove::Uninit()
 
 void DebugCamMove::Update()
 {
-	if (Input::GetKeyPress(VK_SPACE))
+	if (Input::GetKeyPress(DIK_SPACE))
 	{
 		m_pos.y += TOOL::SecDiv(4.0f);
 	}
-	else if (Input::GetKeyPress(VK_SHIFT))
+	else if (Input::GetKeyPress(DIK_LSHIFT))
 	{
 		m_pos.y -= TOOL::SecDiv(4.0f);
 	}
-	if (Input::GetKeyPress('W'))
+	if (Input::GetKeyPress(DIK_W))
 	{
 		m_pos += GetForward() * TOOL::SecDiv(4.0f);
 	}
-	else if (Input::GetKeyPress('S'))
+	else if (Input::GetKeyPress(DIK_S))
 	{
 		m_pos -= GetForward() * TOOL::SecDiv(4.0f);
 	}
 
-	if (Input::GetKeyPress('A'))
+	if (Input::GetKeyPress(DIK_A))
 	{
 		m_pos -= GetSide() * TOOL::SecDiv(4.0f);
 	}
-	else if (Input::GetKeyPress('D'))
+	else if (Input::GetKeyPress(DIK_D))
 	{
 		m_pos += GetSide() * TOOL::SecDiv(4.0f);
 	}
-	m_rot.y += ((Input::GetCursor().x - (SCREEN_WIDTH / 2)) * 0.045f) / 60.0f;
-	m_rot.x += ((Input::GetCursor().y - (SCREEN_HEIGHT / 2)) * 0.045f) / 60.0f;
-
+	m_rot.y += Input::MouseRelative().x;
+	m_rot.x += Input::MouseRelative().y;
 	//Šp“x§ŒÀ
 	if (fabsf(m_rot.x) > TOOL::AToR(60))
 		if (m_rot.x > 0)

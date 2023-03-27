@@ -4,14 +4,13 @@
 #include "GameObject.h"
 #include "HitBox.h"
 
-Model* HitBox::model[(int)HITBOX_TYPE::TYPE_END];
-ID3D11VertexShader* HitBox::m_VertexShader;
-ID3D11PixelShader* HitBox::m_PixelShader;
-ID3D11InputLayout* HitBox::m_VertexLayout;
-ID3D11BlendState* HitBox::blendState = NULL;
-
 void HitBox::Init()
-{}
+{
+	model[(int)HITBOX_TYPE::CUBE] = ResourceManager::AddModel("asset\\models\\Hitbox_Cube.obj");
+	model[(int)HITBOX_TYPE::SPHERE] = ResourceManager::AddModel("asset\\models\\Hitbox_Sphere.obj");
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
+}
 
 void HitBox::Uninit()
 {}
@@ -85,8 +84,6 @@ void HitBox::Set(HITBOX_TYPE intype, bool indraw)
 
 void HitBox::Load()
 {
-	model[(int)HITBOX_TYPE::CUBE] = ResourceManager::AddModel("asset\\models\\Hitbox_Cube.obj");
-	model[(int)HITBOX_TYPE::SPHERE] = ResourceManager::AddModel("asset\\models\\Hitbox_Sphere.obj");
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
+	ResourceManager::AddModel("asset\\models\\Hitbox_Cube.obj");
+	ResourceManager::AddModel("asset\\models\\Hitbox_Sphere.obj");
 }

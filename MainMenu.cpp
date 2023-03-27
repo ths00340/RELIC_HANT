@@ -25,6 +25,8 @@
 
 //Component
 #include "Status.h"
+#include "cInputOperation.h"
+#include "AttitudeControl.h"
 
 NumberManager* a;
 
@@ -49,10 +51,13 @@ void MainMenu::Init()
 	abc->SetScl(TOOL::Uniform(0.25f));
 
 	pl = AddGameObject<Player>((int)OBJ_LAYER::GameObject);
+	pl->RemoveComponent<Status>();
+	pl->RemoveComponent<cInputOperation>();
+	pl->RemoveComponent<AttitudeControl>();
+	pl->DeleteDriveS();
+
 	pl->SetScl(TOOL::Uniform(0.3f));
 	pl->SetPos(Float3(5.f, 0.5f, 2.f));
-	pl->DeleteDriveS();
-	pl->RemoveComponent<Status>();
 
 	blur = AddGameObject<BulrS>((int)OBJ_LAYER::UI);
 
@@ -105,12 +110,12 @@ void MainMenu::Update()
 			a->SetStatus({ 300,300 }, { SCREEN_WIDTH * 0.5f,SCREEN_HEIGHT * 0.5f }, true);
 		}
 
-		if (Input::GetKeyTrigger('W'))
+		if (Input::GetKeyTrigger(DIK_W))
 		{
 			MissionNum = (MISSION)((int)MissionNum + 1);
 		}
 
-		if (Input::GetKeyTrigger('S'))
+		if (Input::GetKeyTrigger(DIK_S))
 		{
 			MissionNum = (MISSION)((int)MissionNum - 1);
 		}
@@ -119,13 +124,13 @@ void MainMenu::Update()
 	}
 
 	if (Manager::GetCommon() == NULL) {
-		if (Input::GetKeyTrigger('E'))
+		if (Input::GetKeyTrigger(DIK_E))
 		{
 			menuCam->Addmenu(1);
 			title->Settype(menuCam->Getmenu());
 		}
 
-		if (Input::GetKeyTrigger('Q'))
+		if (Input::GetKeyTrigger(DIK_Q))
 		{
 			menuCam->Addmenu(-1);
 			title->Settype(menuCam->Getmenu());
@@ -133,7 +138,7 @@ void MainMenu::Update()
 	}
 
 	{//ÉVÅ[ÉìëJà⁄ån
-		if (Input::GetKeyTrigger(VK_SPACE) && menutype == (int)MENU::STAGE)
+		if (Input::GetKeyTrigger(DIK_SPACE) && menutype == (int)MENU::STAGE)
 		{
 			if (Manager::GetCommon() == NULL)
 			{

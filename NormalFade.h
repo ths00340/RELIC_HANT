@@ -1,10 +1,14 @@
+//==============================================================================
+// Filename: NormalFade.h
+// Description: FadeParentクラスを継承した通常フェードクラスの定義
+//==============================================================================
 #pragma once
 #include "FadeParent.h"
 class NormalFade :
 	public FadeParent
 {
 	static ID3D11Buffer* m_VertexBuffer;//頂点バッファ
-	static ID3D11ShaderResourceView* m_Texture;//テクスチャー
+	ID3D11ShaderResourceView* m_Texture;//テクスチャー
 
 	ID3D11VertexShader* m_VertexShader;	//
 	ID3D11PixelShader* m_PixelShader;	//描画用プログラムを保存しておく用

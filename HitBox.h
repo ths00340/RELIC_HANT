@@ -15,12 +15,12 @@ enum class HITBOX_TYPE
 class HitBox :
 	public CComponent
 {
-	static Model* model[(int)HITBOX_TYPE::TYPE_END];
+	Model* model[(int)HITBOX_TYPE::TYPE_END];
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
-	static ID3D11BlendState* blendState;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* blendState;
 
 	Float3 m_size;
 	Float3 addpos;

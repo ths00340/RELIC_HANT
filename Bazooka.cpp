@@ -10,13 +10,6 @@
 #include "ExplosiveBullet.h"
 #include "Status.h"
 
-Model* Bazooka::model;
-Model* Bazooka::hit;
-
-ID3D11VertexShader* Bazooka::m_VertexShader;
-ID3D11PixelShader* Bazooka::m_PixelShader;
-ID3D11InputLayout* Bazooka::m_VertexLayout;
-
 void Bazooka::Predicted(Float3 spos, Float3 vel)
 {
 	Float3 pos = spos;
@@ -31,6 +24,10 @@ void Bazooka::Predicted(Float3 spos, Float3 vel)
 
 void Bazooka::Init()
 {
+	model = ResourceManager::AddModel("asset\\models\\Bazooka_01.obj");
+	hit = ResourceManager::AddModel("asset\\models\\hiteff.obj");
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 	fire_rate = TOOL::FrameMulti(0.75f);
 	dmg = 20;
 }
@@ -141,8 +138,6 @@ void Bazooka::Draw()
 
 void Bazooka::Load()
 {
-	model = ResourceManager::AddModel("asset\\models\\Bazooka_01.obj");
-	hit = ResourceManager::AddModel("asset\\models\\hiteff.obj");
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::AddModel("asset\\models\\Bazooka_01.obj");
+	ResourceManager::AddModel("asset\\models\\hiteff.obj");
 }

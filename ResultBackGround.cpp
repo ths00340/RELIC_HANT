@@ -1,6 +1,6 @@
-#include "ResultBackGrownd.h"
+#include "ResultBackGround.h"
 
-void ResultBackGrownd::Init()
+void ResultBackGround::Init()
 {
 	Polygon2D::Init();
 	LoadTex("asset/texture/ClearRes.png");

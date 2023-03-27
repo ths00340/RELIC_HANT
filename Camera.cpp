@@ -3,7 +3,7 @@
 #include "Camera.h"
 #include "GameObject.h"
 #include "Tools.h"
-#include "input.h"
+#include "cInputOperation.h"
 
 class Bazooka;
 
@@ -17,6 +17,12 @@ void Camera::Init()
 	ViewAng = 1.0f;
 	Range = 30.0f;
 	Mode = CamMode::TPP;
+
+	m_pInput = NULL;
+	if (m_pInput == NULL)
+	{
+		m_pInput = object->LoadComponent<cInputOperation>();
+	}
 }
 
 void Camera::Uninit() {}
@@ -29,7 +35,6 @@ void Camera::Update()
 	Angle.x = TOOL::Limit(Angle.x, TOOL::AToR(60.0f), -TOOL::AToR(60.0f));
 	if (!tag)
 	{
-		if (!Input::GetPause())
 		{
 			//mouse‚Å‰ñ“] //‘Š‘ÎˆÚ“®‚ÌŽæ“¾
 			//D3DXVECTOR2 relative = Input::MouseRelative();
@@ -40,11 +45,14 @@ void Camera::Update()
 			float x = 0.0f;
 			float y = 0.0f;
 
-			y = (Input::GetCursor().x - (SCREEN_WIDTH / 2)) / SCREEN_WIDTH;
-			x = (Input::GetCursor().y - (SCREEN_HEIGHT / 2)) / SCREEN_HEIGHT;
+			if (m_pInput != NULL)
+			{
+				y = (m_pInput->GetPov().x);
+				x = (m_pInput->GetPov().y);
+			}
 
-			Angle.y += TOOL::AToR(180.0f) * y * 0.5f;
-			Angle.x += TOOL::AToR(180.0f) * x * 0.5f;
+			Angle.y += TOOL::AToR(5.0f) * y;
+			Angle.x += TOOL::AToR(5.0f) * x;
 
 			if (Angle.y < -TOOL::AToR(360))
 				Angle.y = 0;

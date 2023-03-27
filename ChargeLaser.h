@@ -9,12 +9,12 @@ class ChargeEffect;//チャージ用エフェクト
 class ChargeLaser :
 	public Wepon
 {
-	static Model* model;
-	static Model* predictionLine;//予測線
+	Model* model;
+	Model* predictionLine;//予測線
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
 
 	int charge_rate = 0;//チャージ時間
 	ChargeEffect* eff = nullptr;//チャージ用エフェクト

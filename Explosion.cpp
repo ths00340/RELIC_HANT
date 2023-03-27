@@ -9,15 +9,18 @@
 
 #define DEFAULT_CHIP_SIZE (100.0f)
 
-ID3D11VertexShader* Explosion::m_VertexShader;
-ID3D11PixelShader* Explosion::m_PixelShader;
-ID3D11InputLayout* Explosion::m_VertexLayout;
-ID3D11ShaderResourceView* Explosion::m_Texture;
 ID3D11Buffer* Explosion::m_VertexBuffer;
-ID3D11BlendState* Explosion::blendState;
 
 void Explosion::Init()
 {
+	//テクスチャ読み込み
+	m_Texture = ResourceManager::AddTex("asset/texture/fire_.png");
+
+	//シェーダー関係
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
+
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+
 	m_pos = Float3(0.0f, 0.0f, 0.0f);
 
 	tagpos = m_pos;
@@ -149,21 +152,11 @@ void Explosion::Load()
 	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
 
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
-
-	//テクスチャ読み込み
-	m_Texture = ResourceManager::AddTex("asset/texture/fire_.png");
-
-	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
-
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
+	ResourceManager::AddTex("asset/texture/fire_.png");
 }
 
 void Explosion::UnLoad()
 {
-	if (m_Texture != nullptr)
-		m_Texture->Release();
-
 	if (m_VertexBuffer != nullptr)
 		m_VertexBuffer->Release();
 }

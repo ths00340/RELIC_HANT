@@ -8,7 +8,7 @@ class BOSS_01_InEn :
 	public BATTLE_DATA
 {
 private:
-	bool Once = false;//ˆê‰ñ‚µ‚©s“®‚µ‚È‚¢‚½‚ß‚Ìƒtƒ‰ƒO
+
 public:
 	void Init();
 	void Begin();

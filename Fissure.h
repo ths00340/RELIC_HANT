@@ -1,15 +1,19 @@
+//==============================================================================
+// Filename: Fissure.h
+// Description :GameObjectクラスを継承したひび割れクラスの定義
+//==============================================================================
 #pragma once
 #include "GameObject.h"
 class Fissure :
 	public GameObject
 {
 	static ID3D11Buffer* m_VertexBuffer;
-	static ID3D11ShaderResourceView* m_Texture;
+	ID3D11ShaderResourceView* m_Texture;
 
-	static ID3D11VertexShader* m_VertexShader;
-	static ID3D11PixelShader* m_PixelShader;
-	static ID3D11InputLayout* m_VertexLayout;
-	static ID3D11BlendState* blendState;
+	ID3D11VertexShader* m_VertexShader;
+	ID3D11PixelShader* m_PixelShader;
+	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* blendState;
 	int flame = 0;
 	int maxtime = 60;
 	float alfa = 0.0f;

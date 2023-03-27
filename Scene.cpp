@@ -52,7 +52,6 @@ void Scene::Loads()
 {
 	Bullet::Load();
 	ParticleManager::Load();
-	Player::Load();
 	Enemy::Load();
 	Skybox::Load();
 	Explosion::Load();

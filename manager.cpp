@@ -26,7 +26,7 @@ void Manager::Init()
 	ResourceManager::Init();
 	Audio::InitMaster();
 	common = NULL;
-	Input::SetPause(true);
+	//Input::SetPause(true);
 	Input::ShowPoint(true);
 
 	srand((unsigned int)timeGetTime());
@@ -98,7 +98,7 @@ void Manager::Draw()
 	Renderer::SetLight(light);
 	//*******１パス目 シャドウバッファの作成*******
 	Renderer::BeginDepth();
-	
+
 	Renderer::SetViewMatrix(&light.ViewMatrix);
 	Renderer::SetProjectionMatrix(&light.ProjectionMatrix);
 	NowScene->ShadowDraw();
@@ -109,7 +109,6 @@ void Manager::Draw()
 	NowScene->NoUIDraw();
 
 	Renderer::Begin();
-	//NowScene->Draw();
 	for (Scene* sce : addScene)
 	{
 		Renderer::GetDeviceContext()->RSSetViewports(1, sce->GetView());

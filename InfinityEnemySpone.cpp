@@ -10,17 +10,20 @@
 
 void InfinityEnemySpone::Init()
 {
+	BATTLE_DATA::Init();
 	sce = Manager::GetScene();
 	mtex = sce->AddGameObject<Stage02>((int)OBJ_LAYER::UI);
+
 	EnemyNum = 100;
 	for (int i = 0; i < EnemyNum; i++)
 	{
 		Enemy* en = NULL;
 		en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
 		en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
-		en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
+		Leg_01* _enLeg = en->LoadComponent<Leg_01>();
+		en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(_enLeg->GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
 	}
-	Endurance = new TimeStr();
+	Endurance = DBG_NEW TimeStr();
 	*Endurance = 60;
 	ptime = 0.f;
 	timer = sce->AddGameObject<Timer2D>((int)OBJ_LAYER::UI);
@@ -64,7 +67,8 @@ void InfinityEnemySpone::ExtraMove()
 			Enemy* en = NULL;
 			en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
 			en->SetScl(TOOL::Uniform(TOOL::RandF() * 0.5 + 0.25f));
-			en->SetPos(Float3((TOOL::RandF() * 200.f) - 100.f, fabsf(Leg_01::GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
+			Leg_01* _enLeg = en->LoadComponent<Leg_01>();
+			en->SetPos(Float3((TOOL::RandF() * 100.f) - 50.f, fabsf(_enLeg->GetModel()->Get_min().y * en->Getscl().y), (TOOL::RandF() * 200.0f) - 100.f));
 		}
 	}
 }

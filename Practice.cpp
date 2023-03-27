@@ -47,7 +47,7 @@ void Practice::Begin()
 
 void Practice::ClearObserver()
 {
-	if (Input::GetKeyPress(VK_SPACE))
+	if (Input::GetKeyPress(DIK_SPACE))
 	{
 		ClTime += TOOL::SecDiv(1.0f);
 	}

@@ -102,10 +102,10 @@ void Game::Uninit()
 
 	Renderer::GetDeviceContext()->RSSetState(ResourceManager::GetFrame(FRAME_S::CULL_BACK));
 
+	Scene::Uninit();
+
 	if (B_Data)
 		DeleteBattle();
-
-	Scene::Uninit();
 }
 
 void Game::Update()
@@ -222,7 +222,7 @@ void Game::Update()
 			if (cleartime >= TOOL::FrameMulti(3.f))
 			{
 				tex->SetDraw(true);
-				tex->SetMax(TOOL::FrameMulti(2.f));
+				tex->SetMax(TOOL::FrameMulti(0.5f));
 				Next = false;
 			}
 		}
@@ -233,7 +233,7 @@ void Game::Update()
 				{
 					{
 						fade = Manager::SetCommon<Fade>();
-						fade->Set(0.5f);
+						fade->Set(1.5f);
 					}
 				}
 

@@ -235,6 +235,12 @@ void ResourceManager::StartUp()
 		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::SIMPLE_SKY], &m_VertexLayout[(int)SHADER_S::SIMPLE_SKY], "SkyVS.cso");
 		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::SIMPLE_SKY], "SkyPS.cso");
 	}
+
+	//INSTANCE_LIGHT_ON
+	{
+		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::INSTANCE_LIGHT_ON], &m_VertexLayout[(int)SHADER_S::INSTANCE_LIGHT_ON], "InsvertexLightingVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::INSTANCE_LIGHT_ON], "InsvertexLightingPS.cso");
+	}
 }
 
 void ResourceManager::Init()

@@ -74,6 +74,15 @@ struct VS_IN
 	float2 TexCoord		: TEXCOORD0;
 };
 
+struct VS_IN_INSTANCE
+{
+	float4 Position		: POSITION0;
+	float4 Normal		: NORMAL0;
+	float4 Diffuse		: COLOR0;
+	float2 TexCoord		: TEXCOORD0;
+	uint InstanceId : SV_InstanceID;
+};
+
 struct PS_IN
 {
 	float4 Position		:SV_POSITION;
@@ -102,3 +111,10 @@ struct PS_OUT
 	float4 Diffuse :SV_Target0;//í èÌ
 	float4 Normal:SV_Target1;//ñ@ê¸
 };
+
+StructuredBuffer<matrix> WorldMatrix:register(t3);
+
+float4x4 GetInstanceTransform(int index)
+{
+	return transpose(WorldMatrix[index]);
+}

@@ -32,6 +32,10 @@ private:
 	ID3D11VertexShader* m_VertexShader;
 	ID3D11PixelShader* m_PixelShader;
 	ID3D11InputLayout* m_VertexLayout;
+	ID3D11BlendState* m_BlendState = nullptr;
+
+	ID3D11Buffer* m_pWorldBuffer = NULL;
+	ID3D11ShaderResourceView* m_pWorldSRV = NULL;
 
 	Float3 m_vel;
 	Float3 startpos;
@@ -52,11 +56,8 @@ public:
 		Float3 scl = Float3(0.15f, 0.15f, 0.15f),
 		Float3 Rot = Float3(1.0f, 1.0f, 1.0f));
 
-	void SetModel(PARTICLE_S partmodel, BLEND_S blend)
-	{
-		Bstate = blend;
-		Pstate = partmodel;
-	}
+	void SetModel(PARTICLE_S partmodel, BLEND_S blend);
+
 
 	static void Load();
 };

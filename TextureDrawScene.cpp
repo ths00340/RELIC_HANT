@@ -13,7 +13,6 @@ void TextureDrawScene::Init()
 	view.MaxDepth = 1.0f;
 	view.TopLeftX = 0.f;
 	view.TopLeftY = 0;
-	AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
 	DrawTexture = AddGameObject<Display>((int)OBJ_LAYER::UI);
 	DrawTexture->SetTexture(Renderer::GetRenderTexture(RENDER_::DIFFUSE));
 	for (int i = 1; i < (int)RENDER_::NUM; i++)

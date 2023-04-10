@@ -29,10 +29,14 @@ void Camera::Uninit() {}
 
 void Camera::Update()
 {
+	if (Mode == CamMode::FREE)
+		return;
+
 	Dir = m_tag - m_pos;
 
 	//äpìxêßå¿
 	Angle.x = TOOL::Limit(Angle.x, TOOL::AToR(60.0f), -TOOL::AToR(60.0f));
+	if (!m_pInput == NULL)
 	if (!tag)
 	{
 		{

@@ -20,12 +20,20 @@ void ViewCamera::Uninit()
 void ViewCamera::Update()
 {
 	if (viewCam == NULL)
+	{
 		viewCam = NoneCam;
+		return;
+	}
 }
 
 void ViewCamera::Draw()
 {
-	D3DXMatrixLookAtLH(viewCam->GetViewMatrixPoint(), viewCam->GetPosPoint(), viewCam->GetTagPoint(), viewCam->GetUpPoint());
+	Float3* pos,* tag,* up;
+	pos = viewCam->GetPosPoint();
+	tag = viewCam->GetTagPoint();
+	up = viewCam->GetUpPoint();
+
+	D3DXMatrixLookAtLH(viewCam->GetViewMatrixPoint(), pos,tag,up);
 
 	Renderer::SetViewMatrix(viewCam->GetViewMatrixPoint());
 

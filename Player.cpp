@@ -14,6 +14,7 @@
 #include "Camera_.h"
 #include "NumberManager.h"
 #include "Enemy.h"
+#include "BreakCam.h"
 
 ///Component
 #include "Status.h"
@@ -242,7 +243,8 @@ void Player::Finish()
 	Scene* scene = Manager::GetScene();
 	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, 7.5, 0.2f, 0);
 	m_pCam->SetShakePos();
-
+	BreakCam* bCam=scene->AddGameObject<BreakCam>((int)OBJ_LAYER::GameObject);
+	bCam->Set(m_pCam->GetPos(), m_pCam->GetUp(), m_pCam->GetTag());
 	SetDestroy();
 }
 

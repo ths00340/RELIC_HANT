@@ -34,6 +34,34 @@ void Model::Draw()
 	}
 }
 
+void Model::InstanceDraw(int num, ID3D11ShaderResourceView* inWpmRSV)
+{
+	// 頂点バッファ設定
+	UINT stride = sizeof(VERTEX_3D);
+	UINT offset = 0;
+	Renderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+
+	// インデックスバッファ設定
+	Renderer::GetDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	// プリミティブトポロジ設定
+	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
+	for (unsigned int i = 0; i < m_SubsetNum; i++)
+	{
+		// マテリアル設定
+		Renderer::SetMaterial(m_SubsetArray[i].Material.Material);
+
+		// テクスチャ設定
+		Renderer::GetDeviceContext()->PSSetShaderResources(0, 1, &m_SubsetArray[i].Material.Texture);
+		Renderer::GetDeviceContext()->VSSetShaderResources(3, 1, &inWpmRSV);
+
+		// ポリゴン描画
+		Renderer::GetDeviceContext()->DrawIndexedInstanced(m_SubsetArray[i].IndexNum, num, m_SubsetArray[i].StartIndex, 0, 0);
+	}
+}
+
 void Model::Load(const char* FileName)
 {
 	MODEL model;

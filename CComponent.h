@@ -24,4 +24,5 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() {};
 	void Setobj(GameObject* obj) { object = obj; }
+	GameObject* GetParent() { return object; }
 };

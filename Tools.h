@@ -14,7 +14,8 @@
 
 enum class CamMode {
 	FPP,
-	TPP
+	TPP,
+	FREE,
 };
 
 typedef D3DXVECTOR3 Float3;

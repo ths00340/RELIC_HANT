@@ -52,7 +52,7 @@ private:
 public:
 
 	void Draw();
-	//void InstanceDraw();
+	void InstanceDraw(int num, ID3D11ShaderResourceView* inWpmRSV);
 
 	void Load(const char* FileName);
 	void Unload();

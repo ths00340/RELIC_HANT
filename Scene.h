@@ -103,6 +103,7 @@ public:
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_back(gameObject);
+		TOOL::Display((char*)"’Ç‰ÁF%s\n", obj->GetName());
 		return gameObject;
 	}
 
@@ -113,6 +114,7 @@ public:
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_front(gameObject);
+		TOOL::Display((char*)"’Ç‰ÁF%s\n", obj->GetName());
 		return gameObject;
 	}
 

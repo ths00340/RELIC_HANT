@@ -15,6 +15,7 @@ private:
 	Model* m_model = nullptr;
 	ID3D11BlendState* blendState = nullptr;
 
+	D3DXMATRIX m_World;
 	Float3 m_vel = { 0.f,0.f,0.f };
 	Float3 m_ang_vel = { 0.f,0.f,0.f };
 	float Gravity = 0.f;
@@ -48,4 +49,5 @@ public:
 
 	void SetModel(Model* inmodel, BLEND_S blend);
 	ID3D11BlendState* GetBlendState()override { return blendState; }
+	D3DXMATRIX GetWorld() { return m_World; };
 };

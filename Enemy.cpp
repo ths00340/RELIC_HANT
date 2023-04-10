@@ -207,13 +207,13 @@ void Enemy::Finish()
 	mana = scene->AddGameObject<ParticleManager>(1);
 	mana->SetModel(PARTICLE_S::CUBE, BLEND_S::OBJ_TRANS);
 	mana->Set(m_pos,				//座標
-		TOOL::Uniform(),	//角度
+		TOOL::Uniform(),			//角度
 		2.0f * m_scl.z,				//サイズ
 		TOOL::RandF() * 15 + 5 + (50 * m_scl.z),//数
 		GRAVITY,					//重力値
 		2,							//生存時間
-		m_scl * 0.5f,
-		{ 3.f,3.f,3.f });				//サイズ
+		m_scl * 0.5f,				//サイズ
+		{ 3.f,3.f,3.f });			//回転速度	
 
 	SetDestroy();
 }

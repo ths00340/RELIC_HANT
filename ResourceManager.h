@@ -51,6 +51,7 @@ enum class SHADER_S
 	NORMAL_MAPING,
 	NORMAL,
 	SIMPLE_SKY,
+	INSTANCE_LIGHT_ON,
 	SHADER_E//シェーダーの最大数
 };
 

@@ -25,7 +25,6 @@ void Bazooka::Predicted(Float3 spos, Float3 vel)
 void Bazooka::Init()
 {
 	model = ResourceManager::AddModel("asset\\models\\Bazooka_01.obj");
-	hit = ResourceManager::AddModel("asset\\models\\hiteff.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 	fire_rate = TOOL::FrameMulti(0.75f);
@@ -123,17 +122,6 @@ void Bazooka::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 	model->Draw();
-
-	float a = TOOL::Magni_one(hit->Get_max().z, 15.f * object->Getscl().z);
-
-	D3DXMatrixScaling(&scl, a, a, a);
-	D3DXMatrixRotationYawPitchRoll(&rot, 0.0f, 0.0f, 0.0f);
-	D3DXMatrixTranslation(&trans, PredictedPoint.x, PredictedPoint.y, PredictedPoint.z);
-	world = scl * rot * trans;
-	Renderer::SetWorldMatrix(&world);
-
-	if (objS)
-		hit->Draw();
 }
 
 void Bazooka::Load()

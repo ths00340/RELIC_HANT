@@ -125,7 +125,7 @@ void Field::Init()
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
-	m_pos = Float3(0.f, 0.f, 0.f);
+	m_pos = Float3(0.f, -0.5f, 0.f);
 	m_scl = Float3(1.f, 1.f, 1.f);
 	m_rot = Float3(0.f, 0.f, 0.f);
 
@@ -228,5 +228,5 @@ float Field::GetHeight(Float3 inPos)
 	py = -((inPos.x - pos1.x) * n.x
 		+ (inPos.z - pos1.z) * n.z) / n.y + pos1.y;
 
-	return py;
+	return py - 0.5f;
 }

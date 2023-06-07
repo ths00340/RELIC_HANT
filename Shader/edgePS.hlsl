@@ -21,6 +21,7 @@ void main(in PS_EdgeInput In, out float4 outDiffuse : SV_Target)
 	Normal += g_NormalTexture.Sample(g_SamplerState, In.tex7.xy).xyz;
 	Normal += g_NormalTexture.Sample(g_SamplerState, In.tex8.xy).xyz;
 
+
 	//周囲のピクセルの深度値の平均を計算する。
 	float depth = g_DepthTexture.Sample(g_SamplerState, In.tex0).x;
 	float depth2 = g_DepthTexture.Sample(g_SamplerState, In.tex1).x;

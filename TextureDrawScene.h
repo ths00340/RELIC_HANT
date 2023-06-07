@@ -10,4 +10,6 @@ public:
 	void Uninit() {};
 	void Update() {};
 	void Draw();
+
+	void SetShader(SHADER_S inS);
 };

@@ -102,9 +102,10 @@ void Manager::Draw()
 	Renderer::SetViewMatrix(&light.ViewMatrix);
 	Renderer::SetProjectionMatrix(&light.ProjectionMatrix);
 	NowScene->ShadowDraw();
-	//影用シーン描画
 
 	Renderer::BeginTexture();
+
+
 	//レンダーテクスチャシーン描画//マルチレンダーになるかも…
 	NowScene->NoUIDraw();
 

@@ -29,3 +29,8 @@ void TextureDrawScene::Draw()
 	Game::Draw();
 	Manager::GetScene()->UIDraw();
 }
+
+void TextureDrawScene::SetShader(SHADER_S inS)
+{
+	DrawTexture->SetShader(inS);
+}

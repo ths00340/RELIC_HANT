@@ -85,7 +85,6 @@ void Player::Init()
 	m_pSta->SetMAX(hp);
 
 	AddComponent<Gravity>();
-	//AddComponent<SphereShadow>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::CUBE);
 	AddComponent<AttitudeControl>();
 

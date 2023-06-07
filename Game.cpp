@@ -43,8 +43,10 @@ void Game::Init()
 
 	m_pDefaultBlend = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 
-	////カメラ→3D→2Dの流れ
+	//カメラ管理用オブジェクトの追加 インスタンシングにするべき
 	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
+
+	//ステージ基礎の追加
 	AddGameObject<Skybox>((int)OBJ_LAYER::NoCaring);
 	AddGameObject<Field>((int)OBJ_LAYER::NoCaring);
 
@@ -145,6 +147,7 @@ void Game::Update()
 	//デバック用
 	if (debug_com)
 	{
+		//デバックカメラに切り替え
 		if (Input::GetKeyTrigger(DIK_F1)) {
 			if (GetGameObject<DebugCamMove>() == NULL)
 			{
@@ -155,23 +158,31 @@ void Game::Update()
 				GetGameObject<DebugCamMove>()->SetDestroy();
 		}
 
+		//疑似ヒットボックスの表示
 		if (Input::GetKeyTrigger(DIK_F2)) {
 			for (GameObject* obj : GetGameObjCmp<HitBox>())
 			{
 				HitBox* hit = obj->LoadComponent<HitBox>();
-				if (hit->GetDraw())
-					hit->Set(hit->Gettype());
-				else
-					hit->Set(hit->Gettype(), true);
+
+				hit->Set(hit->Gettype(), hit->GetDraw() ? false:true);
 			}
 		}
 
+		//ワイヤフレームの表示
 		if (Input::GetKeyTrigger(DIK_F3)) {
 			if (!WireFrame)
+			{
 				WireFrame = true;
+				Manager::GetAddScene<TextureDrawScene>()->SetShader(SHADER_S::LIGHT_OFF);
+			}
 			else
+			{
 				WireFrame = false;
+				Manager::GetAddScene<TextureDrawScene>()->SetShader(SHADER_S::EDGE);
+			}
 		}
+
+		//フレーム停止
 		if (Input::GetKeyTrigger(DIK_F4)) {
 			if (!Stop)
 				Stop = true;

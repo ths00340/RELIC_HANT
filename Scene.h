@@ -16,12 +16,12 @@
 #define LAYER_NUM (6)
 
 enum class OBJ_LAYER {
-	System,
-	NoCaring,
-	GameObject,
-	Enemy,
-	Billboard,
-	UI
+	System,		//システム用
+	NoCaring,	//視錐台カリングで消さないオブジェクト
+	GameObject,	//ゲームオブジェクト
+	Enemy,		//敵…管理しやすくするため
+	Billboard,	//ビルボード
+	UI			//UI周り
 };
 
 class Scene
@@ -225,6 +225,8 @@ public:
 	static const bool Getisload() { return isLoad; }
 private:
 	static bool isLoad;
+
+	//指定レイヤーのオブジェクト描画
 	void ObjectDraw(int inLayer)
 	{
 		if (inLayer >= LAYER_NUM)

@@ -59,7 +59,6 @@ void Tree::Draw()
 	vertex[3].TexCoord = Float2(1, 1);
 
 	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
-	//省略したら設定でDISCARDにしているため”昔書かれたことは無視される”
 
 	//入力レイアウト設定
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
@@ -82,19 +81,16 @@ void Tree::Draw()
 	invView._22 = 1.0f;
 	invView._23 = 0.0f;
 
-	// 木とカメラの位置のベクトルを取って、Yを0にして
-	// そのベクトルをNormalizeしたら代入します
 	D3DXVECTOR3 VectorOfDist = Vcam->GetView()->GetPos() - Getpos();
 	D3DXVECTOR3 XVectorOfDist = D3DXVECTOR3(VectorOfDist.x, 0.0f, VectorOfDist.z);
 	D3DXVECTOR3 NormalizeDist;
 	D3DXVec3Normalize(&NormalizeDist, &XVectorOfDist);
-	Float3 CForward = TOOL::VectorNormalize(Vcam->GetView()->GetDir());//TOOL::GetForward(Vcam->GetView()->GetAngle());
+	Float3 CForward = TOOL::VectorNormalize(Vcam->GetView()->GetDir());
 
 	invView._31 = CForward.x;
 	invView._32 = CForward.y;
 	invView._33 = CForward.z;
 
-	// ベクトルYとベクトルZの外積を求めたら代入します
 	D3DXVECTOR3 CrossDist;
 	D3DXVECTOR3 VectorY = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	D3DXVECTOR3 VectorZ = CForward;

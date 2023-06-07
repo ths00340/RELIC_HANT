@@ -12,10 +12,9 @@ void Boss01::Init()
 	for (int i = 0; i < 500; i++)
 	{
 		Tree* t = NULL;
-		t = AddGameObject<Tree>((int)OBJ_LAYER::Billboard);
+		t = AddGameObject<Tree>((int)OBJ_LAYER::GameObject);
 		t->LoadScl()->y = TOOL::RandF() * 10.0f + 8.0f;
 		t->Set(Float3((TOOL::RandF() * 400.0f) - 200.0f, t->Getscl().y - 1.0f, (TOOL::RandF() * 400.0f) - 200.0f));
-		t->AddComponent<SphereShadow>();
 	}
 }
 

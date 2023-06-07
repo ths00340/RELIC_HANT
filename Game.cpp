@@ -277,17 +277,7 @@ void Game::Draw()
 	for (int i = 0; i < 2; i++)//システム系
 		for (GameObject* object : g_GameObject[i])
 		{
-			if (object->GetBlendState() != nullptr)
-				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
-			else
-			{
-				Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
-			}
-
-			object->Draw();
-
-			for (CComponent* com : object->GetComponent())
-				com->Draw();
+			ObjectDraw(i);
 		}
 
 	for (int i = 2; i < LAYER_NUM - 1; i++)//視推台カリング
@@ -312,20 +302,7 @@ void Game::Draw()
 		}
 	}
 
-	for (GameObject* object : g_GameObject[LAYER_NUM - 1])//UI
-	{
-		if (object->GetBlendState() != nullptr)
-			Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
-		else
-		{
-			Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
-		}
-
-		object->Draw();
-
-		for (CComponent* com : object->GetComponent())
-			com->Draw();
-	}
+	UIDraw();
 }
 
 void Game::NoUIDraw()

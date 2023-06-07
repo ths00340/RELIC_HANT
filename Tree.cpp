@@ -12,7 +12,7 @@ void Tree::Init()
 	m_Texture = ResourceManager::AddTex("asset/texture/Tree01.png");
 
 	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
 	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 

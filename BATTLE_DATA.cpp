@@ -26,9 +26,9 @@ void BATTLE_DATA::Update()
 		return;
 	}
 
-	ExtraMove();
+	ExtraMove();//“Æ©‚Ì‹““®
 
-	ClearObserver();
+	ClearObserver();//ƒNƒŠƒA”»’è
 
 	//§ŒÀŠÔ‚ª‚ ‚é‚È‚ç
 	if (timer)

@@ -230,8 +230,8 @@ public:
 
 	void ObjectDraws(int inStartLayer, int inEndLayer)
 	{
-		int StartLayer = inEndLayer > inStartLayer ? inEndLayer : inStartLayer;
-		int EndLayer = inEndLayer > inStartLayer ? inStartLayer : inEndLayer;
+		int EndLayer = inEndLayer > inStartLayer ? inEndLayer : inStartLayer;
+		int StartLayer = inEndLayer > inStartLayer ? inStartLayer : inEndLayer;
 
 		if (StartLayer <0)
 			return;

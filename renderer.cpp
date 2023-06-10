@@ -138,7 +138,7 @@ void Renderer::Init()
 	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 	rasterizerDesc.CullMode = D3D11_CULL_BACK;
 	rasterizerDesc.DepthClipEnable = TRUE;
-	rasterizerDesc.MultisampleEnable = FALSE;
+	rasterizerDesc.FrontCounterClockwise = FALSE;
 
 	ID3D11RasterizerState* rs;
 	m_Device->CreateRasterizerState(&rasterizerDesc, &rs);

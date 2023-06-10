@@ -536,6 +536,15 @@ public:
 		return ret;
 	}
 
+	static Float3 CrossProduct(const Float3& v1, const Float3& v2)
+	{
+		return Float3(
+			v1.y * v2.z - v1.z * v2.y,
+			v1.z * v2.x - v1.x * v2.z,
+			v1.x * v2.y - v1.y * v2.x
+		);
+	}
+
 	//デバッグ出力用：printfと同じ使い方
 	static void Display(char* format, ...);
 };

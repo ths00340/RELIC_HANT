@@ -10,6 +10,7 @@ class NormalMove :
 {
 private:
 	bool Jump = false;
+	class cInputOperation* m_pInput;
 public:
 	NormalMove(GameObject* inobject) :DriveSystem(inobject) {
 		Jump = false;

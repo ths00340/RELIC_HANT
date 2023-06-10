@@ -3,7 +3,7 @@
 void main(in VS_IN_INSTANCE In, out PS_IN Out)
 {
 	float4x4 InstanceTest = GetInstanceTransform(In.InstanceId);
-	matrix wvp,ww;
+	matrix wvp, ww;
 	ww = mul(InstanceTest, World);
 
 	float4 worldNormal, normal;
@@ -24,9 +24,6 @@ void main(in VS_IN_INSTANCE In, out PS_IN Out)
 	Out.Position = mul(In.Position, InstanceTest);
 	Out.Position = mul(Out.Position, View);
 	Out.Position = mul(Out.Position, Projection);
-
-
-
 
 	Out.TexCoord = In.TexCoord;
 }

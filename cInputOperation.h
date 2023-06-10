@@ -33,6 +33,9 @@ public:
 	//拒否キーが押されているか否か
 	bool GetCancel();
 
+	//ジャンプキーが押されているか否か
+	bool GetJump();
+
 private:
 	int m_PadNum = 0;//割り振られたパッド
 	Float2 m_Pov;//視点

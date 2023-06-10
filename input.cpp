@@ -27,6 +27,8 @@ DIJOYSTATE2				Input::m_JoyState2[GAMEPAD_MAX] = { NULL,NULL,NULL,NULL };
 DIJOYSTATE				Input::m_JoyState[GAMEPAD_MAX] = { NULL,NULL,NULL,NULL };
 int						Input::m_PadCount = 0;			// 検出したパッドの数
 
+BOOL Input::m_isMidPointer = false;
+
 void Input::Init()
 {
 	HWND Window = WinGetWindowHandle();
@@ -46,6 +48,8 @@ void Input::Init()
 
 	GetCursorPos(&po);
 	ShowPoint(false);
+
+	m_isMidPointer = false;
 }
 
 void Input::Uninit()
@@ -64,6 +68,22 @@ void Input::Uninit()
 void Input::Update()
 {
 	GetCursorPos(&po);
+
+	if (m_isMidPointer)
+	{
+		HWND hDesktop = GetDesktopWindow();
+		HWND hWindow = WinGetWindowHandle();
+
+		WINDOWINFO windowInfo;
+		windowInfo.cbSize = sizeof(WINDOWINFO);
+
+		GetWindowInfo(hDesktop, &windowInfo);
+
+		RECT m_rect;
+		GetWindowRect(hWindow, &m_rect);
+
+		SetCursorPos(windowInfo.rcWindow.left + (m_rect.right / 2), windowInfo.rcWindow.top + (m_rect.bottom / 2));
+	}
 
 	UpadteKeyboard();
 	UpdateMouse();

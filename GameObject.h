@@ -13,7 +13,6 @@
 #include "CComponent.h"
 #include "Bazooka.h"
 
-
 class GameObject
 {
 protected:

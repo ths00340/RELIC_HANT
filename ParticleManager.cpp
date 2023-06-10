@@ -52,7 +52,6 @@ void ParticleManager::Init()
 		}
 		delete[] inWorld;
 
-
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvd;
 		ZeroMemory(&srvd, sizeof(srvd));
 		srvd.Format = DXGI_FORMAT_UNKNOWN;
@@ -65,8 +64,6 @@ void ParticleManager::Init()
 			int failed = 1;
 		}
 	}
-
-
 
 	name = "ParticleManager";
 	Bstate = BLEND_S::OBJ_TRANS;
@@ -112,7 +109,6 @@ void ParticleManager::Update()
 	}
 	Renderer::GetDeviceContext()->UpdateSubresource(m_pWorldBuffer, 0, NULL, inWorld, 0, 0);
 }
-
 
 void ParticleManager::Draw()
 {

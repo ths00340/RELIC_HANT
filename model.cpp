@@ -47,7 +47,6 @@ void Model::InstanceDraw(int num, ID3D11ShaderResourceView* inWpmRSV)
 	// プリミティブトポロジ設定
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-
 	for (unsigned int i = 0; i < m_SubsetNum; i++)
 	{
 		// マテリアル設定

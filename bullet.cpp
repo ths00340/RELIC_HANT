@@ -54,12 +54,12 @@ void Bullet::Update()
 				ParticleManager* mana = Manager::GetScene()->AddGameObject<ParticleManager>(1);
 				mana->SetModel(PARTICLE_S::DEBRIS, BLEND_S::OBJ_OPAQUE);
 				mana->Set(
-					m_pos, 
-					TOOL::Uniform(), 
-					0.3f * m_scl.z, 
-					TOOL::RandF() * 5, 
-					GRAVITY, 
-					1, 
+					m_pos,
+					TOOL::Uniform(),
+					0.3f * m_scl.z,
+					TOOL::RandF() * 5,
+					GRAVITY,
+					1,
 					TOOL::Uniform(0.25) * m_scl.z,
 					Float3(3.0f, 3.0f, 3.0f)
 				);

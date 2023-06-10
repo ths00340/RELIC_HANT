@@ -70,8 +70,11 @@ void Game::Init()
 #endif // !MUTE
 	debug_com = false;
 
-	//Input::SetPause(false);
 	Input::ShowPoint(false);
+	Input::CangeFixedPointer();
+	Pause = false;
+
+	WireFrame = false;
 
 	GameObject* out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
 	out->SetPos({ 0.0f,50.0f,200.0f });
@@ -96,11 +99,9 @@ void Game::Uninit()
 	if (bgm != NULL)
 		bgm->StopAll();
 
-	//if (!Input::GetPause())
-	//{
-	//	Input::SetPause(true);
-	//	Input::ShowPoint(true);
-	//}
+	//Input::ShowPoint(true);
+	Input::EndFixedPointer();
+	Pause = false;
 
 	Renderer::GetDeviceContext()->RSSetState(ResourceManager::GetFrame(FRAME_S::CULL_BACK));
 
@@ -115,6 +116,14 @@ void Game::Update()
 	Scene::Update();
 	if (B_Data)
 		B_Data->Update();
+
+	if (Input::GetKeyTrigger(DIK_TAB))
+	{
+		Input::CangeFixedPointer();
+		Pause = Pause ? false : true;
+		Input::ShowPoint(Pause);
+		SetAllStop(Pause);
+	}
 
 	//範囲外の設定
 	{
@@ -164,22 +173,20 @@ void Game::Update()
 			{
 				HitBox* hit = obj->LoadComponent<HitBox>();
 
-				hit->Set(hit->Gettype(), hit->GetDraw() ? false:true);
+				hit->Set(hit->Gettype(), hit->GetDraw() ? false : true);
 			}
 		}
 
 		//ワイヤフレームの表示
 		if (Input::GetKeyTrigger(DIK_F3)) {
+
+
 			if (!WireFrame)
-			{
-				WireFrame = true;
 				Manager::GetAddScene<TextureDrawScene>()->SetShader(SHADER_S::LIGHT_OFF);
-			}
 			else
-			{
-				WireFrame = false;
 				Manager::GetAddScene<TextureDrawScene>()->SetShader(SHADER_S::EDGE);
-			}
+
+			WireFrame = WireFrame ? false : true;
 		}
 
 		//フレーム停止
@@ -230,7 +237,7 @@ void Game::Update()
 			bgm->Stop();
 #endif//MUTE
 			cleartime++;
-			if (cleartime >= TOOL::FrameMulti(3.f))
+			if (cleartime >= TOOL::FrameMulti(2.f))
 			{
 				tex->SetDraw(true);
 				tex->SetMax(TOOL::FrameMulti(0.5f));
@@ -244,7 +251,7 @@ void Game::Update()
 				{
 					{
 						fade = Manager::SetCommon<Fade>();
-						fade->Set(1.5f);
+						fade->Set(1.f);
 					}
 				}
 
@@ -277,17 +284,7 @@ void Game::Draw()
 	for (int i = 0; i < 2; i++)//システム系
 		for (GameObject* object : g_GameObject[i])
 		{
-			if (object->GetBlendState() != nullptr)
-				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
-			else
-			{
-				Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
-			}
-
-			object->Draw();
-
-			for (CComponent* com : object->GetComponent())
-				com->Draw();
+			ObjectDraw(i);
 		}
 
 	for (int i = 2; i < LAYER_NUM - 1; i++)//視推台カリング
@@ -312,20 +309,7 @@ void Game::Draw()
 		}
 	}
 
-	for (GameObject* object : g_GameObject[LAYER_NUM - 1])//UI
-	{
-		if (object->GetBlendState() != nullptr)
-			Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
-		else
-		{
-			Renderer::GetDeviceContext()->OMSetBlendState(m_pDefaultBlend, blendFactor, 0xffffffff);
-		}
-
-		object->Draw();
-
-		for (CComponent* com : object->GetComponent())
-			com->Draw();
-	}
+	UIDraw();
 }
 
 void Game::NoUIDraw()

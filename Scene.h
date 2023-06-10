@@ -75,25 +75,9 @@ public:
 			ObjectDraw(i);
 		}
 	}
-	virtual void ShadowDraw() {
-		for (int i = 1; i < (int)LAYER_NUM - 2; i++)
-		{
-			ObjectDraw(i);
-		}
-	};
-
-	virtual void NoUIDraw() {
-		for (int i = 0; i < (int)LAYER_NUM - 2; i++)
-		{
-			ObjectDraw(i);
-		}
-	};
 
 	virtual void UIDraw() {
-		for (int i = (int)LAYER_NUM - 2; i < (int)LAYER_NUM; i++)
-		{
-			ObjectDraw(i);
-		}
+		ObjectDraw((int)OBJ_LAYER::UI);
 	};
 
 	template <typename T>//テンプレート関数
@@ -223,8 +207,6 @@ public:
 	static void Loads();
 	static void UnLoads();
 	static const bool Getisload() { return isLoad; }
-private:
-	static bool isLoad;
 
 	//指定レイヤーのオブジェクト描画
 	void ObjectDraw(int inLayer)
@@ -245,4 +227,30 @@ private:
 				com->Draw();
 		}
 	}
+
+	void ObjectDraws(int inStartLayer, int inEndLayer)
+	{
+		int EndLayer = inEndLayer > inStartLayer ? inEndLayer : inStartLayer;
+		int StartLayer = inEndLayer > inStartLayer ? inStartLayer : inEndLayer;
+
+		if (StartLayer < 0)
+			return;
+
+		for (int i = StartLayer; i <= EndLayer; i++)
+			ObjectDraw(i);
+	}
+
+	void ObjectDraws(OBJ_LAYER inStartLayer, OBJ_LAYER inEndLayer)
+	{
+		int EndLayer = (int)inEndLayer > (int)inStartLayer ? (int)inEndLayer : (int)inStartLayer;
+		int StartLayer = (int)inEndLayer > (int)inStartLayer ? (int)inStartLayer : (int)inEndLayer;
+
+		if (StartLayer < 0)
+			return;
+
+		for (int i = StartLayer; i <= EndLayer; i++)
+			ObjectDraw(i);
+	}
+private:
+	static bool isLoad;
 };

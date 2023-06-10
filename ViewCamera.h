@@ -21,7 +21,6 @@ public:
 	void SetView(Camera* incam)
 	{
 		viewCam = incam;
-
 	}
 	Camera* GetView() { return viewCam; };
 

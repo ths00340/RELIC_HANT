@@ -213,7 +213,7 @@ void Enemy::Finish()
 		GRAVITY,					//重力値
 		2,							//生存時間
 		m_scl * 0.5f,				//サイズ
-		{ 3.f,3.f,3.f });			//回転速度	
+		{ 3.f,3.f,3.f });			//回転速度
 
 	SetDestroy();
 }

@@ -148,13 +148,16 @@ void Player::Update()
 			SetWepon<ShotGun_Physics>();
 
 		if (Input::GetKeyTrigger(DIK_5))
+		{
+			SetDriveS<CarMove>();
 			SetDrive<CarWheel>();
+		}
 
 		if (Input::GetKeyTrigger(DIK_6))
+		{
 			SetDrive<Leg_01>();
-
-		if (Input::GetKeyTrigger(DIK_K))
-			m_pSta->SetHP(5);
+			SetDriveS<NormalMove>();
+		}
 	}
 
 	{
@@ -242,7 +245,7 @@ void Player::Finish()
 	Scene* scene = Manager::GetScene();
 	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, 7.5, 0.2f, 0);
 	m_pCam->SetShakePos();
-	BreakCam* bCam=scene->AddGameObject<BreakCam>((int)OBJ_LAYER::GameObject);
+	BreakCam* bCam = scene->AddGameObject<BreakCam>((int)OBJ_LAYER::GameObject);
 	bCam->Set(m_pCam->GetPos(), m_pCam->GetUp(), m_pCam->GetTag());
 	SetDestroy();
 }

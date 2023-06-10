@@ -105,7 +105,6 @@ void Manager::Draw()
 
 	Renderer::BeginTexture();
 
-
 	//レンダーテクスチャシーン描画//マルチレンダーになるかも…
 	NowScene->ObjectDraws(OBJ_LAYER::System, OBJ_LAYER::Billboard);
 

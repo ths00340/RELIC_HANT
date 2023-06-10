@@ -56,6 +56,7 @@ private:
 	static DIMOUSESTATE2   m_MouseState;	// マウスのダイレクトな状態
 	static DIMOUSESTATE2   m_MouseTrigger;	// 押された瞬間だけON
 	static POINT po;
+	static BOOL m_isMidPointer;
 
 	//パッド
 	static LPDIRECTINPUTDEVICE8 m_pGamePad[GAMEPAD_MAX];
@@ -150,6 +151,16 @@ public:
 
 	static int MouseWheel() {
 		return m_MouseTrigger.lZ / 120;
+	}
+
+	static void CangeFixedPointer()
+	{
+		m_isMidPointer = m_isMidPointer ? false : true;
+	}
+
+	static void EndFixedPointer()
+	{
+		m_isMidPointer = false;
 	}
 
 	static BOOL IsButtonPressed(int padNo, DWORD button);

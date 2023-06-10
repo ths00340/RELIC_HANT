@@ -1,7 +1,8 @@
+#include "Field.h"
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
-#include "Field.h"
+
 
 void Field::Init()
 {
@@ -78,7 +79,6 @@ void Field::Init()
 		//横には2回ループする
 		for (int y = 0; y < (CHIP_Y + 1); y++)
 		{
-			//y_t = rand() % 50;
 			//縦には必要枚数+1回ループする
 			for (int x = 0; x < (CHIP_X + 1); x++)
 			{
@@ -112,7 +112,7 @@ void Field::Init()
 				vx = (pVtx[i + CHIP_X].Position + pVtx[i - CHIP_X].Position);
 
 				float h = (vz.y + vx.y) * 0.25f;
-				pVtx[i].Position.y = h + ((TOOL::RandF() * 0.5f));
+				pVtx[i].Position.y = h + ((TOOL::RandF() * 0.5f))-0.5f;
 			}
 
 		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
@@ -125,7 +125,7 @@ void Field::Init()
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
-	m_pos = Float3(0.f, -0.5f, 0.f);
+	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(1.f, 1.f, 1.f);
 	m_rot = Float3(0.f, 0.f, 0.f);
 
@@ -215,18 +215,16 @@ float Field::GetHeight(Float3 inPos)
 		Float3 v10;
 		v10 = pos0 - pos1;
 		D3DXVec3Cross(&n, &v10, &v12);
-		//TOOL::Display((char*)"左上ｪ！\n");
 	}
 	else
 	{
 		Float3 v13;
 		v13 = pos1 - pos3;
 		D3DXVec3Cross(&n, &v12, &v13);
-		//TOOL::Display((char*)"右下ｧ！\n");
 	}
 
 	py = -((inPos.x - pos1.x) * n.x
 		+ (inPos.z - pos1.z) * n.z) / n.y + pos1.y;
 
-	return py - 0.5f;
+	return py;
 }

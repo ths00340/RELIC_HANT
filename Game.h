@@ -28,6 +28,7 @@ protected:
 	bool Start = false;
 	bool Once = false;
 	bool Stop = false;
+	bool Pause = false;
 
 	int cleartime = 0;
 

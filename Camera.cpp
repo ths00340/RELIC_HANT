@@ -37,34 +37,34 @@ void Camera::Update()
 	//Šp“x§ŒÀ
 	Angle.x = TOOL::Limit(Angle.x, TOOL::AToR(60.0f), -TOOL::AToR(60.0f));
 	if (!m_pInput == NULL)
-	if (!tag)
-	{
+		if (!tag)
 		{
-			//mouse‚Å‰ñ“] //‘Š‘ÎˆÚ“®‚ÌŽæ“¾
-			//D3DXVECTOR2 relative = Input::MouseRelative();
-			//Angle.y += ((relative.x) * 0.045f) / 60.0f;
-			//Angle.x += ((relative.y) * 0.025f) / 60.0f;
-
-			//mouse‚Å‰ñ“]@^‚ñ’†ŒÅ’è‚ÌˆÚ“®’lŽQÆ
-			float x = 0.0f;
-			float y = 0.0f;
-
-			if (m_pInput != NULL)
 			{
-				y = (m_pInput->GetPov().x);
-				x = (m_pInput->GetPov().y);
+				//mouse‚Å‰ñ“] //‘Š‘ÎˆÚ“®‚ÌŽæ“¾
+				//D3DXVECTOR2 relative = Input::MouseRelative();
+				//Angle.y += ((relative.x) * 0.045f) / 60.0f;
+				//Angle.x += ((relative.y) * 0.025f) / 60.0f;
+
+				//mouse‚Å‰ñ“]@^‚ñ’†ŒÅ’è‚ÌˆÚ“®’lŽQÆ
+				float x = 0.0f;
+				float y = 0.0f;
+
+				if (m_pInput != NULL)
+				{
+					y = (m_pInput->GetPov().x);
+					x = (m_pInput->GetPov().y);
+				}
+
+				Angle.y += TOOL::AToR(5.0f) * y;
+				Angle.x += TOOL::AToR(5.0f) * x;
+
+				if (Angle.y < -TOOL::AToR(360))
+					Angle.y = 0;
+
+				if (Angle.y > TOOL::AToR(360))
+					Angle.y = 0;
 			}
-
-			Angle.y += TOOL::AToR(5.0f) * y;
-			Angle.x += TOOL::AToR(5.0f) * x;
-
-			if (Angle.y < -TOOL::AToR(360))
-				Angle.y = 0;
-
-			if (Angle.y > TOOL::AToR(360))
-				Angle.y = 0;
 		}
-	}
 	if (tag)
 		if (!TOOL::CanHit(object->Getpos(), tag->Getpos(), Range))
 		{

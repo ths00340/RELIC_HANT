@@ -28,12 +28,12 @@ void ViewCamera::Update()
 
 void ViewCamera::Draw()
 {
-	Float3* pos,* tag,* up;
+	Float3* pos, * tag, * up;
 	pos = viewCam->GetPosPoint();
 	tag = viewCam->GetTagPoint();
 	up = viewCam->GetUpPoint();
 
-	D3DXMatrixLookAtLH(viewCam->GetViewMatrixPoint(), pos,tag,up);
+	D3DXMatrixLookAtLH(viewCam->GetViewMatrixPoint(), pos, tag, up);
 
 	Renderer::SetViewMatrix(viewCam->GetViewMatrixPoint());
 

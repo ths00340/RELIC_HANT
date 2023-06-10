@@ -101,3 +101,12 @@ bool cInputOperation::GetCancel()
 
 	return ret;
 }
+
+bool cInputOperation::GetJump()
+{
+	bool ret = false;
+	if (Input::GetKeyPress(DIK_SPACE) || Input::IsButtonPressed(m_PadNum, BUTTON_B))
+		ret = true;
+
+	return ret;
+}

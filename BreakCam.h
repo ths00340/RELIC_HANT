@@ -7,7 +7,7 @@
 
 class Camera;
 class BreakCam :
-    public GameObject
+	public GameObject
 {
 private:
 	Camera* cam = NULL;
@@ -19,6 +19,4 @@ public:
 	void Draw();
 
 	void Set(Float3 inPos, Float3 inUp, Float3 inTag);
-
 };
-

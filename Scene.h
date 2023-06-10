@@ -233,17 +233,15 @@ public:
 		int EndLayer = inEndLayer > inStartLayer ? inEndLayer : inStartLayer;
 		int StartLayer = inEndLayer > inStartLayer ? inStartLayer : inEndLayer;
 
-		if (StartLayer <0)
+		if (StartLayer < 0)
 			return;
 
 		for (int i = StartLayer; i <= EndLayer; i++)
 			ObjectDraw(i);
-
 	}
 
 	void ObjectDraws(OBJ_LAYER inStartLayer, OBJ_LAYER inEndLayer)
 	{
-
 		int EndLayer = (int)inEndLayer > (int)inStartLayer ? (int)inEndLayer : (int)inStartLayer;
 		int StartLayer = (int)inEndLayer > (int)inStartLayer ? (int)inStartLayer : (int)inEndLayer;
 
@@ -252,7 +250,6 @@ public:
 
 		for (int i = StartLayer; i <= EndLayer; i++)
 			ObjectDraw(i);
-
 	}
 private:
 	static bool isLoad;

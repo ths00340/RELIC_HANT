@@ -58,6 +58,5 @@ public:
 
 	void SetModel(PARTICLE_S partmodel, BLEND_S blend);
 
-
 	static void Load();
 };

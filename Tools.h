@@ -49,6 +49,11 @@ public:
 		return (float)rand() / (float)RAND_MAX;
 	}
 
+	static float RandF(float in)
+	{
+		return RandF() * in;
+	}
+
 	//ˆê’è‹——£ˆÈã
 	static bool CanRange(Float3 pos1, Float3 pos2, float range)
 	{

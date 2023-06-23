@@ -49,10 +49,10 @@ void Enemy::Init()
 	time = 0;
 
 	//その他コンポーネントの登録&初期設定
-	AddComponent<Gravity>();
+
 	AddComponent<Leg_01>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::SPHERE);
-
+	AddComponent<Gravity>();
 	//オブジェクトの初期設定
 	m_pos = Float3(0.f, 100.f, 0.f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
@@ -84,10 +84,6 @@ void Enemy::Update()
 {
 	Camera* cam = NULL;
 	cam = LoadComponent<Camera>();
-	if (m_pos.y <= fabsf(m_model->Get_min().y * m_scl.y))
-	{
-		m_pos.y = fabsf(m_model->Get_min().y * m_scl.y);
-	}
 
 	time++;
 	Scene* scene = Manager::GetScene();
@@ -151,6 +147,7 @@ void Enemy::Draw()
 	D3DXMatrixScaling(&scl, m_scl.x, m_scl.y, m_scl.z);
 	D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y + m_addrot.y, m_rot.x + m_addrot.x, m_rot.z + m_addrot.z);
 	D3DXMatrixTranslation(&trans, m_pos.x + m_addpos.x, m_pos.y + m_addpos.y, m_pos.z + m_addpos.z);
+
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 	m_model->Draw();

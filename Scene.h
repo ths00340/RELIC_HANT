@@ -113,7 +113,7 @@ public:
 					return (T*)object;
 				}
 			}
-		return NULL;
+		return nullptr;
 	}
 
 	template <typename T>

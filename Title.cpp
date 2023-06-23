@@ -29,7 +29,6 @@ void Title::Init()
 	view.TopLeftY = 0;
 	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
 	AddGameObject<Skybox>((int)OBJ_LAYER::GameObject);
-	//AddGameObject<Field>((int)OBJ_LAYER::GameObject)->SetPos({0.0f,-0.3f,0.0f});
 	dodai = AddGameObject<Dodai>((int)OBJ_LAYER::GameObject);
 	dodai->SetPos({ 0.f,0.08f,3.f });
 

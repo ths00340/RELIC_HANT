@@ -3,7 +3,6 @@
 #include "manager.h"
 #include "renderer.h"
 
-
 void Field::Init()
 {
 	name = "Field";
@@ -15,7 +14,6 @@ void Field::Init()
 
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd{};
-	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DYNAMIC;
 	bd.ByteWidth = sizeof(VERTEX_3D) * numVertex;
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -24,7 +22,6 @@ void Field::Init()
 	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
 	// インデックスバッファ生成
-	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DYNAMIC;
 	bd.ByteWidth = sizeof(unsigned short) * numIndex;
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
@@ -35,30 +32,17 @@ void Field::Init()
 	D3D11_MAPPED_SUBRESOURCE msr;
 	Renderer::GetDeviceContext()->Map(m_IndexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 
-	unsigned short* pIdx = (unsigned short*)msr.pData;
+	unsigned short* pIdx = static_cast<unsigned short*>(msr.pData);
 
 	//n枚に対応できるインデックスの設定を考えてみましょう！
 	int I = 0;
 	int J = 0;
-	int count = 0;
 	for (int i = 0; i < CHIP_Y; i++)
 	{
 		for (int j = 0; j < CHIP_X + 1; j++)
 		{
 			pIdx[I * 2 + 0] = (CHIP_X + 1) + J;
 			pIdx[(I * 2) + 1] = J;
-
-			if ((I % 2) == 0)
-			{
-				Mai[count].a = pIdx[I * 2 + 0];
-				Mai[count].b = pIdx[(I * 2) + 1];
-			}
-			if ((I % 2) == 1)
-			{
-				Mai[count].c = pIdx[I * 2 + 0];
-				Mai[count].d = pIdx[(I * 2) + 1];
-				count++;
-			}
 			I++;
 			J++;
 		}
@@ -101,18 +85,27 @@ void Field::Init()
 			{
 				int i = y * (CHIP_X + 1) + x;
 				Float3 vx, vz, vn;
-				vz = pVtx[i + 1].Position - pVtx[i - 1].Position;
-				vx = pVtx[i + CHIP_X].Position - pVtx[i - CHIP_X].Position;
-
-				D3DXVec3Cross(&vn, &vz, &vx);
-				D3DXVec3Normalize(&vn, &vn);
-				pVtx[i].Normal = vn;
-
 				vz = (pVtx[i + 1].Position + pVtx[i - 1].Position);
 				vx = (pVtx[i + CHIP_X].Position + pVtx[i - CHIP_X].Position);
 
-				float h = (vz.y + vx.y) * 0.25f;
-				pVtx[i].Position.y = h + ((TOOL::RandF() * 0.5f))-0.5f;
+				float h = (vz.y + vx.y) * 0.25f;//平均値
+				pVtx[i].Position.y = h - TOOL::RandF(0.5f);
+			}
+
+		for (int y = 1; y < (CHIP_Y); y++)
+			for (int x = 1; x < (CHIP_X); x++)
+			{
+				int i = y * (CHIP_X + 1) + x;
+
+				float texX = pVtx[i + 1].Position.y;
+				float texx = pVtx[i - 1].Position.y;
+				float texZ = pVtx[i + (CHIP_X+1)].Position.y;
+				float texz = pVtx[i - (CHIP_X+1)].Position.y;
+
+				Float3 du = { 1.f,(texX - texx), 0 };
+				Float3 dv = { 0,(texZ - texz), 1.f };
+
+				pVtx[i].Normal = Float3(TOOL::VectorNormalize(TOOL::CrossProduct(du, dv)));
 			}
 
 		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
@@ -123,7 +116,7 @@ void Field::Init()
 	m_Texture = ResourceManager::AddTex("asset/texture/ground_grass_3264_4062_Small.jpg");
 
 	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_SIMPLE_OFF);
 
 	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(1.f, 1.f, 1.f);
@@ -185,15 +178,15 @@ float Field::GetHeight(Float3 inPos)
 {
 	int x, z;
 
-	x = (inPos.x / CHIP_SIZE_X) + (CHIP_X * 0.5f);
-	z = -(inPos.z / CHIP_SIZE_Y) - (CHIP_Y * 0.5f);
+	x = static_cast<int>((inPos.x / CHIP_SIZE_X) + (CHIP_X * 0.5f));
+	z = static_cast<int>(-(inPos.z / CHIP_SIZE_Y) - (CHIP_Y * 0.5f));
 	z += CHIP_Y - 1;
 
 	int i = z * (CHIP_X + 1) + x;
 	int j = ((z + 1) * (CHIP_X + 1)) + x;
 
 	Float3 pos0, pos1, pos2, pos3;
-	if (x >= CHIP_X || z >= CHIP_Y || x <= 0 || z <= 0)
+	if (x > CHIP_X || z > CHIP_Y || x < 0 || z < 0)
 		return 0.f;
 
 	pos0 = pVtx[i].Position;
@@ -203,7 +196,7 @@ float Field::GetHeight(Float3 inPos)
 
 	Float3 v12, v1p, c;
 	v12 = pos2 - pos1;
-	v1p = inPos - pos1;
+	v1p = inPos - pos2;
 
 	D3DXVec3Cross(&c, &v12, &v1p);//時計回りで計算すると表方向
 
@@ -223,8 +216,7 @@ float Field::GetHeight(Float3 inPos)
 		D3DXVec3Cross(&n, &v12, &v13);
 	}
 
-	py = -((inPos.x - pos1.x) * n.x
-		+ (inPos.z - pos1.z) * n.z) / n.y + pos1.y;
+	py = -((inPos.x - pos1.x) * n.x + (inPos.z - pos1.z) * n.z) / n.y + pos1.y;
 
 	return py;
 }

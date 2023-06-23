@@ -302,6 +302,30 @@ float fbm(float2 st, int seed) {
 	return val;
 }
 
+float3 DomainWarp(float2 st,float time)
+{
+	float3 mixColor1 = float3(0.8, 0.35, 0.12);
+	float3 mixColor2 = float3(0.3, 0.75, 0.69);
+
+	float3 color = float3(0.f, 0.745f, 0.9f);
+	float2 q = float2(0.f, 0.f);
+	q.x = fBm(st + float2(0.f, 0.f), time);
+	q.y = fBm(st + float2(1.f, 0.f), time);
+
+	float2 r = float2(0.0, 0.f);
+	r.x = fBm(st + (4.0 * q) + float2(1.7, 9.2) + 0.15, 0);
+	r.y = fBm(st + (4.0 * q) + float2(8.3, 2.8) + 0.12, 0);
+
+	color = lerp(color, mixColor1, clamp(length(q), 0.0, 1.0));
+	color = lerp(color, mixColor2, clamp(length(r), 0.0, 1.0));
+
+	float f = fBm(st + 4.0 * r, 0);
+
+	float coef = (f * f * f + (0.6 * f * f) + (0.5 * f));
+	color *= coef;
+	return color;
+}
+
 float3 Vec3Cross(float3 a, float3 b)
 {
 	float3 ret;

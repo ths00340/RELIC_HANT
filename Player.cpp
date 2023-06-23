@@ -67,6 +67,9 @@ void Player::Init()
 	case WEPON_TYPE::SHOTGUN_1:
 		SetWepon<ShotGun_Physics>();
 		hp = 130;
+	case WEPON_TYPE::NONE:
+		hp = 50;
+		break;
 	}
 
 	switch (Manager::GetDSystem())
@@ -74,6 +77,7 @@ void Player::Init()
 	case MOVE_TYPE::CAR:
 		SetDriveS<CarMove>();
 		SetDrive<CarWheel>();
+		AddComponent<AttitudeControl>();
 		break;
 	case MOVE_TYPE::FREE:
 		SetDriveS<NormalMove>();
@@ -86,7 +90,7 @@ void Player::Init()
 
 	AddComponent<Gravity>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::CUBE);
-	AddComponent<AttitudeControl>();
+	
 
 	m_pScene = Manager::GetScene();
 	m_pos = D3DXVECTOR3(-0.0f, 0.25f, 0.0f);
@@ -133,28 +137,47 @@ void Player::Update()
 	//デバック用処理
 	{
 		if (Input::GetKeyTrigger(DIK_F5))
+		{
 			DeleteWepon();
+			Manager::SetWeponType(WEPON_TYPE::NONE);
+		}
 
 		if (Input::GetKeyTrigger(DIK_1))
+		{
 			SetWepon<Bazooka>();
+			Manager::SetWeponType(WEPON_TYPE::BAZOOKA);
+		}
 
 		if (Input::GetKeyTrigger(DIK_2))
+		{
 			SetWepon<ChargeLaser>();
+			Manager::SetWeponType(WEPON_TYPE::LASER);
+		}
+
 
 		if (Input::GetKeyTrigger(DIK_3))
+		{
 			SetWepon<Gatling>();
+			Manager::SetWeponType(WEPON_TYPE::GATLING);
+		}
 
 		if (Input::GetKeyTrigger(DIK_4))
+		{
 			SetWepon<ShotGun_Physics>();
+			Manager::SetWeponType(WEPON_TYPE::SHOTGUN_1);
+		}
+
 
 		if (Input::GetKeyTrigger(DIK_5))
 		{
+			Manager::SetDsystem(MOVE_TYPE::CAR);
 			SetDriveS<CarMove>();
 			SetDrive<CarWheel>();
 		}
 
 		if (Input::GetKeyTrigger(DIK_6))
 		{
+			Manager::SetDsystem(MOVE_TYPE::FREE);
 			SetDrive<Leg_01>();
 			SetDriveS<NormalMove>();
 		}
@@ -213,6 +236,9 @@ void Player::Draw()
 	//シェーダー入力
 	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
 	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
+
+	ID3D11ShaderResourceView* DepthTexture = Renderer::GetShadowDepthTexture();
+	Renderer::GetDeviceContext()->PSSetShaderResources(1, 1, &DepthTexture);
 
 	//マトリクス設定
 	D3DXMATRIX world, scl, rot, trans;

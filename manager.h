@@ -20,6 +20,7 @@ enum class WEPON_TYPE
 	LASER,
 	BAZOOKA,
 	SHOTGUN_1,
+	NONE,
 };
 
 //ˆÚ“®í
@@ -81,7 +82,7 @@ public:
 	template<typename T>
 	static Common* SetCommon()
 	{
-		if (common == NULL)
+		if (common == nullptr)
 		{
 			common = DBG_NEW T();
 			common->Init();
@@ -128,7 +129,7 @@ public:
 				return (T*)sce;
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	//w’è‚µ‚½’Ç‰ÁƒV[ƒ“‚Ìíœ

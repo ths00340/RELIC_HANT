@@ -33,8 +33,9 @@ enum class FRAME_S {
 //シェーダー種類
 enum class SHADER_S
 {
-	LIGHT_ON, //光源有り
-	LIGHT_OFF,//光源なし
+	LIGHT_ON, //光源有り 法線出力あり
+	LIGHT_OFF,//光源なし 法線出力あり
+	LIGHT_SIMPLE_OFF,//光源なし 法線出力なし
 	LIGHT_LIM,//リムライト
 	NORMAL_TOON,//プログラムでトゥーン
 	NORMAL_FOG, //通常フォグ

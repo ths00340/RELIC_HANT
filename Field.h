@@ -29,12 +29,6 @@ private:
 	VERTEX_3D* pVtx = nullptr;
 
 	int numVertex, numIndex;
-
-	struct maisuu
-	{
-		int a, b, c, d;
-	};
-	maisuu Mai[CHIP_KAZU];
 public:
 	void Init();
 	void Uninit();

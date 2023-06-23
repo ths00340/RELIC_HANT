@@ -40,6 +40,9 @@ public:
 		return name;
 	}
 
+	//ダメージ演出
 	void Damage(int dmg);
-	void Finish();
+
+	//撃破演出
+	void Finish();	
 };

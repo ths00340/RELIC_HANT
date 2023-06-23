@@ -279,7 +279,7 @@ void Renderer::Init()
 	int MipLV = 6;
 	{
 		//シャドウバッファ作成
-		ID3D11Texture2D* depthTexture[2] = { NULL };
+		ID3D11Texture2D* depthTexture[2] = { NULL ,NULL };
 		D3D11_TEXTURE2D_DESC td;
 		ZeroMemory(&td, sizeof(td));
 		td.Width = swapChainDesc.BufferDesc.Width; //バックバッファのサイズを受けつぐ
@@ -430,6 +430,13 @@ void Renderer::Uninit()
 	m_DeviceContext->ClearState();
 	for (int i = 0; i < (int)RENDER_::NUM; i++)
 		m_RenderTextureView[i]->Release();
+
+	m_ShadowDepthStencilView->Release();
+	m_ShadowDepthShaderResourceView->Release();
+
+	m_RenderDepthStencilView->Release();
+	m_RenderDepthShaderResourceView->Release();
+
 
 	m_SwapChain->Release();
 	m_DeviceContext->Release();

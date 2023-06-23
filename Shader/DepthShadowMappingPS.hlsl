@@ -14,10 +14,10 @@ void main(in PS_IN In, out PS_OUT Out)
 
 		//シャドウマップテクスチャより、ライトカメラからピクセルまでの距離（深度値）を取得
 	float depth = g_TextureShadowDepth.Sample(g_SamplerState,
-		In.ShadowPosition.xy);
+		In.ShadowPosition.xy).r;
 
 	//取得値が通常カメラからピクセルへの距離より小さい
-	if (depth < In.ShadowPosition.z - 0.000001) //0.01はZファイティング補正値（後述）
+	if (depth < In.ShadowPosition.z - 0.001) //0.01はZファイティング補正値（後述）
 	{
 		Out.Diffuse.rgb *= 0.5; //色を暗くする
 	}

@@ -113,7 +113,7 @@ void Field::Init()
 
 	//テクスチャ読み込み
 
-	m_Texture = ResourceManager::AddTex("asset/texture/ground_grass_3264_4062_Small.jpg");
+	m_Texture = ResourceManager::AddTex("asset/texture/RockImage.jpg");
 
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_SIMPLE_OFF);

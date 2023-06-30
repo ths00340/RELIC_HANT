@@ -9,7 +9,7 @@ void Boss01::Init()
 {
 	Game::Init();
 	SetBattle<BOSS_01>();
-	for (int i = 0; i < 500; i++)
+	for (int i = 0; i < 250; i++)
 	{
 		Tree* t = NULL;
 		t = AddGameObject<Tree>((int)OBJ_LAYER::Billboard);

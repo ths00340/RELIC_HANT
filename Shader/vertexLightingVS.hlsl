@@ -11,6 +11,7 @@ void main(in VS_IN In, out PS_IN Out)
 	worldNormal = mul(normal, World);
 	worldNormal = normalize(worldNormal);
 	worldNormal.w = 1.f;
+	Out.Normal = worldNormal;
 
 	float light = -dot(Light.Direction.xyz, worldNormal.xyz);
 	light = saturate(light);

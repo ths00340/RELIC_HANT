@@ -196,6 +196,23 @@ float fBm(float2 uv, float time)
 	return value;
 }
 
+float fBm(float2 uv, float time, int octave)
+{
+	// Initial values
+	float value = 0.0;
+	float amplitude = .5;
+	float frequency = 0.;
+	float2 st = uv;
+	//
+	// Loop of octaves
+	for (int i = 0; i < octave; i++) {
+		value += amplitude * noise(st, time);
+		st *= 2.;
+		amplitude *= .5;
+	}
+	return value;
+}
+
 //‰~1
 float disc(float2 uv, float size) {
 	float d = distance(uv, float2(0.5, 0.5));
@@ -302,6 +319,18 @@ float fbm(float2 st, int seed) {
 	return val;
 }
 
+float fbm(float2 st, int seed, int octave) {
+	float val = 0.0;
+	float a = 0.5;
+
+	for (int i = 0; i < octave; i++) {
+		val += a * noise2(st, seed);
+		st *= 2.0;
+		a *= 0.5;
+	}
+	return val;
+}
+
 float3 DomainWarp(float2 st,float time)
 {
 	float3 mixColor1 = float3(0.8, 0.35, 0.12);
@@ -344,3 +373,42 @@ float3 Vec3Cross(float3 a, float3 b)
 
 	return ret;
 }
+
+float ThresholdTransition(float value, float threshold, float lowValue, float highValue, float transitionWidth)
+{
+	float transitionStart = threshold - transitionWidth * 0.5f;
+	float transitionEnd = threshold + transitionWidth * 0.5f;
+
+	if (value < transitionStart)
+	{
+		return lowValue;
+	}
+	else if (value > transitionEnd)
+	{
+		return highValue;
+	}
+	else
+	{
+		float t = (value - transitionStart) / transitionWidth;
+		return lowValue + t * (highValue - lowValue);
+	}
+}
+
+float4 Transition(float value, float threshold1, float threshold2, float4 value1, float4 value2, float4 value3)
+{
+	if (value < threshold1)
+	{
+		return value1;
+	}
+	else if (value < threshold2)
+	{
+		float t = (value - threshold1) / (threshold2 - threshold1);
+		return lerp(value1, value2, t);
+	}
+	else
+	{
+		float t = (value - threshold2) / (1.0 - threshold2);
+		return lerp(value2, value3, t);
+	}
+}
+

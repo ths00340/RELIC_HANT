@@ -20,12 +20,10 @@ void ParticleManager::Init()
 
 	HRESULT hr;
 	D3DXMATRIX* inWorld = new D3DXMATRIX[MAX_PARTICLE];
-	Float3* inPos = new Float3[MAX_PARTICLE];
 
 	for (int i = 0; i < MAX_PARTICLE; i++)
 	{
 		inWorld[i] *= 0.f;
-		inPos[i] *= 0.f;
 	}
 
 	//Matrix
@@ -48,6 +46,7 @@ void ParticleManager::Init()
 		{
 			delete[] inWorld;
 			int failed = 1;
+			TOOL::Display((char*)"エラー：m_pWorldBuffer生成失敗\n");
 			return;
 		}
 		delete[] inWorld;
@@ -82,23 +81,24 @@ void ParticleManager::Uninit()
 		object->Uninit();
 		delete object;
 	}
+	Particle.clear();
 
+	if(m_pWorldBuffer!=nullptr)
 	m_pWorldBuffer->Release();
+
+	if (m_pWorldSRV != nullptr)
 	m_pWorldSRV->Release();
 }
 
 void ParticleManager::Update()
 {
-	D3DXMATRIX	inWorld[MAX_PARTICLE];
-	Float3		inPos[MAX_PARTICLE];
-	int i = 0;
+	std::vector<D3DXMATRIX> inWorld;
+
 	for (ParticleTest* object : Particle)//範囲forループ
 	{
 		object->Update();
 		object->Draw();
-		inWorld[i] = object->GetWorld();
-		inPos[i] = object->Getpos();
-		i++;
+		inWorld.push_back(object->GetWorld());
 	}
 	Particle.remove_if([](GameObject* object) {return object->Destroy(); });
 
@@ -107,7 +107,11 @@ void ParticleManager::Update()
 		SetDestroy();
 		return;
 	}
-	Renderer::GetDeviceContext()->UpdateSubresource(m_pWorldBuffer, 0, NULL, inWorld, 0, 0);
+
+	// 必要な場合にサイズを調整する
+	inWorld.resize(MAX_PARTICLE);
+
+	Renderer::GetDeviceContext()->UpdateSubresource(m_pWorldBuffer, 0, nullptr, inWorld.data(), 0, 0);
 }
 
 void ParticleManager::Draw()
@@ -122,6 +126,8 @@ void ParticleManager::Draw()
 	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	Renderer::GetDeviceContext()->OMSetBlendState(m_BlendState, blendFactor, 0xffffffff);
+	Particle.remove_if([](GameObject* object) { return object->Destroy(); });
+
 	m_model[(int)Pstate]->InstanceDraw(Particle.size(), m_pWorldSRV);
 }
 
@@ -130,7 +136,7 @@ void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, f
 	m_pos = pos;
 	m_rot = rot;
 	Particles = particle_num;
-	Particles = TOOL::Limit(particle_num, 500, 0);
+	Particles = TOOL::Limit(particle_num, MAX_PARTICLE, 0);
 
 	for (int i = 0; i < Particles; i++)
 	{

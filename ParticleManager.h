@@ -34,7 +34,7 @@ private:
 	ID3D11InputLayout* m_VertexLayout;
 	ID3D11BlendState* m_BlendState = nullptr;
 
-	ID3D11Buffer* m_pWorldBuffer = NULL;
+	ID3D11Buffer* m_pWorldBuffer = nullptr;
 	ID3D11ShaderResourceView* m_pWorldSRV = NULL;
 
 	Float3 m_vel;

@@ -145,6 +145,12 @@ void ResourceManager::StartUp()
 		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LIGHT_ON], "pixelLightingPS.cso");
 	}
 
+	//LIGHT_VER_ON
+	{
+		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LIGHT_VER_ON], &m_VertexLayout[(int)SHADER_S::LIGHT_VER_ON], "vertexLightingVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LIGHT_VER_ON], "vertexLightingPS.cso");
+	}
+
 	//LIGHT_LIM
 	{
 		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LIGHT_LIM], &m_VertexLayout[(int)SHADER_S::LIGHT_LIM], "RimLightingVS.cso");
@@ -245,6 +251,18 @@ void ResourceManager::StartUp()
 	{
 		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::INSTANCE_LIGHT_ON], &m_VertexLayout[(int)SHADER_S::INSTANCE_LIGHT_ON], "InsvertexLightingVS.cso");
 		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::INSTANCE_LIGHT_ON], "InsvertexLightingPS.cso");
+	}
+
+	//NOISE_CLOUD
+	{
+		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::NOISE_CLOUD], &m_VertexLayout[(int)SHADER_S::NOISE_CLOUD], "SkyCloudVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::NOISE_CLOUD], "SkyCloudPS.cso");
+	}
+
+	//BREND_TEX
+	{
+		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::BREND_TEX], &m_VertexLayout[(int)SHADER_S::BREND_TEX], "BrendTextureVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::BREND_TEX], "BrendTexturePS.cso");
 	}
 }
 

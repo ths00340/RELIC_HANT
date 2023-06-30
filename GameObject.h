@@ -139,10 +139,7 @@ public:
 			delete this;
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	std::list<CComponent*> GetComponent()

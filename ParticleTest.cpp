@@ -27,6 +27,8 @@ void ParticleTest::Init()
 		TOOL::RandF() * (10.0f / 60.0f) - (5.0f / 60.0f)
 	);
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
+
+	D3DXMatrixIdentity(&m_World);
 }
 
 void ParticleTest::Uninit()
@@ -56,7 +58,6 @@ void ParticleTest::Update()
 		m_rot.z += m_ang_vel.z;
 		m_vel.y -= Gravity;
 	}
-	//m_rot.y += m_ang_vel.y;
 
 	int testt = live_time - time;
 	float testsize = (float)testt / (float)live_time;

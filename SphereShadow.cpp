@@ -22,7 +22,7 @@ void SphereShadow::Uninit()
 void SphereShadow::Update()
 {
 	m_pos = object->Getpos();
-	m_pos.y = 0.01f;
+	m_pos.y = 1.01f;
 	Float3 vec = object->Getvec();
 	vec.y = 0.0f;
 	m_pos += vec;
@@ -38,31 +38,6 @@ void SphereShadow::Update()
 
 void SphereShadow::Draw()
 {
-	D3D11_MAPPED_SUBRESOURCE msr;
-	Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
-	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
-
-	vertex[0].Position = D3DXVECTOR3(-1.0f, 0.0f, 1.0f);
-	vertex[0].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[0].TexCoord = D3DXVECTOR2(0, 0);
-
-	vertex[1].Position = D3DXVECTOR3(1.0f, 0.0f, 1.0f);
-	vertex[1].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord = D3DXVECTOR2(1, 0);
-
-	vertex[2].Position = D3DXVECTOR3(-1.0f, 0.0f, -1.0f);
-	vertex[2].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord = D3DXVECTOR2(0, 1);
-
-	vertex[3].Position = D3DXVECTOR3(1.0f, 0.0f, -1.0f);
-	vertex[3].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord = D3DXVECTOR2(1, 1);
-
-	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 	//省略したら設定でDISCARDにしているため”昔書かれたことは無視される”
 
 	//入力レイアウト設定

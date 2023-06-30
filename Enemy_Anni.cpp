@@ -42,7 +42,6 @@ void Enemy_Anni::Begin()
 
 void Enemy_Anni::ClearObserver()
 {
-	TOOL::Display((char*)"TargetList size %d\n", TargetList->GetListCount());
 	if (TargetList->Empty())
 	{
 		Clear = true;

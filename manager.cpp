@@ -25,8 +25,7 @@ void Manager::Init()
 	Input::Init();
 	ResourceManager::Init();
 	Audio::InitMaster();
-	common = NULL;
-	//Input::SetPause(true);
+	common = nullptr;
 	Input::ShowPoint(true);
 
 	srand((unsigned int)timeGetTime());
@@ -38,6 +37,7 @@ void Manager::Init()
 void Manager::Uninit()
 {
 	NowScene->Uninit();
+	DeleteAddScenes();
 	Audio::UninitMaster();
 	delete NowScene;
 	ResourceManager::Uninit();
@@ -57,14 +57,14 @@ void Manager::Update()
 		sce->Update();
 	}
 
-	if (common != NULL)
+	if (common != nullptr)
 	{
 		common->Update();
 		if (common->GetDestroy())
 		{
 			common->Uninit();
 			delete common;
-			common = NULL;
+			common = nullptr;
 		}
 	}
 }
@@ -73,12 +73,12 @@ void Manager::Draw()
 {
 	Renderer::GetDeviceContext()->RSSetViewports(1, NowScene->GetView());
 
-	Float3 SunPos = { -5.f,10.f,-5.f };
+	Float3 SunPos = { -10.f,10.f,-10.f };
 
 	LIGHT light;
 	light.Enable = true;
 	light.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
-	light.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	light.Diffuse = D3DXCOLOR(1.f,1.f,1.f, 1.0f);
 	light.Position = { SunPos.x,SunPos.y,SunPos.z,0.f };
 	Float3 dir = Float3(0.f, 0.f, 0.f) - Float3(light.Position.x, light.Position.y, light.Position.z);
 	light.Direction = D3DXVECTOR4(dir.x, dir.y, dir.z, 0.0f);
@@ -92,7 +92,7 @@ void Manager::Draw()
 	D3DXMatrixLookAtLH(&light.ViewMatrix, &eye, &at, &up);
 	//ライトカメラのプロジェクション行列を作成
 	D3DXMatrixPerspectiveFovLH(&light.ProjectionMatrix, 1.0f,
-		1.f, 10.0f, 1200.0f);
+		(float)SCREEN_WIDTH / SCREEN_HEIGHT, 5.0f, 1000.0f);
 
 	//ライト情報をセット
 	Renderer::SetLight(light);
@@ -101,17 +101,18 @@ void Manager::Draw()
 
 	Renderer::SetViewMatrix(&light.ViewMatrix);
 	Renderer::SetProjectionMatrix(&light.ProjectionMatrix);
-	NowScene->ObjectDraws(OBJ_LAYER::System, OBJ_LAYER::Billboard);
+	NowScene->ObjectDraws(OBJ_LAYER::GameObject, OBJ_LAYER::Billboard);
 
+	Renderer::SetLight(light);
 	Renderer::BeginTexture();
-
 	//レンダーテクスチャシーン描画//マルチレンダーになるかも…
 	NowScene->ObjectDraws(OBJ_LAYER::System, OBJ_LAYER::Billboard);
 
+	Renderer::SetLight(light);
 	Renderer::Begin();
 	for (Scene* sce : addScene)
 	{
-		Renderer::GetDeviceContext()->RSSetViewports(1, sce->GetView());
+		Renderer::GetDeviceContext()->RSSetViewports(1, sce->GetView());	
 		sce->Draw();
 	}
 	if (common != NULL)

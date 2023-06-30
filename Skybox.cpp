@@ -12,7 +12,7 @@ void Skybox::Init()
 {
 	m_model = ResourceManager::AddModel("asset\\models\\Skybox_001.obj");
 	//シェーダー関係
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::SIMPLE_SKY);
 
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 

@@ -4,7 +4,6 @@
 #include "ViewCamera.h"
 #include "Camera.h"
 #include "Tree.h"
-ID3D11Buffer* Tree::m_VertexBuffer;
 
 void Tree::Init()
 {
@@ -22,18 +21,16 @@ void Tree::Init()
 	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(8.f, 8.f, 8.f);
 	m_rot = Float3(0.f, 0.f, 0.f);
-}
 
-void Tree::Uninit()
-{
-}
+	//頂点バッファ生成
+	D3D11_BUFFER_DESC bd{};
+	bd.Usage = D3D11_USAGE_DYNAMIC;//後から書き換え可能だよ
+	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
 
-void Tree::Update()
-{
-}
+	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
 
-void Tree::Draw()
-{
 	D3D11_MAPPED_SUBRESOURCE msr;
 	Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &msr);
 	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
@@ -60,6 +57,24 @@ void Tree::Draw()
 
 	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 
+	Scene* scene = Manager::GetScene();
+	m_Vcam = scene->GetGameObject<ViewCamera>();
+
+	
+}
+
+void Tree::Uninit()
+{
+	if (m_VertexBuffer != nullptr)
+		m_VertexBuffer->Release();
+}
+
+void Tree::Update()
+{
+}
+
+void Tree::Draw()
+{
 	//入力レイアウト設定
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 
@@ -68,9 +83,8 @@ void Tree::Draw()
 	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
 
 	//ビュー行列の取得
-	Scene* scene = Manager::GetScene();
-	ViewCamera* Vcam = scene->GetGameObject<ViewCamera>();
-	D3DXMATRIX view = Vcam->GetView()->GetViewMatrix();
+
+	D3DXMATRIX view = m_Vcam->GetView()->GetViewMatrix();
 
 	// ビューの逆行列
 	D3DXMATRIX invView;
@@ -81,11 +95,11 @@ void Tree::Draw()
 	invView._22 = 1.0f;
 	invView._23 = 0.0f;
 
-	D3DXVECTOR3 VectorOfDist = Vcam->GetView()->GetPos() - Getpos();
+	D3DXVECTOR3 VectorOfDist = m_Vcam->GetView()->GetPos() - m_pos;
 	D3DXVECTOR3 XVectorOfDist = D3DXVECTOR3(VectorOfDist.x, 0.0f, VectorOfDist.z);
 	D3DXVECTOR3 NormalizeDist;
 	D3DXVec3Normalize(&NormalizeDist, &XVectorOfDist);
-	Float3 CForward = TOOL::VectorNormalize(Vcam->GetView()->GetDir());
+	Float3 CForward = TOOL::VectorNormalize(m_Vcam->GetView()->GetDir());
 
 	invView._31 = CForward.x;
 	invView._32 = CForward.y;
@@ -139,21 +153,10 @@ void Tree::Set(Float3 inpos)
 
 void Tree::Load()
 {
-	//頂点バッファ生成
-	D3D11_BUFFER_DESC bd{};
-	bd.Usage = D3D11_USAGE_DYNAMIC;//後から書き換え可能だよ
-	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
-
-	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
-
 	//テクスチャ読み込み
 	ResourceManager::AddTex("asset/texture/Tree01.png");
 }
 
 void Tree::UnLoad()
 {
-	if (m_VertexBuffer != nullptr)
-		m_VertexBuffer->Release();
 }

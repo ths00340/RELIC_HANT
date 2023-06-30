@@ -33,8 +33,10 @@ enum class FRAME_S {
 //シェーダー種類
 enum class SHADER_S
 {
-	LIGHT_ON, //光源有り
-	LIGHT_OFF,//光源なし
+	LIGHT_ON, //光源有り 法線出力あり
+	LIGHT_OFF,//光源なし 法線出力あり
+	LIGHT_VER_ON,//頂点光源
+	LIGHT_SIMPLE_OFF,//光源なし 法線出力なし
 	LIGHT_LIM,//リムライト
 	NORMAL_TOON,//プログラムでトゥーン
 	NORMAL_FOG, //通常フォグ
@@ -44,14 +46,16 @@ enum class SHADER_S
 	GLITCH_NOISE,//グリッチノイズ
 	JAGGY_NOISE,//ジャギー付きグリッチノイズ
 	VIDEO_NOISE,//ビデオ風ノイズ
-	EDGE,
-	METAMOL,
-	SCAN,
-	DEPTH_SHADOW,
-	NORMAL_MAPING,
-	NORMAL,
-	SIMPLE_SKY,
-	INSTANCE_LIGHT_ON,
+	EDGE,//エッジシェーダー
+	METAMOL,//海洋シェーダー（仮）
+	SCAN,//円形レーダーシェーダー
+	DEPTH_SHADOW,//深度バッファシャドウシェーダー
+	NORMAL_MAPING,//法線マッピングシェーダー
+	NORMAL,//法線出力シェーダー
+	SIMPLE_SKY,//簡易空シェーダー
+	INSTANCE_LIGHT_ON,//インスタンシング光源ありシェーダー
+	NOISE_CLOUD,//ノイズ雲シェーダー
+	BREND_TEX,//テクスチャブレンド
 	SHADER_E//シェーダーの最大数
 };
 

@@ -27,6 +27,9 @@ public:
 		charge_rate = 0;
 		objS = NULL;
 		eff = nullptr;
+		m_VertexShader = nullptr;
+		m_PixelShader = nullptr;
+		m_VertexLayout = nullptr;
 	}
 
 	void Init();

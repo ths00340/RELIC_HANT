@@ -12,7 +12,7 @@ void main(in PS_IN In, out PS_OUT Out)
 	float Luminance = 1000.f;//光の強さ
 	float3 SatellitePos = Light.Position;
 	float4 TopColor, UnderColor, MoonColor;
-	TopColor = float4(0.686f, 0.933f, 0.933f, 1.f);// float4(0.058f, 0.07f, 0.149f, 1.f);//夜
+	TopColor = float4(0.686f, 0.933f, 0.933f, 1.f);// float4(0.058f, 0.07f, 0.149f, 1.f);//夜 
 	UnderColor = float4(0.878f, 1.f, 1.f, 1.f);      //float4(0.203f, 0.239f, 0.45f, 1.f);//夜
 	MoonColor = float4(0.968f, 0.972f, 0.941f, 1.f);
 	Out.Normal = float4(1.f, 0.f, 0.f, 1.f);
@@ -22,9 +22,6 @@ void main(in PS_IN In, out PS_OUT Out)
 	//描画したいピクセルのローカル座標を正規化
 	float3 dir = normalize(In.WorldPosition);
 	//ラジアンを算出する
-	//atan2(x,y) 直行座標の角度をラジアンで返す度胸
-	//atan(x)と異なり、1周分の角度をラジアンで返せる　今回はスカイボックスの円周上のラジアンが返される
-	//asin(x)  -π/2～π/2の間で逆正弦を返す　xの範囲は-1～1
 	float2 rad = float2(atan2(dir.x, dir.z), asin(dir.y));
 	float2 uv = rad / float2(3.141592f / 2.f, 3.141592f / 2.f);
 
@@ -49,7 +46,7 @@ void main(in PS_IN In, out PS_OUT Out)
 			//点と処理対象のピクセルとの距離ベクトル
 			float2 diff = neighbor + p - fst;
 
-			//色を星ごとにランダムに当てはめる　星の座標を利用
+			//色を星ごとにランダムに当てはめる
 			float r = rand(p + 1);
 			float g = rand(p + 2);
 			float b = rand(p + 3);
@@ -68,8 +65,7 @@ void main(in PS_IN In, out PS_OUT Out)
 	{
 		float3 dir2 = normalize(SatellitePos); //太陽の位置ベクトル正規化
 		float angle = dot(dir2, dir); //太陽の位置ベクトル　と　描画されるピクセルの位置ベクトル　の内積
-		//pow(x,y)はxをy乗する　
-		//0 < max(0, angle) < 1 なので　_SunStrengthを大きくするほど計算結果は0に近づく
+		//_SunStrengthを大きくするほど計算結果は0に近づく
 		float3 c = Out.Diffuse + (MoonColor * pow(max(0, angle), Luminance) * 1.f);
 		Out.Diffuse.rgb = c;
 	}

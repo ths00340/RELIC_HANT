@@ -5,7 +5,7 @@ SamplerState g_SamplerState : register(s0);
 
 void main(in PS_IN In, out PS_OUT Out)
 {
-	Out.Normal = In.Normal;
+	Out.Normal = float4(0.f,1.f,0.f,0.f);
 	float4 normal = normalize(In.Normal); //ピクセルの法線を正規化
 	float light = 0.5 - dot(normal.xyz, Light.Direction.xyz) * 0.5; //光源計算をする
 
@@ -29,10 +29,5 @@ void main(in PS_IN In, out PS_OUT Out)
 	float specular = -dot(halfv, normal.xyz); //ハーフベクトルと法線の内積を計算
 	specular = saturate(specular); //サチュレートする
 
-	float rim = 1.0 + dot(eyev, normal.xyz); //視線と法線の内積を明るさに変換する
-	rim = pow(rim, 1) * 1.0f; //スペキュラと同じような処理を適当に行う。
-	rim = saturate(rim); //rimをサチュレートする
-	float4 col = { 1.f,0.f,0.f,1.f };
-	Out.Diffuse.rgb += rim * col; //通常の色へ加算する。
-	Out.Diffuse.a = In.Diffuse.a;
+	//Out.Normal = In.Normal;
 }

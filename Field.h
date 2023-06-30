@@ -20,7 +20,9 @@ private:
 
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	ID3D11Buffer* m_IndexBuffer = NULL;	// インデックスバッファ
-	ID3D11ShaderResourceView* m_Texture = NULL;
+	ID3D11ShaderResourceView* m_Texture  = NULL;
+	ID3D11ShaderResourceView* m_Texture2 = NULL;
+	ID3D11ShaderResourceView* m_Texture3 = NULL;
 	ID3D11BlendState* blendState;
 	ID3D11VertexShader* m_VertexShader = NULL;
 	ID3D11PixelShader* m_PixelShader = NULL;
@@ -29,12 +31,6 @@ private:
 	VERTEX_3D* pVtx = nullptr;
 
 	int numVertex, numIndex;
-
-	struct maisuu
-	{
-		int a, b, c, d;
-	};
-	maisuu Mai[CHIP_KAZU];
 public:
 	void Init();
 	void Uninit();

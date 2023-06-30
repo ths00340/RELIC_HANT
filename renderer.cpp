@@ -37,7 +37,7 @@ ID3D11ShaderResourceView* Renderer::m_RenderDepthShaderResourceView;
 
 D3DXVECTOR4 Renderer::Time = { 0.f,0.f,0.f,0.f };
 
-float Renderer::ClearColor[4] = { 0.f,0.f,0.f,1.f };
+float Renderer::ClearColor[4] = { 0.0f, 0.f, 0.f,1.f };
 
 void Renderer::Init()
 {
@@ -276,15 +276,15 @@ void Renderer::Init()
 	material.Shininess = 1.0f;
 	SetMaterial(material);
 
-	int MipLV = 6;
+	int MipLV = 1;
 	{
 		//シャドウバッファ作成
-		ID3D11Texture2D* depthTexture[2] = { NULL };
+		ID3D11Texture2D* depthTexture[2] = { NULL ,NULL };
 		D3D11_TEXTURE2D_DESC td;
 		ZeroMemory(&td, sizeof(td));
 		td.Width = swapChainDesc.BufferDesc.Width; //バックバッファのサイズを受けつぐ
 		td.Height = swapChainDesc.BufferDesc.Height;
-		td.MipLevels = MipLV;
+		td.MipLevels = 0;
 		td.ArraySize = 1;
 		td.Format = DXGI_FORMAT_R32_TYPELESS;//32bitの自由な形式のデータとする
 		td.SampleDesc = swapChainDesc.SampleDesc;
@@ -430,6 +430,13 @@ void Renderer::Uninit()
 	m_DeviceContext->ClearState();
 	for (int i = 0; i < (int)RENDER_::NUM; i++)
 		m_RenderTextureView[i]->Release();
+
+	m_ShadowDepthStencilView->Release();
+	m_ShadowDepthShaderResourceView->Release();
+
+	m_RenderDepthStencilView->Release();
+	m_RenderDepthShaderResourceView->Release();
+
 
 	m_SwapChain->Release();
 	m_DeviceContext->Release();

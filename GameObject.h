@@ -79,6 +79,7 @@ public:
 	const Float3 Getscl() { return m_scl; };
 	const Float3 Getvec() { return m_vec; };
 	const Float3 Getaddrot() { return m_addrot; };
+	const Float3 GetAddPos() { return m_addpos; };
 
 	const Float3 GetForward()
 	{
@@ -138,10 +139,7 @@ public:
 			delete this;
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	std::list<CComponent*> GetComponent()

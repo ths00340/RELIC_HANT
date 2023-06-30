@@ -49,6 +49,11 @@ public:
 		return (float)rand() / (float)RAND_MAX;
 	}
 
+	static float RandF(float in)
+	{
+		return RandF() * in;
+	}
+
 	//一定距離以上
 	static bool CanRange(Float3 pos1, Float3 pos2, float range)
 	{
@@ -545,6 +550,84 @@ public:
 		);
 	}
 
+	static float fBmNoise(const Float2 st, const int octave)
+	{
+		float val = 0.0;
+		float a = 0.5;
+		Float2 St = st;
+
+		for (int i = 0; i < octave; i++) {
+			val += a * noise2(St);
+			St *= 2.0f;
+			a *= 0.5f;
+		}
+		return val;
+	}
+
+	static float BlurBox(const Float2 st,Float2 midpos,Float2 size,float softness)
+	{
+		Float2 uvOffset = Float2(fabsf(st.x - midpos.x), fabsf(st.y - midpos.y)) - size * 0.5f;
+		Float2 clampedOffset = Float2(saturate(uvOffset.x / softness), saturate(uvOffset.y / softness));
+		float ret = 1.0f - fmaxf(clampedOffset.x, clampedOffset.y);
+		return ret;
+	}
+
 	//デバッグ出力用：printfと同じ使い方
 	static void Display(char* format, ...);
+
+private:
+	static float noise2(Float2 st)
+	{
+		Float2 p = Float2(floorf(st.x), floorf(st.y));
+		Float2 f = Float2(fracf(st.x), fracf(st.y));
+		
+		float w00 = dot(rand2(p), f);
+		float w10 = dot(rand2(p + Float2(1.0f, 0.0f)), f - Float2(1.0f, 0.0f));
+		float w01 = dot(rand2(p + Float2(0.0f, 1.0f)), f - Float2(0.0f, 1.0f));
+		float w11 = dot(rand2(p + Float2(1.0f, 1.0f)), f - Float2(1.0f, 1.0f));
+
+		Float2 u = Multiply(Multiply(f, f), (Float2(3.f, 3.f) - (2.0f * f)));
+
+		return lerp(lerp(w00, w10, u.x), lerp(w01, w11, u.x), u.y);
+	}
+
+	static float fracf(float value)
+	{
+		return value - floorf(value);
+	}
+
+	static Float2 Multiply(const Float2 a, const Float2 b)
+	{
+		Float2 result;
+		result.x = a.x * b.x;
+		result.y = a.y * b.y;
+		return result;
+	}
+
+	static float dot(Float2 a, Float2 b)
+	{
+		return a.x * b.x + a.y * b.y;
+	}
+
+	static float lerp(float a, float b, float x)
+	{
+		return a + x * (b - a);
+	}
+
+	static float step(float a, float x)
+	{
+		return (float)(x >= a) ? 1.f : 0.f;
+	}
+
+	static float saturate(float value) {
+		return Limit(value);
+	}
+
+	static Float2 rand2(Float2 uv)
+	{
+		Float2 st = Float2(dot(uv, Float2(127.1f, 311.7f)),
+			dot(uv, Float2(269.5f, 183.3f)));
+
+		return Float2(-1.f, -1.f) + (2.0f * Float2(fracf(sinf(st.x) * 43758.5453123f), fracf(sinf(st.y) * 43758.5453123f)));
+	}
 };

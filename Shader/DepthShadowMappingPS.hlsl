@@ -17,7 +17,7 @@ void main(in PS_IN In, out PS_OUT Out)
 		In.ShadowPosition.xy);
 
 	//取得値が通常カメラからピクセルへの距離より小さい
-	if (depth < In.ShadowPosition.z - 0.000001) //0.01はZファイティング補正値（後述）
+	if (depth <= In.ShadowPosition.z - 0.001) //0.01はZファイティング補正値（後述）
 	{
 		Out.Diffuse.rgb *= 0.5; //色を暗くする
 	}

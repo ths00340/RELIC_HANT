@@ -6,7 +6,7 @@ class TextureDrawScene :
 private:
 	class Display* DrawTexture;
 public:
-	void Init();
+	void Init()override;
 	void Uninit() {};
 	void Update() {};
 	void Draw();

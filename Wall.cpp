@@ -5,7 +5,7 @@
 
 void Wall::Init()
 {
-	name = "Field";
+	name = "Wall";
 	m_pos = Float3(0.0f, 0.0f, 0.0f);
 	m_scl = Float3(1.0f, 1.0f, 1.0f);
 

@@ -39,7 +39,9 @@ public:
 		view.TopLeftX = 0;
 		view.TopLeftY = 0;
 	};
-	virtual ~Scene() {};
+	virtual ~Scene() {
+		ClearGameObjects();
+	};
 	virtual void Init()
 	{
 		isLoad = false;
@@ -113,7 +115,7 @@ public:
 					return (T*)object;
 				}
 			}
-		return NULL;
+		return nullptr;
 	}
 
 	template <typename T>
@@ -253,4 +255,15 @@ public:
 	}
 private:
 	static bool isLoad;
+
+	void ClearGameObjects() {
+		for (int i = LAYER_NUM - 1; i >= 0; i--) {
+			for (GameObject* object : g_GameObject[i]) {
+				object->RemoveComponents();
+				object->Uninit();
+				delete object;
+			}
+			g_GameObject[i].clear();
+		}
+	}
 };

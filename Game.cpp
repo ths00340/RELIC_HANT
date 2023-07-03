@@ -91,11 +91,6 @@ void Game::Init()
 	out = AddGameObject<Wall>((int)OBJ_LAYER::NoCaring);
 	out->SetRot({ 0.0f,-TOOL::AToR(90),0.0f });
 	out->SetPos({ -200.0f,50.0f,0.0f });
-
-	Plane* _plane = AddGameObject<Plane>((int)OBJ_LAYER::NoCaring);
-	_plane->SetShader(SHADER_S::NOISE_CLOUD);
-	_plane->SetRot(Float3(0.f, 3.14f, 0.f));
-	_plane->SetPos(Float3(0.f, 100.f, 0.f));
 }
 
 void Game::Uninit()
@@ -185,8 +180,6 @@ void Game::Update()
 
 		//ワイヤフレームの表示
 		if (Input::GetKeyTrigger(DIK_F3)) {
-
-
 			if (!WireFrame)
 				Manager::GetAddScene<TextureDrawScene>()->SetShader(SHADER_S::LIGHT_OFF);
 			else

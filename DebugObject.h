@@ -1,7 +1,7 @@
 #pragma once
 #include "CComponent.h"
 class DebugObject :
-    public CComponent
+	public CComponent
 {
 private:
 	class Model* DebugOBJ;//ó\ë™ê¸
@@ -13,10 +13,9 @@ private:
 	Float3 m_size;
 
 public:
-	DebugObject(GameObject* inobject) :CComponent(inobject){}
+	DebugObject(GameObject* inobject) :CComponent(inobject) {}
 	void Init();
 	void Update();
 	void Uninit();
 	void Draw();
 };
-

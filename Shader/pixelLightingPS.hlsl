@@ -5,7 +5,7 @@ SamplerState g_SamplerState : register(s0);
 
 void main(in PS_IN In, out PS_OUT Out)
 {
-	Out.Normal = float4(0.f,1.f,0.f,0.f);
+	Out.Normal = float4(0.f, 1.f, 0.f, 0.f);
 	float4 normal = normalize(In.Normal); //ピクセルの法線を正規化
 	float light = 0.5 - dot(normal.xyz, Light.Direction.xyz) * 0.5; //光源計算をする
 

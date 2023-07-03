@@ -38,6 +38,17 @@ protected:
 private:
 	ID3D11BlendState* blendState = nullptr;
 	GameObject* me;//Ž©•ªŽw’è//‚¢‚é‚©‚Í•ª‚©‚ç‚ñ
+
+	Float3 MatrixToEuler(const D3DXMATRIX& matrix)
+	{
+		Float3 ret;
+		// Extract the Euler angles
+		ret.y = atan2(matrix._13, matrix._11);
+		ret.x = asin(-matrix._12);
+		ret.z = atan2(matrix._32, matrix._22);
+
+		return ret;
+	}
 public:
 	GameObject() {
 		me = this;
@@ -62,6 +73,40 @@ public:
 	virtual void SetVec(Float3 invec) { m_vec = invec; };
 	virtual void SetAddRot(Float3 inaddrot) { m_addrot = inaddrot; };
 	virtual void SetAddPos(Float3 inaddpos) { m_addpos = inaddpos; };
+
+	void SetForward(Float3 inForward)
+	{
+		D3DXMATRIX rot;
+		D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
+
+		rot._31 = inForward.x;
+		rot._32 = inForward.y;
+		rot._33 = inForward.z;
+
+		m_rot = MatrixToEuler(rot);
+	}
+	void SetUp(Float3 inUp)
+	{
+		D3DXMATRIX rot;
+		D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
+
+		rot._21 = inUp.x;
+		rot._22 = inUp.y;
+		rot._23 = inUp.z;
+
+		m_addrot = MatrixToEuler(rot);
+	}
+	void SetSide(Float3 inSide)
+	{
+		D3DXMATRIX rot;
+		D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
+
+		rot._11 = inSide.x;
+		rot._12 = inSide.y;
+		rot._13 = inSide.z;
+
+		m_rot = MatrixToEuler(rot);
+	}
 
 	void SetDestroy() {
 		m_Destoroy = true;
@@ -214,11 +259,6 @@ public:
 
 	bool RemoveComponents()
 	{
-		//std::list<CComponent*>::iterator it = Component.begin();
-		//for (; it != Component.end(); ++it) {
-		//
-		//	delete* it;
-		//}
 		for (CComponent* it : Component)
 		{
 			it->Uninit();

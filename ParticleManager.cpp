@@ -83,11 +83,11 @@ void ParticleManager::Uninit()
 	}
 	Particle.clear();
 
-	if(m_pWorldBuffer!=nullptr)
-	m_pWorldBuffer->Release();
+	if (m_pWorldBuffer != nullptr)
+		m_pWorldBuffer->Release();
 
 	if (m_pWorldSRV != nullptr)
-	m_pWorldSRV->Release();
+		m_pWorldSRV->Release();
 }
 
 void ParticleManager::Update()

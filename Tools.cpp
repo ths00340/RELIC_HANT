@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-void TOOL::Display(char* format, ...)
+void TOOL::Display(const char* format, ...)
 {
 	va_list ap;
 	va_start(ap, format);

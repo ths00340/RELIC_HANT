@@ -44,5 +44,5 @@ public:
 	void Damage(int dmg);
 
 	//Œ‚”j‰‰o
-	void Finish();	
+	void Finish();
 };

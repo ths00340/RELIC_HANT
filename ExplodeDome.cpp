@@ -23,7 +23,7 @@ void ExplodeDome::Finish()
 	}
 	Fissure* fis = scene->AddGameObject<Fissure>((int)OBJ_LAYER::GameObject);
 	fis->Set(0.5f);
-	fis->SetPos(Float3(m_pos.x, 0.01f, m_pos.z));
+	fis->SetPos(m_pos);
 	fis->SetScl(TOOL::Uniform(Max));
 
 	SetDestroy();

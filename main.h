@@ -3,12 +3,12 @@
 // Description: ÉÅÉCÉìÉwÉbÉ_
 //==============================================================================
 #pragma once
-
+#define _CRTDBG_MAP_ALLOC
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <windows.h>
 #include <assert.h>
-
+#include <iostream>
 #pragma warning(push)
 #pragma warning(disable:4005)
 
@@ -20,8 +20,7 @@
 #include "dinput.h"
 #include "mmsystem.h"
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
+#include <cstdlib>
 #include <crtdbg.h>
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )

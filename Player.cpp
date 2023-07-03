@@ -90,7 +90,6 @@ void Player::Init()
 
 	AddComponent<Gravity>();
 	AddComponent<HitBox>()->Set(HITBOX_TYPE::CUBE);
-	
 
 	m_pScene = Manager::GetScene();
 	m_pos = D3DXVECTOR3(-0.0f, 0.25f, 0.0f);
@@ -154,7 +153,6 @@ void Player::Update()
 			Manager::SetWeponType(WEPON_TYPE::LASER);
 		}
 
-
 		if (Input::GetKeyTrigger(DIK_3))
 		{
 			SetWepon<Gatling>();
@@ -166,7 +164,6 @@ void Player::Update()
 			SetWepon<ShotGun_Physics>();
 			Manager::SetWeponType(WEPON_TYPE::SHOTGUN_1);
 		}
-
 
 		if (Input::GetKeyTrigger(DIK_5))
 		{

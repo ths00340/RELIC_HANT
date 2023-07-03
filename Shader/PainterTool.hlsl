@@ -331,7 +331,7 @@ float fbm(float2 st, int seed, int octave) {
 	return val;
 }
 
-float3 DomainWarp(float2 st,float time)
+float3 DomainWarp(float2 st, float time)
 {
 	float3 mixColor1 = float3(0.8, 0.35, 0.12);
 	float3 mixColor2 = float3(0.3, 0.75, 0.69);
@@ -411,4 +411,3 @@ float4 Transition(float value, float threshold1, float threshold2, float4 value1
 		return lerp(value2, value3, t);
 	}
 }
-

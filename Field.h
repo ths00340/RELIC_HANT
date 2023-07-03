@@ -20,7 +20,7 @@ private:
 
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	ID3D11Buffer* m_IndexBuffer = NULL;	// インデックスバッファ
-	ID3D11ShaderResourceView* m_Texture  = NULL;
+	ID3D11ShaderResourceView* m_Texture = NULL;
 	ID3D11ShaderResourceView* m_Texture2 = NULL;
 	ID3D11ShaderResourceView* m_Texture3 = NULL;
 	ID3D11BlendState* blendState;
@@ -36,5 +36,6 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	float GetHeight(Float3 inPos);
+	static void Load();
+	float GetHeight(Float3 inPos = Float3(0.f, 0.f, 0.f), Float3* retNor = nullptr);
 };

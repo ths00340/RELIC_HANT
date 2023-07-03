@@ -6,11 +6,13 @@ void main(in VS_IN In, out PS_IN Out)
 	wvp = mul(wvp, Projection); //2パス目は通常カメラの行列が設定される
 	Out.Position = mul(In.Position, wvp); //頂点座標をワールド変換して出力
 
-	float4 worldNormal, normal; //法線のワールド変換
-	normal = float4(In.Normal.xyz, 0.0);
-	worldNormal = mul(normal, World);
-	worldNormal = normalize(worldNormal);
-	Out.Normal = worldNormal; //法線を出力
+	//頂点法線をワールド行列で回転させる(頂点と同じ回転をさせる)
+	float4 worldNormal, normal; //ローカル変数を作成
+	normal = float4(In.Normal.xyz, 0.0);//法線ベクトルのwを0としてコピー（平行移動しないため)
+	worldNormal = mul(normal, World); //法線をワールド行列で回転する
+	worldNormal = normalize(worldNormal); //回転後の法線を正規化する
+	worldNormal.w = 1.f;
+	Out.Normal = worldNormal; //回転後の法線出力 In.Normalでなく回転後の法線を出力
 
 	Out.Diffuse = In.Diffuse;
 	Out.TexCoord = In.TexCoord; //テクスチャ座標を出力

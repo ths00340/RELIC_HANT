@@ -7,26 +7,25 @@ void Plane::Init()
 {
 	VERTEX_3D vertex[4];
 
-	vertex[0].Position	= Float3(1000.0f, 0.0f, 1000.0f);
-	vertex[0].Normal	= Float3(0.0f, 1.0f, 0.0f);
-	vertex[0].Diffuse	= Float4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[0].TexCoord	= Float2(100.0f, 0.0f);
+	vertex[0].Position = Float3(1000.0f, 0.0f, 1000.0f);
+	vertex[0].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[0].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[0].TexCoord = Float2(100.0f, 0.0f);
 
-	vertex[1].Position	= Float3(-1000.0f, 0.0f, 1000.0f);
-	vertex[1].Normal	= Float3(0.0f, 1.0f, 0.0f);
-	vertex[1].Diffuse	= Float4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[1].TexCoord	= Float2(0.0f, 0.0f);
+	vertex[1].Position = Float3(-1000.0f, 0.0f, 1000.0f);
+	vertex[1].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[1].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[1].TexCoord = Float2(0.0f, 0.0f);
 
-	vertex[2].Position	= Float3(1000.0f, 0.0f, -1000.0f);
-	vertex[2].Normal	= Float3(0.0f, 1.0f, 0.0f);
-	vertex[2].Diffuse	= Float4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[2].TexCoord	= Float2(100.0f, 100.0f);
+	vertex[2].Position = Float3(1000.0f, 0.0f, -1000.0f);
+	vertex[2].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[2].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[2].TexCoord = Float2(100.0f, 100.0f);
 
-	vertex[3].Position	= Float3(-1000.0f, 0.0f, -1000.0f);
-	vertex[3].Normal	= Float3(0.0f, 1.0f, 0.0f);
-	vertex[3].Diffuse	= Float4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertex[3].TexCoord	= Float2(0.0f, 100.0f);
-
+	vertex[3].Position = Float3(-1000.0f, 0.0f, -1000.0f);
+	vertex[3].Normal = Float3(0.0f, 1.0f, 0.0f);
+	vertex[3].Diffuse = Float4(1.0f, 1.0f, 1.0f, 1.0f);
+	vertex[3].TexCoord = Float2(0.0f, 100.0f);
 
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));

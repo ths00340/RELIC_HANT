@@ -89,7 +89,7 @@ public:
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_back(gameObject);
-		TOOL::Display((char*)"追加：%s\n", obj->GetName());
+		TOOL::Display("追加：%s\n", obj->GetName());
 		return gameObject;
 	}
 
@@ -100,7 +100,7 @@ public:
 		GameObject* obj = gameObject;
 		gameObject->Init();
 		g_GameObject[Layer].push_front(gameObject);
-		TOOL::Display((char*)"追加：%s\n", obj->GetName());
+		TOOL::Display("追加：%s\n", obj->GetName());
 		return gameObject;
 	}
 

@@ -564,7 +564,7 @@ public:
 		return val;
 	}
 
-	static float BlurBox(const Float2 st,Float2 midpos,Float2 size,float softness)
+	static float BlurBox(const Float2 st, Float2 midpos, Float2 size, float softness)
 	{
 		Float2 uvOffset = Float2(fabsf(st.x - midpos.x), fabsf(st.y - midpos.y)) - size * 0.5f;
 		Float2 clampedOffset = Float2(saturate(uvOffset.x / softness), saturate(uvOffset.y / softness));
@@ -573,14 +573,14 @@ public:
 	}
 
 	//デバッグ出力用：printfと同じ使い方
-	static void Display(char* format, ...);
+	static void Display(const char* format, ...);
 
 private:
 	static float noise2(Float2 st)
 	{
 		Float2 p = Float2(floorf(st.x), floorf(st.y));
 		Float2 f = Float2(fracf(st.x), fracf(st.y));
-		
+
 		float w00 = dot(rand2(p), f);
 		float w10 = dot(rand2(p + Float2(1.0f, 0.0f)), f - Float2(1.0f, 0.0f));
 		float w01 = dot(rand2(p + Float2(0.0f, 1.0f)), f - Float2(0.0f, 1.0f));

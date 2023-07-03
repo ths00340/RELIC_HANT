@@ -572,7 +572,7 @@ D3DXVECTOR2 Input::GetJoyPadLeft(int padnum)
 	return Float2(0.f, 0.f);
 };
 
-float		Input::GetL2(int padnum)
+float Input::GetL2(int padnum)
 {
 	if (m_PadCount > 0)
 	{
@@ -589,7 +589,7 @@ float		Input::GetL2(int padnum)
 	}
 };
 
-float		Input::GetR2(int padnum)
+float Input::GetR2(int padnum)
 {
 	if (m_PadCount > 0)
 	{

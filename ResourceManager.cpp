@@ -138,7 +138,7 @@ void ResourceManager::StartUp()
 		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LIGHT_SIMPLE_OFF], &m_VertexLayout[(int)SHADER_S::LIGHT_SIMPLE_OFF], "SimpleTextureVS.cso");
 		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::LIGHT_SIMPLE_OFF], "SimpleTexturePS.cso");
 	}
-	
+
 	//LIGHT_ON
 	{
 		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::LIGHT_ON], &m_VertexLayout[(int)SHADER_S::LIGHT_ON], "pixelLightingVS.cso");

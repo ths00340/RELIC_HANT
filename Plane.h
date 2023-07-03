@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 class Plane :
-    public GameObject
+	public GameObject
 {
 	ID3D11Buffer* m_VertexBuffer;
 
@@ -17,4 +17,3 @@ public:
 	ID3D11BlendState* GetBlendState()override { return blendState; }
 	void SetShader(SHADER_S inType);
 };
-

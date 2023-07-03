@@ -35,7 +35,7 @@ void NormalMove::Update()
 
 	float max = sta->GetSpdmax();
 
-	move += object->GetForward() * max * m_pInput->GetMov().y*0.35f;
+	move += object->GetForward() * max * m_pInput->GetMov().y * 0.35f;
 	move += object->GetSide() * max * m_pInput->GetMov().x * 0.35f;
 
 	if (m_pInput->GetJump() && Jump && sta->GetST() >= 20.f)

@@ -50,7 +50,6 @@ void Manager::Update()
 {
 	Renderer::Update();
 	Input::Update();
-
 	NowScene->Update();
 	for (Scene* sce : addScene)
 	{
@@ -73,19 +72,18 @@ void Manager::Draw()
 {
 	Renderer::GetDeviceContext()->RSSetViewports(1, NowScene->GetView());
 
-	Float3 SunPos = { -10.f,10.f,-10.f };
-
+	Float3 sunPos = { -10.f,10.f,-10.f };
 	LIGHT light;
 	light.Enable = true;
 	light.Ambient = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
-	light.Diffuse = D3DXCOLOR(1.f,1.f,1.f, 1.0f);
-	light.Position = { SunPos.x,SunPos.y,SunPos.z,0.f };
+	light.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.0f);
+	light.Position = { sunPos.x,sunPos.y,sunPos.z,0.f };
 	Float3 dir = Float3(0.f, 0.f, 0.f) - Float3(light.Position.x, light.Position.y, light.Position.z);
 	light.Direction = D3DXVECTOR4(dir.x, dir.y, dir.z, 0.0f);
 	D3DXVec4Normalize(&light.Direction, &light.Direction);
 
 	D3DXVECTOR3 eye, up, at;
-	eye = SunPos;
+	eye = sunPos;
 	at = { 0.0f, 0.0f, 0.0f };
 	up = { 0.0f, 1.0f, 0.0f };
 
@@ -112,7 +110,7 @@ void Manager::Draw()
 	Renderer::Begin();
 	for (Scene* sce : addScene)
 	{
-		Renderer::GetDeviceContext()->RSSetViewports(1, sce->GetView());	
+		Renderer::GetDeviceContext()->RSSetViewports(1, sce->GetView());
 		sce->Draw();
 	}
 	if (common != NULL)

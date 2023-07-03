@@ -5,7 +5,7 @@
 void Display::Init()
 {
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
-	blendState = ResourceManager::GetBlend(BLEND_S::SORT_FALSE);
+	blendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 
 	// 頂点バッファ生成
 	D3D11_BUFFER_DESC bd{};

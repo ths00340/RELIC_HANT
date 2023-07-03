@@ -17,7 +17,10 @@ void ExplosiveBullet::Finish()
 {
 	float maxshake = 120.f;
 	Scene* scene = Manager::GetScene();
-	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, DmgRange, 0.2f, atk);
+
+	ExplodeDome* dome=scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject);
+	dome->Set(m_pos, DmgRange, 0.2f, atk);
+	dome->SetUp(m_pGra->GetGroundNormal());
 	SetDestroy();
 	GameObject* pl = scene->GetGameObject<Player>();
 	if (pl)
@@ -35,7 +38,7 @@ void ExplosiveBullet::Init()
 	m_model = ResourceManager::AddModel("asset\\models\\Bazooka_bul.obj");
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
-	AddComponent<Gravity>();
+	m_pGra = AddComponent<Gravity>();
 	m_pos = Float3(-3.f, 1.f, 0.f);
 	m_scl = Float3(0.25f, 0.25f, 0.25f);
 	m_rot = Float3(0.f, 0.f, 0.f);
@@ -72,9 +75,7 @@ void ExplosiveBullet::Update()
 		}
 	}
 
-	float groundHeight = fabsf(Getmin().y) * Getscl().y;
-
-	if (m_pos.y <= groundHeight + 0.1f)
+	if (m_pGra->GetisGround())
 		Finish();
 
 	if (TOOL::CanRange(m_pos, startpos, 60.0f))

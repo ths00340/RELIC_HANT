@@ -27,6 +27,8 @@ void Polygon2D::Init()
 
 void Polygon2D::Uninit()
 {
+	if (m_VertexBuffer)
+		m_VertexBuffer->Release();
 }
 
 void Polygon2D::Draw()

@@ -5,6 +5,8 @@
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	/// ウィンドウの生成
 	if (!WinCreateSimpleWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT))
 	{
@@ -42,7 +44,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	Manager::Uninit();
 
 	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 
 	return 0;
 }

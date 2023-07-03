@@ -1,7 +1,7 @@
 #include "common.hlsl"
 void main(in VS_IN In, out PS_IN Out)
 {
-	matrix wvp; 
+	matrix wvp;
 	wvp = mul(World, View); //ライトカメラの行列
 	wvp = mul(wvp, Projection); //通常カメラの行列
 	float4 worldNormal, normal; //法線のワールド変換

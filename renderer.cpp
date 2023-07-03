@@ -437,7 +437,6 @@ void Renderer::Uninit()
 	m_RenderDepthStencilView->Release();
 	m_RenderDepthShaderResourceView->Release();
 
-
 	m_SwapChain->Release();
 	m_DeviceContext->Release();
 	m_Device->Release();

@@ -7,12 +7,14 @@
 class ExplosiveBullet :
 	public GameObject
 {
+private:
 	class Model* m_model;
 
 	ID3D11VertexShader* m_VertexShader;
 	ID3D11PixelShader* m_PixelShader;
 	ID3D11InputLayout* m_VertexLayout;
 	ID3D11BlendState* blendState;
+	class Gravity* m_pGra = nullptr;
 	Float3 startpos;
 	int atk;
 	float DmgRange;

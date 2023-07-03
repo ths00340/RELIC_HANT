@@ -59,8 +59,6 @@ void Tree::Init()
 
 	Scene* scene = Manager::GetScene();
 	m_Vcam = scene->GetGameObject<ViewCamera>();
-
-	
 }
 
 void Tree::Uninit()

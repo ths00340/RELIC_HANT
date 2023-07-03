@@ -25,6 +25,7 @@
 #include "NormalFade.h"
 #include "Fissure.h"
 #include "ShotGun_Physics.h"
+#include "Field.h"
 
 bool Scene::isLoad;
 
@@ -72,6 +73,7 @@ void Scene::Loads()
 	NormalFade::Load();
 	Fissure::Load();
 	ShotGun_Physics::Load();
+	Field::Load();
 
 	isLoad = true;
 }

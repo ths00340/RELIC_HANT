@@ -24,6 +24,7 @@
     <ClInclude Include="audio.h" />
     <ClInclude Include="BATTLE_DATA.h" />
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="BillBoadManager.h" />
     <ClInclude Include="billboard_Temp.h" />
     <ClInclude Include="Blinking_Space.h" />
     <ClInclude Include="Blur_Tex.h" />
@@ -129,6 +130,7 @@
     <ClCompile Include="audio.cpp" />
     <ClCompile Include="BATTLE_DATA.cpp" />
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="BillBoadManager.cpp" />
     <ClCompile Include="Blinking_Space.cpp" />
     <ClCompile Include="Blur_Tex.cpp" />
     <ClCompile Include="Boss01.cpp" />

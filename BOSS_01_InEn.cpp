@@ -54,7 +54,7 @@ void BOSS_01_InEn::Begin()
 			if (i > EnemyNum - 20)
 			{
 				en->SetScl(TOOL::Uniform(0.25f));
-				en->AddComponent<ShotGun_Physics>();
+				en->AddComponent<ShotGun_Physics>()->SetPredict();
 			}
 		}
 	}

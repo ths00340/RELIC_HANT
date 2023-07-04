@@ -163,7 +163,7 @@ void ShotGun_Physics::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 
-	if (objS)
+	if (objS&&isPredict)
 		predictionLine->Draw();
 }
 

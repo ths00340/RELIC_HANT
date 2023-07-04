@@ -21,6 +21,8 @@ private:
 	Float3 randrot = Float3(0.0f, 0.0f, 0.0f);//—”—p‚Ì“ü‚ê•¨
 
 	Float3 m_barrelpos;//–Cg‚ÌÀ•W
+
+	bool isPredict = true;
 public:
 	ShotGun_Physics(GameObject* inobject) :Wepon(inobject)
 	{
@@ -31,12 +33,14 @@ public:
 		objS = NULL;
 		randrot = Float3(0.0f, 0.0f, 0.0f);
 		range = 20.f;
+		isPredict = true;
 	}
 
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
+	void SetPredict(bool isP = false) { isPredict = isP; }
 
 	static void Load();
 };

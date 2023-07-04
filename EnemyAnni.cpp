@@ -4,17 +4,23 @@
 #include "EnemyAnni.h"
 #include "Tree.h"
 #include "SphereShadow.h"
+#include "BillBoadManager.h"
 
 void EnemyAnni::Init()
 {
 	Game::Init();
 	SetBattle<Enemy_Anni>();
+
+	BillBoadManager* _billM = AddGameObject<BillBoadManager>((int)OBJ_LAYER::NoCaring);
+	_billM->SetTexture(ResourceManager::AddTex("asset/texture/Tree01.png"));
 	for (int i = 0; i < 250; i++)
 	{
-		Tree* t = NULL;
-		t = AddGameObject<Tree>((int)OBJ_LAYER::Billboard);
-		t->LoadScl()->y = TOOL::RandF() * 10.0f + 8.0f;
-		t->Set(Float3((TOOL::RandF() * 400.0f) - 200.0f, t->Getscl().y - 1.0f, (TOOL::RandF() * 400.0f) - 200.0f));
+		float sizeY = TOOL::RandF() * 10.0f + 8.0f;
+		_billM->Set(
+			Float3((TOOL::RandF() * 400.0f) - 200.0f
+				, sizeY - 1.0f
+				, (TOOL::RandF() * 400.0f) - 200.0f)
+			, Float3(8.f, sizeY, 8.f));
 	}
 }
 

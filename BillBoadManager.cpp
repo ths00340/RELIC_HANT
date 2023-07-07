@@ -92,7 +92,7 @@ void BillBoadManager::Init()
 		}
 	}
 
-	name = "ParticleManager";
+	name = "BillBoadManager";
 	m_BlendState = ResourceManager::GetBlend(BLEND_S::SORT_TRUE);
 
 	SetTexture(ResourceManager::AddTex("asset/texture/field004.jpg"));
@@ -100,11 +100,6 @@ void BillBoadManager::Init()
 
 void BillBoadManager::Uninit()
 {
-	for (D3DXMATRIX matrix : m_Matrixs)
-	{
-		delete matrix;
-	}
-
 	m_Matrixs.clear();
 
 	if (m_VertexBuffer)

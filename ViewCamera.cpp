@@ -9,12 +9,13 @@ Camera* NoneCam = NULL;
 void ViewCamera::Init()
 {
 	name = "ViewCamera";
-	NoneCam = new Camera(NULL);
+	NoneCam = DBG_NEW Camera(NULL);
 	viewCam = NoneCam;
 }
 
 void ViewCamera::Uninit()
 {
+	delete NoneCam;
 }
 
 void ViewCamera::Update()

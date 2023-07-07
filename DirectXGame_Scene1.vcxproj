@@ -97,6 +97,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ResultBackGround.h" />
     <ClInclude Include="Result_S.h" />
+    <ClInclude Include="ReuseObjectAbstract.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Score.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="ResultBackGround.cpp" />
     <ClCompile Include="Result_S.cpp" />
+    <ClCompile Include="ReuseObjectAbstract.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShotGun_Physics.cpp" />
     <ClCompile Include="ShutterFade.cpp" />

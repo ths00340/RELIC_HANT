@@ -44,8 +44,11 @@ struct LIGHT
 class Renderer
 {
 private:
+	static DWORD oldTime;
+
 	//シェーダー送信用の時間
 	static D3DXVECTOR4 Time;
+	static float deltaTime;
 
 	//バックグラウンドの色
 	static float ClearColor[4];
@@ -151,4 +154,7 @@ public:
 	}
 
 	static void SetTime(float inTime = 0.f) { Time.w = inTime; }
+
+	static const Float4 GetTime() { return Time; }
+	static const float GetDeltaTime() { return deltaTime; }
 };

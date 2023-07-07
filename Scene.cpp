@@ -35,6 +35,9 @@ void Scene::Update()
 	{
 		for (GameObject* object : g_GameObject[i])//”ÍˆÍforƒ‹[ƒv
 		{
+			if (!object->GetEnable())
+				continue;
+
 			if (object->GetStop())
 				continue;
 

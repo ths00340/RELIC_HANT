@@ -16,6 +16,7 @@
 #include "Gravity.h"
 #include "SphereShadow.h"
 #include "ExplodeDome.h"
+#include "TargetCom.h"
 
 void Enemy::Init()
 {

@@ -37,12 +37,14 @@ void Bullet::Update()
 
 		for (GameObject* enemy : enemyList)
 		{
+			if (!enemy->GetEnable())
+				continue;
+
 			Float3 enemyPos = enemy->Getpos();
 			float size_z_e = enemy->Getmax().z * enemy->Getscl().z;
 			float size_z_m = m_model->Get_max().z * m_scl.z;
 
 			if (TOOL::CanHit(m_pos, enemyPos, size_z_e + size_z_m))
-
 			{
 				Status* sta;
 				SetDestroy();
@@ -70,7 +72,7 @@ void Bullet::Update()
 
 	if (TOOL::CanRange(m_pos, startpos, range))
 	{
-		SetDestroy();
+		SetEnable(false);
 	}
 }
 

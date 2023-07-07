@@ -16,7 +16,7 @@ void ShotGun_Physics::Init()
 	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	fire_time = TOOL::FrameMulti(0.45f);
+	fire_time = 0.45f;
 #ifndef MUTE
 	shot = Manager::GetScene()->AddGameObject<Audio>((int)OBJ_LAYER::System);
 	shot->Load("asset\\SE\\ShotSound_2.wav");
@@ -26,9 +26,27 @@ void ShotGun_Physics::Init()
 
 void ShotGun_Physics::Uninit()
 {
+	if (model)
+		model = nullptr;
+
+	if (barrel)
+		barrel = nullptr;
+
+	if (predictionLine)
+		predictionLine = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
+
 #ifndef MUTE
 	shot->Destroy();
-	shot = NULL;
+	shot = nullptr;
 #endif // MUTE
 }
 
@@ -38,7 +56,7 @@ void ShotGun_Physics::Update()
 
 	Camera* cam = object->LoadComponent<Camera>();
 	m_scl = object->Getscl();
-	time++;
+	time += Renderer::GetDeltaTime();
 	Scene* scene = Manager::GetScene();
 	angle = cam->GetAngle().x;
 	angle = TOOL::Limit(angle, 0.f, -TOOL::AToR(60.f));
@@ -70,7 +88,7 @@ void ShotGun_Physics::Update()
 			a = shot->Play();
 			shot->SetVolume(0.05f, a);
 #endif //MUTE
-			time = 0;
+			time = 0.f;
 
 			for (int i = 0; i < 10; i++)
 			{
@@ -82,7 +100,7 @@ void ShotGun_Physics::Update()
 				blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
 
 				if (object->LoadComponent<Camera>())
-					object->LoadComponent<Camera>()->SetShakePos(10, 0.25f);
+					object->LoadComponent<Camera>()->SetShakePos(0.1f, 0.25f);
 			}
 		}
 	}

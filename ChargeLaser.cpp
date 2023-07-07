@@ -15,8 +15,7 @@ void ChargeLaser::Init()
 	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	charge_rate = TOOL::FrameMulti(0.8f);
-	TOOL::Display((char*)"チャージフレーム%d\n", charge_rate);
+	charge_rate = 0.8f;
 
 	eff = nullptr;
 
@@ -27,6 +26,23 @@ void ChargeLaser::Init()
 
 void ChargeLaser::Uninit()
 {
+	if (model)
+		model = nullptr;
+
+	if (predictionLine)
+		predictionLine = nullptr;
+
+	if (eff)
+		eff = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
 }
 
 void ChargeLaser::Update()
@@ -64,7 +80,7 @@ void ChargeLaser::Update()
 	{
 		if (time > charge_rate)
 		{
-			time = 0;
+			time = 0.f;
 
 			LaserBullet* blt = scene->AddGameObject<LaserBullet>((int)OBJ_LAYER::GameObject);
 
@@ -76,7 +92,7 @@ void ChargeLaser::Update()
 
 		if (objS->GetShot())
 		{
-			time++;
+			time+=Renderer::GetDeltaTime();
 			if (eff == nullptr)
 			{
 				eff = scene->AddGameObject<ChargeEffect>((int)OBJ_LAYER::Billboard);
@@ -87,7 +103,7 @@ void ChargeLaser::Update()
 		}
 		else
 		{
-			time = 0;
+			time = 0.f;
 			if (eff != nullptr)
 			{
 				eff->SetDestroy();

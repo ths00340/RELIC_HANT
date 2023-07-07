@@ -27,17 +27,28 @@ void Bazooka::Init()
 	model = ResourceManager::AddModel("asset\\models\\Bazooka_01.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	fire_rate = TOOL::FrameMulti(0.75f);
+	fire_rate = 0.75f;
 	dmg = 20;
 }
 
 void Bazooka::Uninit()
 {
+	if (model)
+		model = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
 }
 
 void Bazooka::Update()
 {
-	time++;
+	time += Renderer::GetDeltaTime();
 	Camera* cam = object->LoadComponent<Camera>();
 	m_scl = object->Getscl();
 
@@ -77,7 +88,7 @@ void Bazooka::Update()
 	if (objS != NULL)
 		if (objS->GetShot() && time > fire_rate)
 		{
-			time = 0;
+			time = 0.f;
 
 			ExplosiveBullet* blt = scene->AddGameObject<ExplosiveBullet>((int)OBJ_LAYER::GameObject);
 			blt->Set(shotpos, ShotAngle, TOOL::SecDiv(30.0f), dmg, 15.f * object->Getscl().z);

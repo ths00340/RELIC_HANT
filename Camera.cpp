@@ -18,14 +18,18 @@ void Camera::Init()
 	Range = 30.0f;
 	Mode = CamMode::TPP;
 
-	m_pInput = NULL;
-	if (m_pInput == NULL)
+	m_pInput = nullptr;
+	if (m_pInput == nullptr)
 	{
 		m_pInput = object->LoadComponent<cInputOperation>();
 	}
 }
 
-void Camera::Uninit() {}
+void Camera::Uninit() {
+
+	if(m_pInput)
+		m_pInput = nullptr;
+}
 
 void Camera::Update()
 {
@@ -40,11 +44,6 @@ void Camera::Update()
 		if (!tag)
 		{
 			{
-				//mouse‚Å‰ñ“] //‘Š‘ÎˆÚ“®‚ÌŽæ“¾
-				//D3DXVECTOR2 relative = Input::MouseRelative();
-				//Angle.y += ((relative.x) * 0.045f) / 60.0f;
-				//Angle.x += ((relative.y) * 0.025f) / 60.0f;
-
 				//mouse‚Å‰ñ“]@^‚ñ’†ŒÅ’è‚ÌˆÚ“®’lŽQÆ
 				float x = 0.0f;
 				float y = 0.0f;
@@ -73,11 +72,15 @@ void Camera::Update()
 	//ƒ^[ƒQƒbƒg‚ÉŽ‹“_‚ð‡‚í‚¹‚é
 	if (tag)
 	{
-		static Float3 tagpos;
+		Float3 tagpos;
 		tagpos = tag->Getpos() - object->Getpos();
-		//atan2f(tagpos.x, tagpos.z);
-		Angle.y += TOOL::SubAngle(tagpos, Dir) / 3.0f;
+		float zeroFloat = 0.f;
+		Angle.y = TOOL::SmoothDamp(Angle.y, Angle.y+TOOL::SubAngle(tagpos, Dir), zeroFloat, 0.025f, 1000.f, Renderer::GetDeltaTime());
 		Angle.x = -atan2f(tagpos.y, hypotf(tagpos.z, tagpos.x));
+		if (!tag->GetEnable())
+		{
+			tag = nullptr;
+		}
 	}
 
 	if (Mode == CamMode::FPP)
@@ -89,12 +92,12 @@ void Camera::Update()
 	{
 		//—h‚ê
 		{
-			time++;
+			time += Renderer::GetDeltaTime();
 			if (shakeP)
 			{
 				{//ˆÊ’u—h‚ê
 					float x, y, a;
-					a = 1.f - ((float)time / (float)MaxRandP);
+					a = 1.f - (time / MaxRandP);
 					x = shakeStrP * a * (TOOL::RandF() - 0.5f);
 					y = shakeStrP * a * (TOOL::RandF() - 0.5f);
 
@@ -113,7 +116,7 @@ void Camera::Update()
 			{
 				{//Šp“x—h‚ê
 					m_up = { 0.f, 1.f, 0.f };
-					float a = 1.f - ((float)time / (float)MaxRandR);
+					float a = 1.f - (time / MaxRandR);
 					float i = shakeStrR * a * (TOOL::RandF() - 0.5f);
 					m_up += { cosf(Angle.y)* i, -i, -sinf(Angle.y) * i };
 				}
@@ -126,7 +129,7 @@ void Camera::Update()
 
 			if (!shakeP && !shakeR)
 			{
-				time = 0;
+				time = 0.f;
 			}
 		}
 
@@ -158,15 +161,15 @@ void Camera::SetUp(D3DXVECTOR3 inup)
 	m_up = inup;
 }
 
-void Camera::SetShakePos(int max, float Str)
+void Camera::SetShakePos(float max, float Str)
 {
 	shakeP = true;
-	time = 0;
+	time = 0.f;
 	MaxRandP = max;
 	shakeStrP = Str;
 }
 
-void Camera::SetShakeRot(int max, float Str)
+void Camera::SetShakeRot(float max, float Str)
 {
 	shakeR = true;
 	time = 0;

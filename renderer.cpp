@@ -35,6 +35,9 @@ ID3D11DepthStencilView* Renderer::m_RenderDepthStencilView;
 //深度テクスチャの入れ物
 ID3D11ShaderResourceView* Renderer::m_RenderDepthShaderResourceView;
 
+DWORD Renderer::oldTime;
+float Renderer::deltaTime;
+
 D3DXVECTOR4 Renderer::Time = { 0.f,0.f,0.f,0.f };
 
 float Renderer::ClearColor[4] = { 0.0f, 0.f, 0.f,1.f };
@@ -414,6 +417,8 @@ void Renderer::Init()
 			}
 		}
 	}
+
+	oldTime = timeGetTime();
 }
 
 void Renderer::Uninit()
@@ -423,6 +428,9 @@ void Renderer::Uninit()
 	m_ProjectionBuffer->Release();
 	m_LightBuffer->Release();
 	m_MaterialBuffer->Release();
+	m_CameraBuffer->Release();
+	m_ParameterBuffer->Release();
+	m_TimeBuffer->Release();
 
 	for (int i = 0; i < (int)RENDER_::NUM; i++)
 		m_RenderTextureShaderResourceView[i]->Release();
@@ -437,6 +445,10 @@ void Renderer::Uninit()
 	m_RenderDepthStencilView->Release();
 	m_RenderDepthShaderResourceView->Release();
 
+	m_RenderTargetView->Release();
+	m_DepthStateEnable->Release();
+	m_DepthStateDisable->Release();
+
 	m_SwapChain->Release();
 	m_DeviceContext->Release();
 	m_Device->Release();
@@ -444,12 +456,21 @@ void Renderer::Uninit()
 
 void Renderer::Update()
 {
-	Time.w += 1.f / 60.f;
+	DWORD nowTime = timeGetTime();
+	DWORD keikaTime = nowTime - oldTime;
+
+	int intValue = static_cast<int>(keikaTime);
+	
+	deltaTime = (float)intValue / 1000.f;
+
+	Time.w += deltaTime;
 	Time.x = Time.w / 8.f;
 	Time.y = Time.w / 4.f;
 	Time.z = Time.w / 2.f;
 	m_DeviceContext->UpdateSubresource(m_TimeBuffer, 0, NULL, &Time, 0, 0);
 	Time.w = fmodf(Time.w, 10000.f);
+
+	oldTime = timeGetTime();
 }
 
 void Renderer::Begin()
@@ -542,7 +563,7 @@ void Renderer::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11Input
 
 	file = fopen(FileName, "rb");
 	fsize = _filelength(_fileno(file));
-	unsigned char* buffer = new unsigned char[fsize];
+	unsigned char* buffer = DBG_NEW unsigned char[fsize];
 	fread(buffer, fsize, 1, file);
 	fclose(file);
 
@@ -573,7 +594,7 @@ void Renderer::CreatePixelShader(ID3D11PixelShader** PixelShader, const char* Fi
 
 	file = fopen(FileName, "rb");
 	fsize = _filelength(_fileno(file));
-	unsigned char* buffer = new unsigned char[fsize];
+	unsigned char* buffer = DBG_NEW unsigned char[fsize];
 	fread(buffer, fsize, 1, file);
 	fclose(file);
 

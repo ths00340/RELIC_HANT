@@ -14,6 +14,9 @@ class ParticleTest :public GameObject
 private:
 	Model* m_model = nullptr;
 	ID3D11BlendState* blendState = nullptr;
+	ID3D11VertexShader* m_VertexShader = nullptr;
+	ID3D11PixelShader* m_PixelShader = nullptr;
+	ID3D11InputLayout* m_VertexLayout = nullptr;
 
 	D3DXMATRIX m_World;
 	Float3 m_vel = { 0.f,0.f,0.f };
@@ -40,6 +43,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	void InstanceDraw();
 	void Set(D3DXVECTOR3 pos = Float3(0.f, 0.f, 0.f),
 		float inGravity = GRAVITY,
 		int inLiveTime = 60,

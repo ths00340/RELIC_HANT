@@ -19,7 +19,7 @@ void ParticleManager::Init()
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INSTANCE_LIGHT_ON);
 
 	HRESULT hr;
-	D3DXMATRIX* inWorld = new D3DXMATRIX[MAX_PARTICLE];
+	D3DXMATRIX* inWorld = DBG_NEW D3DXMATRIX[MAX_PARTICLE];
 
 	for (int i = 0; i < MAX_PARTICLE; i++)
 	{
@@ -97,7 +97,7 @@ void ParticleManager::Update()
 	for (ParticleTest* object : Particle)//”ÍˆÍforƒ‹[ƒv
 	{
 		object->Update();
-		object->Draw();
+		object->InstanceDraw();
 		inWorld.push_back(object->GetWorld());
 	}
 	Particle.remove_if([](GameObject* object) {return object->Destroy(); });
@@ -140,7 +140,7 @@ void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, f
 
 	for (int i = 0; i < Particles; i++)
 	{
-		ParticleTest* gameObject = new ParticleTest();
+		ParticleTest* gameObject = DBG_NEW ParticleTest();
 		gameObject->Init();
 		gameObject->SetModel(m_model[(int)Pstate], Bstate);
 		gameObject->Set(m_pos, inGravity, TOOL::FrameMulti((float)livetime), TOOL::Uniform(vel), scl, Rot);

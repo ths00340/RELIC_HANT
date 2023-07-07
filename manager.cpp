@@ -40,6 +40,10 @@ void Manager::Uninit()
 	DeleteAddScenes();
 	Audio::UninitMaster();
 	delete NowScene;
+
+	if (common)
+		delete common;
+
 	ResourceManager::Uninit();
 	Scene::UnLoads();
 	Input::Uninit();

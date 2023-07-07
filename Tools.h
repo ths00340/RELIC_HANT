@@ -54,6 +54,38 @@ public:
 		return RandF() * in;
 	}
 
+	static float SmoothDamp(float current, float target, float& currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+	{
+		// タイムステップの制限
+		smoothTime = fmaxf(0.0001f, smoothTime);
+
+		// 移動の補間係数を計算
+		float omega = 2.0f / smoothTime;
+		float x = omega * deltaTime;
+		float exp = 1.0f / (1.0f + x + 0.48f * x * x + 0.235f * x * x * x);
+
+		// 目標値への差を計算
+		float diff = current - target;
+		float maxDelta = maxSpeed * smoothTime;
+
+		// 速度の補間
+		float temp = (currentVelocity + omega * diff) * deltaTime;
+		float velocity = Limit(temp, maxDelta, -maxDelta);
+		currentVelocity = (currentVelocity - omega * velocity) * exp;
+
+		// 新しい現在値を計算
+		float newValue = target + (diff + velocity) * exp;
+
+		// 目標値に近づいたら補間を終了
+		//if (diff > 0.0f == newValue > target)
+		//{
+		//	newValue = target;
+		//	currentVelocity = 0.0f;
+		//}
+
+		return newValue;
+	}
+
 	//一定距離以上
 	static bool CanRange(Float3 pos1, Float3 pos2, float range)
 	{

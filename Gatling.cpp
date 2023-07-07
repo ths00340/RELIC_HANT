@@ -11,12 +11,13 @@
 
 void Gatling::Init()
 {
+	maxspednum = 50;
 	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
 	barrel = ResourceManager::AddModel("asset\\models\\Tullet05barrel.obj");
 	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	fire_time = TOOL::FrameMulti(0.15f);
+	fire_time = 0.30f;
 	roll_max = TOOL::AToR(60);
 
 #ifndef MUTE
@@ -25,7 +26,31 @@ void Gatling::Init()
 #endif // MUTE
 }
 
-void Gatling::Uninit() {}
+void Gatling::Uninit() 
+{
+	if (model)
+		model = nullptr;
+
+	if (barrel)
+		barrel = nullptr;
+
+	if (predictionLine)
+		predictionLine = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
+
+#ifndef MUTE
+	shot->Destroy();
+	shot = nullptr;
+#endif // MUTE
+}
 
 void Gatling::Update()
 {
@@ -33,13 +58,13 @@ void Gatling::Update()
 
 	Camera* cam = object->LoadComponent<Camera>();
 	m_scl = object->Getscl();
-	time++;
+	time += Renderer::GetDeltaTime();
 	Scene* scene = Manager::GetScene();
 
 	angle = cam->GetAngle().x;
 	angle = TOOL::Limit(angle, 0.0f, -TOOL::AToR(60.0f));
 
-	int fire = (float)fire_time * fire_rate;
+	int fire = fire_time * fire_rate;
 
 	if (objS)
 	{
@@ -68,7 +93,7 @@ void Gatling::Update()
 			a = shot->Play();
 			shot->SetVolume(0.05f, a);
 #endif
-			time = 0;
+			time = 0.f;
 
 			randrot = Float3(0.0f, 0.0f, 0.0f);
 			randrot.x = ((TOOL::RandF() * TOOL::AToR(5.f)) - TOOL::AToR(2.5f)) * (1.f - fire_rate);

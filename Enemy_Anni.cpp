@@ -42,6 +42,8 @@ void Enemy_Anni::Begin()
 
 void Enemy_Anni::ClearObserver()
 {
+	TOOL::Display("EnemyNum:%d\n", TargetList->GetListCount());
+
 	if (TargetList->Empty())
 	{
 		Clear = true;

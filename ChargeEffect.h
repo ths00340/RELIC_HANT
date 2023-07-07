@@ -20,8 +20,8 @@ private:
 	ID3D11BlendState* blendState;
 	int m_Count = 0;
 	int maxcount = 10;
-	int flame = 0;
-	int flametime = 1;
+	float time = 0;
+	float flametime = 1;
 public:
 	void Init();
 	void Uninit();

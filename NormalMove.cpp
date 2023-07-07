@@ -19,6 +19,8 @@ void NormalMove::Init()
 
 void NormalMove::Uninit()
 {
+	if (m_pInput)
+		m_pInput = nullptr;
 }
 
 void NormalMove::Update()

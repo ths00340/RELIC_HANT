@@ -83,7 +83,7 @@ void BOSS_01_InEn::ExtraMove()
 	//“Áêƒ‚[ƒVƒ‡ƒ“
 	if (Once)
 	{
-		Once = true;
+		Once = false;
 	}
 	else
 	{

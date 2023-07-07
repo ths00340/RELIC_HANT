@@ -17,6 +17,8 @@ void Gravity::Init()
 
 void Gravity::Uninit()
 {
+	if (field)
+		field = nullptr;
 }
 
 void Gravity::Update()

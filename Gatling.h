@@ -17,7 +17,7 @@ class Gatling :
 	ID3D11InputLayout* m_VertexLayout;
 
 	//縦のアングルのみ
-	int fire_time = 0;//発射レート
+	float fire_time = 0;//発射レート
 	float fire_rate = 0.f;//発射スパン
 	float rate_min = 0.75f;
 	float roll_max = 3.14f;//回転速度最大値

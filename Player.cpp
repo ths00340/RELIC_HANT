@@ -115,6 +115,7 @@ struct Floatt3 {
 
 void Player::Update()
 {
+
 	m_Idol += TOOL::AToR(30);
 	if (m_Idol > TOOL::AToR(90))
 		m_Idol = 0;
@@ -189,6 +190,9 @@ void Player::Update()
 
 		for (GameObject* obj : enlist)
 		{
+			if (!obj->GetEnable())
+				continue;
+
 			if (obj == this)
 				continue;
 

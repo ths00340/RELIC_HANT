@@ -13,7 +13,7 @@ class Bazooka :
 	ID3D11PixelShader* m_PixelShader;
 	ID3D11InputLayout* m_VertexLayout;
 
-	int fire_rate = 0;//発射レート
+	float fire_rate = 0.f;//発射レート
 
 	void Predicted(Float3 spos, Float3 vel);//予測用
 	Float3 PredictedPoint;//着弾予測座標
@@ -21,9 +21,9 @@ public:
 	Bazooka(GameObject* inobject) :Wepon(inobject)
 	{
 		dmg = 20;
-		time = 0;
+		time = 0.f;
 		angle = 0.0f;
-		fire_rate = 0;
+		fire_rate = 0.f;
 		objS = NULL;
 		PredictedPoint = Float3(0.0f, 0.0f, 0.0f);
 	}

@@ -16,7 +16,7 @@ private:
 	ID3D11PixelShader* m_PixelShader;
 	ID3D11InputLayout* m_VertexLayout;
 
-	int fire_time = 0;
+	float fire_time = 0;
 
 	Float3 randrot = Float3(0.0f, 0.0f, 0.0f);//—”—p‚Ì“ü‚ê•¨
 

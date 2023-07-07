@@ -15,8 +15,8 @@ private:
 	ID3D11InputLayout* m_VertexLayout;
 	ID3D11BlendState* blendState;
 	int atk;
-	int time;
-	int livetime;
+	float time;
+	float livetime;
 	float startsize;
 	float Range = 0.f;
 public:

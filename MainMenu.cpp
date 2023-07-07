@@ -43,7 +43,6 @@ void MainMenu::Init()
 	fade = NULL;
 
 	Manager::AddScene<TextureDrawScene>();
-	//Manager::AddScene<DebugDrawScene>();
 
 	menuCam = AddGameObject<Camera_>((int)OBJ_LAYER::System);
 	abc = AddGameObject<Platform>((int)OBJ_LAYER::GameObject);
@@ -55,7 +54,7 @@ void MainMenu::Init()
 	pl->RemoveComponent<cInputOperation>();
 	pl->RemoveComponent<AttitudeControl>();
 	pl->DeleteDriveS();
-
+	
 	pl->SetScl(TOOL::Uniform(0.3f));
 	pl->SetPos(Float3(5.f, 0.5f, 2.f));
 
@@ -74,8 +73,13 @@ void MainMenu::Init()
 
 void MainMenu::Uninit()
 {
-	if (bgm != NULL)
+	if (bgm)
+	{
 		bgm->StopAll();
+		bgm->Destroy();
+		bgm = nullptr;
+	}
+
 	Game::Uninit();
 }
 

@@ -32,6 +32,8 @@ protected:
 	std::list<CComponent*> Component;//疑似コンポーネント
 
 	bool m_Stop = false;//アップデートの停止///秒数にするべきか
+	bool m_Enable = true;
+
 
 	const char* name = "NoName";//タグ
 
@@ -60,6 +62,7 @@ public:
 	virtual void Uninit() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void InstanceDraw() {};
 
 	virtual void FixedUpdate() {
 		m_pos += m_vec;
@@ -111,6 +114,7 @@ public:
 	void SetDestroy() {
 		m_Destoroy = true;
 	}
+	void SetEnable(bool inEnable) { m_Enable = inEnable; };
 	void SetStop(bool stop = true)
 	{
 		m_Stop = stop;
@@ -118,6 +122,7 @@ public:
 
 	//取得系
 	const bool	 GetDestory() { return m_Destoroy; }
+	const bool	 GetEnable() { return m_Enable; }
 	const bool   GetStop() { return m_Stop; }
 	const Float3 Getpos() { return m_pos; };
 	const Float3 Getrot() { return m_rot; };
@@ -235,7 +240,6 @@ public:
 		{
 			if (typeid(*comp) == typeid(T))//型を調べる
 			{
-				//OutputDebugString(TEXT("通った\n"));
 				comps.push_back((T*)comp);
 			}
 		}
@@ -243,12 +247,13 @@ public:
 	}
 
 	template<typename T>
-	bool RemoveComponent()
+	const bool RemoveComponent()
 	{
 		for (CComponent* comp : Component)
 		{
 			if (typeid(*comp) == typeid(T))//型を調べる
 			{
+				comp->Uninit();
 				Component.remove(comp);
 				delete comp;
 				return true;
@@ -257,7 +262,7 @@ public:
 		return false;
 	}
 
-	bool RemoveComponents()
+	const bool RemoveComponents()
 	{
 		for (CComponent* it : Component)
 		{

@@ -8,6 +8,11 @@ void TargetCom::Init()
 	bData->GetTargetList()->AttachTarget(object);
 }
 
+void TargetCom::Update()
+{
+
+}
+
 void TargetCom::Uninit()
 {
 	Game* sce = (Game*)Manager::GetScene();

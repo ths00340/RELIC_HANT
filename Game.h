@@ -51,7 +51,7 @@ public:
 		if (B_Data)
 			DeleteBattle();
 
-		B_Data = new T();
+		B_Data = DBG_NEW T();
 		B_Data->Init();
 	}
 

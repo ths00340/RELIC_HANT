@@ -9,7 +9,7 @@
 
 void BillBoadManager::Init()
 {
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INSTANCE_LIGHT_ON);
+	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INSTANCE_Y_BILLBOAD);
 
 	//頂点バッファ生成
 	D3D11_BUFFER_DESC bd{};
@@ -115,8 +115,11 @@ void BillBoadManager::Uninit()
 void BillBoadManager::Update()
 {
 	std::vector<D3DXMATRIX> inWorld;
-	for (const D3DXMATRIX matrix : m_Matrixs)//範囲forループ
+	for ( D3DXMATRIX const matrix  : m_Matrixs)//範囲forループ
 	{
+
+
+
 		inWorld.push_back(matrix);
 	}
 	// 必要な場合にサイズを調整する

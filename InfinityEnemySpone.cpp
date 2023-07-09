@@ -4,16 +4,18 @@
 #include "EnemyPool.h"
 #include "Enemy.h"
 #include "InfinityEnemySpone.h"
-#include "Stage02.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
 #include "Leg_01.h"
+#include "MissionTex.h"
 
 void InfinityEnemySpone::Init()
 {
 	BATTLE_DATA::Init();
 	sce = Manager::GetScene();
-	mtex = sce->AddGameObject<Stage02>((int)OBJ_LAYER::UI);
+	mtex = sce->AddGameObject<MissionTex>((int)OBJ_LAYER::UI);
+	mtex->LoadTex("asset/texture/MissTex01.png");
+
 	m_pPool = sce->GetGameObject<EnemyPool>(OBJ_LAYER::System);
 	EnemyNum = 200;
 	m_pPool->Set(EnemyNum);

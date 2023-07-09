@@ -465,15 +465,6 @@
     <ClInclude Include="MissionTex.h">
       <Filter>ヘッダー ファイル\GameObject\UIs\MTex</Filter>
     </ClInclude>
-    <ClInclude Include="Stage01.h">
-      <Filter>ヘッダー ファイル\GameObject\UIs\MTex</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage03.h">
-      <Filter>ヘッダー ファイル\GameObject\UIs\MTex</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage02.h">
-      <Filter>ヘッダー ファイル\GameObject\UIs\MTex</Filter>
-    </ClInclude>
     <ClInclude Include="ResultBackGround.h">
       <Filter>ヘッダー ファイル\GameObject\UIs</Filter>
     </ClInclude>
@@ -647,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="ParticlePool.h">
       <Filter>ヘッダー ファイル\GameObject\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -845,16 +839,7 @@
     <ClCompile Include="MissionTex.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Stage01.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="TimeFrame.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage03.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage02.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="ResultBackGround.cpp">
@@ -1079,6 +1064,12 @@
       <Filter>Shader\Image</Filter>
     </FxCompile>
     <FxCompile Include="Shader\SkyCloudVS.hlsl">
+      <Filter>Shader\Image</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\InsvertexYBillBoadPS.hlsl">
+      <Filter>Shader\Image</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\InsvertexYBillBoadVS.hlsl">
       <Filter>Shader\Image</Filter>
     </FxCompile>
   </ItemGroup>

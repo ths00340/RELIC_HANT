@@ -4,11 +4,11 @@
 #include "EnemyPool.h"
 #include "Enemy.h"
 #include "BOSS_01.h"
-#include "Stage03.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
 #include "ShotGun_Physics.h"
 #include "TargetCom.h"
+#include "MissionTex.h"
 
 void BOSS_01::Init()
 {
@@ -18,7 +18,8 @@ void BOSS_01::Init()
 	sce = Manager::GetScene();
 
 	//Žw—ß‘‚Ì“o˜^
-	mtex = sce->AddGameObject<Stage03>((int)OBJ_LAYER::UI);
+	mtex = sce->AddGameObject<MissionTex>((int)OBJ_LAYER::UI);
+	mtex->LoadTex("asset/texture/MissTex04.png");
 
 	m_pPool = sce->GetGameObject<EnemyPool>(OBJ_LAYER::System);
 	m_pPool->Set(1);

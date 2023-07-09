@@ -3,15 +3,18 @@
 #include "EnemyPool.h"
 #include "Enemy.h"
 #include "Enemy_Anni.h"
-#include "Stage01.h"
 #include "Leg_01.h"
 #include "TargetCom.h"
+#include "MissionTex.h"
 
 void Enemy_Anni::Init()
 {
 	BATTLE_DATA::Init();
 	sce = Manager::GetScene();
-	mtex = sce->AddGameObject<Stage01>((int)OBJ_LAYER::UI);
+	mtex = sce->AddGameObject<MissionTex>((int)OBJ_LAYER::UI);
+	mtex->LoadTex("asset/texture/MissTex02.png");
+
+
 	EnemyNum = 20;
 	m_pPool = sce->GetGameObject<EnemyPool>(OBJ_LAYER::System);
 	m_pPool->Set(EnemyNum);

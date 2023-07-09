@@ -137,6 +137,7 @@ void Polygon2D::Draw()
 
 void Polygon2D::LoadTex(const char* filename)
 {
+	m_Texture = nullptr;
 	m_Texture = ResourceManager::AddTex(filename);
 }
 

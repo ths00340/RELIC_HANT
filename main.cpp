@@ -21,7 +21,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	dwExecLastTime = timeGetTime();
 	dwCurrentTime = 0;
 
-	MSG msg;
 	while (!WinIsQuitMessage())
 	{
 		//メッセージの更新

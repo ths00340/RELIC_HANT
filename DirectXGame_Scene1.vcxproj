@@ -109,9 +109,6 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SousaH.h" />
     <ClInclude Include="SphereShadow.h" />
-    <ClInclude Include="Stage01.h" />
-    <ClInclude Include="Stage02.h" />
-    <ClInclude Include="Stage03.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="DebugCamMove.h" />
@@ -206,9 +203,6 @@
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SousaH.cpp" />
     <ClCompile Include="SphereShadow.cpp" />
-    <ClCompile Include="Stage01.cpp" />
-    <ClCompile Include="Stage02.cpp" />
-    <ClCompile Include="Stage03.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="DebugCamMove.cpp" />
@@ -410,6 +404,22 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shader\InsvertexYBillBoadPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\InsvertexYBillBoadVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\InsvertexLightingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

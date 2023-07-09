@@ -4,12 +4,12 @@
 #include "EnemyPool.h"
 #include "Enemy.h"
 #include "BOSS_01_InEn.h"
-#include "Stage03.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
 #include "ShotGun_Physics.h"
 #include "Leg_01.h"
 #include "TargetCom.h"
+#include "MissionTex.h"
 
 void BOSS_01_InEn::Init()
 {
@@ -20,7 +20,8 @@ void BOSS_01_InEn::Init()
 	m_pPool->Set(EnemyNum + 1);
 
 	Enemy* en = m_pPool->Recycle();
-	mtex = sce->AddGameObject<Stage03>((int)OBJ_LAYER::UI);
+	mtex = sce->AddGameObject<MissionTex>((int)OBJ_LAYER::UI);
+	mtex->LoadTex("asset/texture/MissTex04.png");
 
 	if (en)
 	{

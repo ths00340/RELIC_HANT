@@ -17,6 +17,20 @@ void Leg_01::Init()
 
 void Leg_01::Uninit()
 {
+	if (flont)
+		flont = nullptr;
+
+	if (Back)
+		Back = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
 }
 
 void Leg_01::Update()

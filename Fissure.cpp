@@ -7,10 +7,17 @@
 #include "Camera.h"
 #include "Fissure.h"
 
-ID3D11Buffer* Fissure::m_VertexBuffer;
-
 void Fissure::Init()
 {
+	//頂点バッファ生成
+	D3D11_BUFFER_DESC bd{};
+	bd.Usage = D3D11_USAGE_DYNAMIC;//後から書き換え可能だよ
+	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
+
+	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
+
 	m_Texture = ResourceManager::AddTex("asset/texture/Fis.png");
 
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_ON);
@@ -29,6 +36,8 @@ void Fissure::Init()
 
 void Fissure::Uninit()
 {
+	if (m_VertexBuffer != nullptr)
+		m_VertexBuffer->Release();
 }
 
 void Fissure::Update()
@@ -44,7 +53,7 @@ void Fissure::Update()
 
 void Fissure::Draw()
 {
-	if (m_Destoroy)
+	if (m_Destroy)
 		return;
 
 	D3D11_MAPPED_SUBRESOURCE msr;
@@ -116,20 +125,9 @@ void Fissure::Set(float maxtime)
 
 void Fissure::Load()
 {
-	//頂点バッファ生成
-	D3D11_BUFFER_DESC bd{};
-	bd.Usage = D3D11_USAGE_DYNAMIC;//後から書き換え可能だよ
-	bd.ByteWidth = sizeof(VERTEX_3D) * 4;
-	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//頂点バッファの内容を書き換えることができるようにした
-
-	Renderer::GetDevice()->CreateBuffer(&bd, NULL, &m_VertexBuffer);
-
 	ResourceManager::AddTex("asset/texture/Fis.png");
 }
 
 void Fissure::UnLoad()
 {
-	if (m_VertexBuffer != nullptr)
-		m_VertexBuffer->Release();
 }

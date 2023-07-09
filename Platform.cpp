@@ -13,7 +13,6 @@ void Platform::Init()
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_OPAQUE);
 	name = "Plarform";
-	AddComponent<Camera>();
 	m_pos = Float3(0.f, 0.f, 0.f);
 	m_scl = Float3(0.05f, 0.05f, 0.05f);
 	m_rot = Float3(0.f, 0.f, 0.f);

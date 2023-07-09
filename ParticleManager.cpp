@@ -9,17 +9,11 @@
 
 void ParticleManager::Init()
 {
-	m_model[(int)PARTICLE_S::ITEM1] = ResourceManager::AddModel("asset\\models\\Item01.obj");
-	m_model[(int)PARTICLE_S::ITEM2] = ResourceManager::AddModel("asset\\models\\Item02.obj");
-	m_model[(int)PARTICLE_S::ITEM3] = ResourceManager::AddModel("asset\\models\\Item03.obj");
-	m_model[(int)PARTICLE_S::GIA] = ResourceManager::AddModel("asset\\models\\neji.obj");
-	m_model[(int)PARTICLE_S::DEBRIS] = ResourceManager::AddModel("asset\\models\\hahen.obj");
-	m_model[(int)PARTICLE_S::CUBE] = ResourceManager::AddModel("asset\\models\\tolitoli.obj");
-
+	m_model = ResourceManager::AddModel("asset\\models\\Item01.obj");
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::INSTANCE_LIGHT_ON);
 
 	HRESULT hr;
-	D3DXMATRIX* inWorld = new D3DXMATRIX[MAX_PARTICLE];
+	D3DXMATRIX* inWorld = DBG_NEW D3DXMATRIX[MAX_PARTICLE];
 
 	for (int i = 0; i < MAX_PARTICLE; i++)
 	{
@@ -66,7 +60,6 @@ void ParticleManager::Init()
 
 	name = "ParticleManager";
 	Bstate = BLEND_S::OBJ_TRANS;
-	Pstate = PARTICLE_S::ITEM1;
 	m_BlendState = ResourceManager::GetBlend(Bstate);
 	for (GameObject* object : Particle)//範囲forループ
 	{
@@ -97,14 +90,14 @@ void ParticleManager::Update()
 	for (ParticleTest* object : Particle)//範囲forループ
 	{
 		object->Update();
-		object->Draw();
+		object->InstanceDraw();
 		inWorld.push_back(object->GetWorld());
 	}
 	Particle.remove_if([](GameObject* object) {return object->Destroy(); });
 
 	if (Particle.size() <= 0)
 	{
-		SetDestroy();
+		SetEnable(false);
 		return;
 	}
 
@@ -128,11 +121,22 @@ void ParticleManager::Draw()
 	Renderer::GetDeviceContext()->OMSetBlendState(m_BlendState, blendFactor, 0xffffffff);
 	Particle.remove_if([](GameObject* object) { return object->Destroy(); });
 
-	m_model[(int)Pstate]->InstanceDraw(Particle.size(), m_pWorldSRV);
+	m_model->InstanceDraw(Particle.size(), m_pWorldSRV);
+}
+
+void ParticleManager::OnDisable()
+{
+	for (GameObject* object : Particle)
+	{
+		object->Uninit();
+		delete object;
+	}
+	Particle.clear();
 }
 
 void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, float inGravity, int livetime, Float3 scl, Float3 Rot)
 {
+	SetEnable(true);
 	m_pos = pos;
 	m_rot = rot;
 	Particles = particle_num;
@@ -140,19 +144,50 @@ void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, f
 
 	for (int i = 0; i < Particles; i++)
 	{
-		ParticleTest* gameObject = new ParticleTest();
+		ParticleTest* gameObject = DBG_NEW ParticleTest();
 		gameObject->Init();
-		gameObject->SetModel(m_model[(int)Pstate], Bstate);
 		gameObject->Set(m_pos, inGravity, TOOL::FrameMulti((float)livetime), TOOL::Uniform(vel), scl, Rot);
 		Particle.push_back(gameObject);
 	}
+
+	D3DXMATRIX* inWorld = DBG_NEW D3DXMATRIX[MAX_PARTICLE];
+
+	for (int i = 0; i < MAX_PARTICLE; i++)
+	{
+		inWorld[i] *= 0.f;
+	}
+
+	Renderer::GetDeviceContext()->UpdateSubresource(m_pWorldBuffer, 0, nullptr, inWorld, 0, 0);
+
+	delete[] inWorld;
 }
 
 void ParticleManager::SetModel(PARTICLE_S partmodel, BLEND_S blend)
 {
 	Bstate = blend;
-	Pstate = partmodel;
 	m_BlendState = ResourceManager::GetBlend(Bstate);
+
+	switch (partmodel)
+	{
+	case PARTICLE_S::ITEM1:
+		m_model = ResourceManager::AddModel("asset\\models\\Item01.obj");
+		break;
+	case PARTICLE_S::ITEM2:
+		m_model = ResourceManager::AddModel("asset\\models\\Item02.obj");
+		break;
+	case PARTICLE_S::ITEM3:
+		m_model = ResourceManager::AddModel("asset\\models\\Item03.obj");
+		break;
+	case PARTICLE_S::GIA:
+		m_model = ResourceManager::AddModel("asset\\models\\neji.obj");
+		break;
+	case PARTICLE_S::DEBRIS:
+		m_model = ResourceManager::AddModel("asset\\models\\hahen.obj");
+		break;
+	case PARTICLE_S::CUBE:
+		m_model = ResourceManager::AddModel("asset\\models\\tolitoli.obj");
+		break;
+	}
 }
 
 void ParticleManager::Load()

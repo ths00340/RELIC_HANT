@@ -1,13 +1,14 @@
 #include "manager.h"
 #include "Scene.h"
 #include "Tools.h"
+#include "EnemyPool.h"
 #include "Enemy.h"
 #include "BOSS_01.h"
-#include "Stage03.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
 #include "ShotGun_Physics.h"
 #include "TargetCom.h"
+#include "MissionTex.h"
 
 void BOSS_01::Init()
 {
@@ -17,17 +18,24 @@ void BOSS_01::Init()
 	sce = Manager::GetScene();
 
 	//指令書の登録
-	mtex = sce->AddGameObject<Stage03>((int)OBJ_LAYER::UI);
+	mtex = sce->AddGameObject<MissionTex>((int)OBJ_LAYER::UI);
+	mtex->LoadTex("asset/texture/MissTex04.png");
+
+	m_pPool = sce->GetGameObject<EnemyPool>(OBJ_LAYER::System);
+	m_pPool->Set(1);
 
 	//ボスエネミーの設定
 	{
 		Enemy* en = NULL;
-		en = sce->AddGameObject<Enemy>((int)OBJ_LAYER::Enemy);
-		en->SetScl(TOOL::Uniform(1.f));
-		en->LoadComponent<Status>()->SetMAX(500);
-		en->AddComponent<ShotGun_Physics>();
-		en->SetShader(SHADER_S::LIGHT_LIM);
-		en->AddComponent<TargetCom>();
+		en = m_pPool->Recycle();
+		if (en)
+		{
+			en->SetScl(TOOL::Uniform(1.f));
+			en->LoadComponent<Status>()->SetMAX(500);
+			en->AddComponent<ShotGun_Physics>();
+			en->SetShader(SHADER_S::LIGHT_LIM);
+			en->AddComponent<TargetCom>();
+		}
 	}
 
 	//時間管理オブジェクトの生成

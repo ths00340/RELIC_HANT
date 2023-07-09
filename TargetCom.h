@@ -10,7 +10,7 @@ class TargetCom :
 public:
 	TargetCom(GameObject* inobject) :CComponent(inobject) {};
 	void Init();
-	void Update() {};
 	void Uninit();
-	void Draw() {};
+	void OnEnable();
+	void OnDisable();
 };

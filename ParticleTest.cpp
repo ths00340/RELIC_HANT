@@ -26,7 +26,6 @@ void ParticleTest::Init()
 		TOOL::RandF() * 10.0f / 60.0f,
 		TOOL::RandF() * (10.0f / 60.0f) - (5.0f / 60.0f)
 	);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
 
 	D3DXMatrixIdentity(&m_World);
 }
@@ -67,11 +66,13 @@ void ParticleTest::Update()
 void ParticleTest::Draw()
 {
 	//マトリクス設定
-	D3DXMATRIX scl, rot, trans;
+	D3DXMATRIX world, scl, rot, trans;
 	D3DXMatrixScaling(&scl, m_scl.x, m_scl.y, m_scl.z);
-	D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
-	D3DXMatrixTranslation(&trans, m_pos.x, m_pos.y, m_pos.z);
-	m_World = scl * rot * trans;
+	D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y + m_addrot.y, m_rot.x + m_addrot.x, m_rot.z + m_addrot.z);
+	D3DXMatrixTranslation(&trans, m_pos.x + m_addpos.x, m_pos.y + m_addpos.y, m_pos.z + m_addpos.z);
+
+	world = scl * rot * trans;
+	Renderer::SetWorldMatrix(&world);
 }
 
 void ParticleTest::Set(D3DXVECTOR3 pos,
@@ -101,8 +102,12 @@ void ParticleTest::Set(D3DXVECTOR3 pos,
 	DefaultSize = m_scl;
 }
 
-void ParticleTest::SetModel(Model* inmodel, BLEND_S blend)
+void ParticleTest::InstanceDraw()
 {
-	m_model = inmodel;
-	blendState = ResourceManager::GetBlend(blend);
+	//マトリクス設定
+	D3DXMATRIX scl, rot, trans;
+	D3DXMatrixScaling(&scl, m_scl.x, m_scl.y, m_scl.z);
+	D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
+	D3DXMatrixTranslation(&trans, m_pos.x, m_pos.y, m_pos.z);
+	m_World = scl * rot * trans;
 }

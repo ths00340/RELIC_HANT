@@ -13,10 +13,14 @@ void AttitudeControl::Update()
 	time++;
 	Float3 PPos = object->Getpos();
 
-	Float3 Look = TOOL::LookatX(PPos, FixedPos);
+	float Look = TOOL::LookatX(PPos, FixedPos).x;
 
 	if (!TOOL::CanHit(FixedPos, PPos, 0.05f))
-		object->LoadAddRot()->x = TOOL::LookatX(PPos, FixedPos).x;
+	{
+		float _nowRot = object->Getaddrot().x;
+		float zeroFloat = 0.f;
+		object->LoadAddRot()->x = TOOL::SmoothDamp(_nowRot, Look, zeroFloat, 0.025f, 1000.f, 0.016f);
+	}
 
 	FixedPos = PPos;
 }

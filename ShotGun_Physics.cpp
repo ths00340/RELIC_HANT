@@ -6,6 +6,7 @@
 #include "Tools.h"
 #include "Camera.h"
 #include "Status.h"
+#include "NBulletPool.h"
 #include "bullet.h"
 #include "ShotGun_Physics.h"
 
@@ -16,19 +17,38 @@ void ShotGun_Physics::Init()
 	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	fire_time = TOOL::FrameMulti(0.45f);
+	fire_time = 0.45f;
 #ifndef MUTE
 	shot = Manager::GetScene()->AddGameObject<Audio>((int)OBJ_LAYER::System);
 	shot->Load("asset\\SE\\ShotSound_2.wav");
 #endif // MUTE
 	range = 30;
+	pool = Manager::GetScene()->GetGameObject<NBulletPool>(OBJ_LAYER::System);
 }
 
 void ShotGun_Physics::Uninit()
 {
+	if (model)
+		model = nullptr;
+
+	if (barrel)
+		barrel = nullptr;
+
+	if (predictionLine)
+		predictionLine = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
+
 #ifndef MUTE
 	shot->Destroy();
-	shot = NULL;
+	shot = nullptr;
 #endif // MUTE
 }
 
@@ -38,7 +58,7 @@ void ShotGun_Physics::Update()
 
 	Camera* cam = object->LoadComponent<Camera>();
 	m_scl = object->Getscl();
-	time++;
+	time += Renderer::GetDeltaTime();
 	Scene* scene = Manager::GetScene();
 	angle = cam->GetAngle().x;
 	angle = TOOL::Limit(angle, 0.f, -TOOL::AToR(60.f));
@@ -70,19 +90,22 @@ void ShotGun_Physics::Update()
 			a = shot->Play();
 			shot->SetVolume(0.05f, a);
 #endif //MUTE
-			time = 0;
+			time = 0.f;
 
 			for (int i = 0; i < 10; i++)
 			{
 				randrot = Float3(0.0f, 0.0f, 0.0f);
 				randrot.x = ((TOOL::RandF() * TOOL::AToR(7.f)) - TOOL::AToR(3.5f));
 				randrot.y = ((TOOL::RandF() * TOOL::AToR(7.f)) - TOOL::AToR(3.5f));
-				Bullet* blt = scene->AddGameObject<Bullet>((int)OBJ_LAYER::GameObject);
-				blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), dmg, range);
-				blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
+				Bullet* blt = pool->Recycle();
+				if (blt)
+				{
+					blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), dmg, range);
+					blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
 
-				if (object->LoadComponent<Camera>())
-					object->LoadComponent<Camera>()->SetShakePos(10, 0.25f);
+					if (object->LoadComponent<Camera>())
+						object->LoadComponent<Camera>()->SetShakePos(0.1f, 0.25f);
+				}
 			}
 		}
 	}
@@ -146,12 +169,6 @@ void ShotGun_Physics::Draw()
 	Renderer::SetWorldMatrix(&world);
 	model->Draw();
 
-	TrueF3 = TOOL::GetUp(
-		Float3(object->Getrot().x + object->Getaddrot().x,
-			object->Getrot().y + object->Getaddrot().y,
-			object->Getrot().z + object->Getaddrot().z))
-		* (object->Getmax().y * object->Getscl().y);
-
 	D3DXMatrixTranslation(&trans, m_barrelpos.x + TrueF3.x, m_barrelpos.y + TrueF3.y, m_barrelpos.z + TrueF3.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
@@ -163,7 +180,7 @@ void ShotGun_Physics::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 
-	if (objS)
+	if (objS && isPredict)
 		predictionLine->Draw();
 }
 

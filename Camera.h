@@ -27,15 +27,15 @@ private:
 	class cInputOperation* m_pInput;
 
 	/// óhÇÍópïœêî
-	int  time = 0;
+	float  time = 0.f;
 
 	bool shakeP = false;
 	bool shakeR = false;
 
-	int	 MaxRandP = 0;
-	int	 MaxRandR = 0;
-	float shakeStrP = 1.0f;
-	float shakeStrR = 1.0f;
+	float MaxRandP = 0.f;
+	float MaxRandR = 0.f;
+	float shakeStrP = 1.f;
+	float shakeStrR = 1.f;
 
 public:
 
@@ -98,8 +98,8 @@ public:
 		if (tag == NULL)
 			tag = intag;
 	}
-	void SetShakePos(int max = 60, float Str = 1.f);
-	void SetShakeRot(int max = 60, float Str = 1.f);
+	void SetShakePos(float max = 1.f, float Str = 1.f);
+	void SetShakeRot(float max = 1.f, float Str = 1.f);
 
 	const Float3 GetDir();
 	const Float3 GetAngle() { return Angle; };

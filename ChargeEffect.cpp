@@ -31,11 +31,11 @@ void ChargeEffect::Uninit()
 
 void ChargeEffect::Update()
 {
-	flame++;
-	if (flame >= flametime)
+	time += Renderer::GetDeltaTime();
+	if (time >= flametime)
 	{
 		m_Count++;
-		flame = 0;
+		time = 0.f;
 	}
 
 	if (m_Count > maxcount)
@@ -48,7 +48,7 @@ void ChargeEffect::Update()
 
 void ChargeEffect::Draw()
 {
-	if (m_Destoroy)
+	if (m_Destroy)
 		return;
 
 	float x = m_Count % maxcount * (1.0f / 10.0f);
@@ -130,15 +130,8 @@ void ChargeEffect::Draw()
 void ChargeEffect::Set(float maxtime)
 {
 	int frame = 0;
-	flame = TOOL::FrameMulti(maxtime);
-	TOOL::Display((char*)"再生フレーム%d:1\n", flametime);
-	flametime = flame / 10;
-	int add = flametime * 10;
-	add = flame - add;
-	if (fabs(add) > 0)
-		flametime += 1;
-
-	TOOL::Display((char*)"平均フレーム差%d:\n", fabs(add));
+	time = maxtime;
+	flametime = time / 10.f;
 }
 
 void ChargeEffect::Load()

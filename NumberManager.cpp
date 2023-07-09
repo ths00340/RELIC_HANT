@@ -8,7 +8,7 @@ void NumberManager::Init()
 	m_ZeroDraw = false;
 	for (int i = 0; i < NUM_MAX; i++)
 	{
-		Number* Num = new Number();
+		Number* Num = DBG_NEW Number();
 		Num->Init();
 		m_Num.push_back(Num);
 	}
@@ -21,6 +21,7 @@ void NumberManager::Uninit()
 		object->Uninit();
 		delete object;
 	}
+	m_Num.clear();
 }
 
 void NumberManager::Update()

@@ -12,8 +12,8 @@ void main(in PS_IN In, out PS_OUT Out)
 	float Luminance = 1000.f;//Œõ‚Ì‹­‚³
 	float3 SatellitePos = Light.Position;
 	float4 TopColor, UnderColor, MoonColor;
-	TopColor = float4(0.058f, 0.07f, 0.149f, 1.f);//–éfloat4(0.686f, 0.933f, 0.933f, 1.f);// 
-	UnderColor =  float4(0.203f, 0.239f, 0.45f, 1.f);//–éfloat4(0.878f, 1.f, 1.f, 1.f);     
+	TopColor = float4(0.058f, 0.07f, 0.149f, 1.f);//–éfloat4(0.686f, 0.933f, 0.933f, 1.f);//
+	UnderColor = float4(0.203f, 0.239f, 0.45f, 1.f);//–éfloat4(0.878f, 1.f, 1.f, 1.f);
 	MoonColor = float4(0.968f, 0.972f, 0.941f, 1.f);
 	Out.Normal = float4(1.f, 0.f, 0.f, 1.f);
 	//float4(0.686f,0.933f,0.933f,1.f);  //’‹

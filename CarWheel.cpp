@@ -20,6 +20,17 @@ void CarWheel::Init()
 
 void CarWheel::Uninit()
 {
+	if (model)
+		model = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
 }
 
 void CarWheel::Update()

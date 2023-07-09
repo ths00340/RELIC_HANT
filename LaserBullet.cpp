@@ -21,8 +21,8 @@ void LaserBullet::Init()
 	m_rot = Float3(0.f, 0.f, 0.f);
 	minsize = m_model->Get_min();
 	maxsize = m_model->Get_max();
-	time = 0;
-	livetime = TOOL::FrameMulti(0.35f);
+	time = 0.f;
+	livetime = 0.35f;
 	m_scl.z = TOOL::Magni_one(maxsize.z, 60.0f);
 	startsize = m_scl.y;
 	name = "LaserBullet";
@@ -34,7 +34,7 @@ void LaserBullet::Uninit()
 
 void LaserBullet::Update()
 {
-	if (time == 0)
+	if (time == 0.f)
 	{
 		Scene* scene = Manager::GetScene();
 		std::vector<GameObject*> hitlist = scene->GetGameObjCmp<Status>();
@@ -43,6 +43,9 @@ void LaserBullet::Update()
 		Float3 pos;
 		for (GameObject* obj : hitlist)
 		{
+			if (!obj->GetEnable())
+				continue;
+
 			if (TOOL::HitRaySphere(m_pos, GetForward(), obj->Getpos(), obj->Getmax().z * obj->Getscl().z, pos))
 			{
 				obj->LoadComponent<Status>()->PullHP(atk);
@@ -53,9 +56,9 @@ void LaserBullet::Update()
 		}
 	}
 
-	time++;
-	m_scl.x = startsize - (startsize * ((float)time / livetime));
-	m_scl.y = startsize - (startsize * ((float)time / livetime));
+	time += Renderer::GetDeltaTime();
+	m_scl.x = startsize - (startsize * (time / livetime));
+	m_scl.y = startsize - (startsize * (time / livetime));
 
 	if (time > livetime)
 		Finish();

@@ -6,18 +6,22 @@
 #include "Tools.h"
 #include "Camera.h"
 #include "Status.h"
+#include "NBulletPool.h"
 #include "bullet.h"
 #include "Gatling.h"
 
 void Gatling::Init()
 {
+	maxspednum = 25;
 	model = ResourceManager::AddModel("asset\\models\\Tullet05ho.obj");
 	barrel = ResourceManager::AddModel("asset\\models\\Tullet05barrel.obj");
 	predictionLine = ResourceManager::AddModel("asset\\models\\laser01.obj");
 	//シェーダー関係
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::NORMAL_FOG);
-	fire_time = TOOL::FrameMulti(0.15f);
+	rate_max = 0.05f;
+	rate_min = 0.35f;
 	roll_max = TOOL::AToR(60);
+	pool = Manager::GetScene()->GetGameObject<NBulletPool>(OBJ_LAYER::System);
 
 #ifndef MUTE
 	shot = Manager::GetScene()->AddGameObject<Audio>((int)OBJ_LAYER::System);
@@ -25,7 +29,34 @@ void Gatling::Init()
 #endif // MUTE
 }
 
-void Gatling::Uninit() {}
+void Gatling::Uninit()
+{
+	if (model)
+		model = nullptr;
+
+	if (pool)
+		pool = nullptr;
+
+	if (barrel)
+		barrel = nullptr;
+
+	if (predictionLine)
+		predictionLine = nullptr;
+
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
+
+#ifndef MUTE
+	shot->Destroy();
+	shot = nullptr;
+#endif // MUTE
+}
 
 void Gatling::Update()
 {
@@ -33,13 +64,13 @@ void Gatling::Update()
 
 	Camera* cam = object->LoadComponent<Camera>();
 	m_scl = object->Getscl();
-	time++;
+	time += Renderer::GetDeltaTime();
 	Scene* scene = Manager::GetScene();
 
 	angle = cam->GetAngle().x;
 	angle = TOOL::Limit(angle, 0.0f, -TOOL::AToR(60.0f));
 
-	int fire = (float)fire_time * fire_rate;
+	float fire = TOOL::Lerp(rate_min, rate_max, fire_rate);
 
 	if (objS)
 	{
@@ -68,16 +99,20 @@ void Gatling::Update()
 			a = shot->Play();
 			shot->SetVolume(0.05f, a);
 #endif
-			time = 0;
+			time = 0.f;
 
 			randrot = Float3(0.0f, 0.0f, 0.0f);
-			randrot.x = ((TOOL::RandF() * TOOL::AToR(5.f)) - TOOL::AToR(2.5f)) * (1.f - fire_rate);
-			randrot.y = ((TOOL::RandF() * TOOL::AToR(5.f)) - TOOL::AToR(2.5f)) * (1.f - fire_rate);
-			Bullet* blt = scene->AddGameObject<Bullet>((int)OBJ_LAYER::GameObject);
-			blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), 1, range);
-			blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
+			randrot.x = ((TOOL::RandF() * TOOL::AToR(5.f)) - TOOL::AToR(2.5f)) * fire_rate;
+			randrot.y = ((TOOL::RandF() * TOOL::AToR(5.f)) - TOOL::AToR(2.5f)) * fire_rate;
+			Bullet* blt = pool->Recycle();
 
-			shotnum++;
+			if (blt)
+			{
+				blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), 1, range);
+				blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
+
+				shotnum++;
+			}
 		}
 
 		if (!objS->GetShot())
@@ -89,9 +124,9 @@ void Gatling::Update()
 		shotnum = (int)TOOL::Limit(shotnum, maxspednum, 0);
 		fire_rate = (float)shotnum / (float)maxspednum;
 
-		fire_rate = 1.0f - (rate_min * TOOL::Limit(fire_rate, 1.0f, 0.0f));
+		fire_rate = TOOL::Limit(fire_rate, 1.0f, 0.0f);
 
-		float roll = roll_max * (1.f - fire_rate);
+		float roll = roll_max * (0.01f + fire_rate);
 		barrelRoll += roll;
 		if (barrelRoll >= TOOL::AToR(360))
 			barrelRoll = 0.0f;

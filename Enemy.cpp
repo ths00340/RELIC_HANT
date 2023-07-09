@@ -9,6 +9,7 @@
 #include "ViewCamera.h"
 #include "manager.h"
 #include "Player.h"
+#include "ParticlePool.h"
 #include "ParticleManager.h"
 #include "Leg_01.h"
 #include "Bazooka.h"
@@ -16,6 +17,7 @@
 #include "Gravity.h"
 #include "SphereShadow.h"
 #include "ExplodeDome.h"
+#include "TargetCom.h"
 
 void Enemy::Init()
 {
@@ -74,6 +76,7 @@ void Enemy::Init()
 
 void Enemy::Uninit()
 {
+	status = nullptr;
 #ifndef MUTE
 	if (hit)
 		hit->SetDeath();
@@ -153,6 +156,13 @@ void Enemy::Draw()
 	m_model->Draw();
 }
 
+void Enemy::OnEnable()
+{
+	status->SetMAX(10);
+	status->SetBreak(true);
+	time = 0;
+}
+
 void Enemy::Load()
 {
 	ResourceManager::AddModel("asset\\models\\CamBot_E01.obj");
@@ -187,30 +197,46 @@ void Enemy::Finish()
 	ParticleManager* mana;
 
 	Scene* scene = Manager::GetScene();
+	ParticlePool* pool = scene->GetGameObject<ParticlePool>(OBJ_LAYER::System);
+
 	scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject)->Set(m_pos, m_model->Get_max().z * m_scl.z, 0.2f, 0);
 
-	mana = scene->AddGameObject<ParticleManager>(1);
-	mana->SetModel(PARTICLE_S::ITEM2, BLEND_S::OBJ_TRANS);
-	mana->Set(m_pos, TOOL::Uniform(), 2.0f * m_scl.z, TOOL::RandF() * 15 + 5 + (50 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana = pool->Recycle();
+	if (mana)
+	{
+		mana->SetModel(PARTICLE_S::ITEM2, BLEND_S::OBJ_TRANS);
+		mana->Set(m_pos, TOOL::Uniform(), 2.0f * m_scl.z, TOOL::RandF() * 15 + 5 + (50 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	}
 
-	mana = scene->AddGameObject<ParticleManager>(1);
-	mana->SetModel(PARTICLE_S::ITEM3, BLEND_S::OBJ_TRANS);
-	mana->Set(m_pos, TOOL::Uniform(), 3.0f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana = pool->Recycle();
+	if (mana)
+	{
+		mana->SetModel(PARTICLE_S::ITEM3, BLEND_S::OBJ_TRANS);
+		mana->Set(m_pos, TOOL::Uniform(), 3.0f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	}
 
-	mana = scene->AddGameObject<ParticleManager>(1);
-	mana->SetModel(PARTICLE_S::GIA, BLEND_S::OBJ_OPAQUE);
-	mana->Set(m_pos, TOOL::Uniform(), 0.5f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	mana = pool->Recycle();
 
-	mana = scene->AddGameObject<ParticleManager>(1);
-	mana->SetModel(PARTICLE_S::CUBE, BLEND_S::OBJ_TRANS);
-	mana->Set(m_pos,				//座標
-		TOOL::Uniform(),			//角度
-		2.0f * m_scl.z,				//サイズ
-		TOOL::RandF() * 15 + 5 + (50 * m_scl.z),//数
-		GRAVITY,					//重力値
-		2,							//生存時間
-		m_scl * 0.5f,				//サイズ
-		{ 3.f,3.f,3.f });			//回転速度
+	if (mana)
+	{
+		mana->SetModel(PARTICLE_S::GIA, BLEND_S::OBJ_OPAQUE);
+		mana->Set(m_pos, TOOL::Uniform(), 0.5f * m_scl.z, TOOL::RandF() * 10 + (5 * m_scl.z), GRAVITY, 2, m_scl * 0.5f);
+	}
 
-	SetDestroy();
+	mana = pool->Recycle();
+
+	if (mana)
+	{
+		mana->SetModel(PARTICLE_S::CUBE, BLEND_S::OBJ_TRANS);
+		mana->Set(m_pos,				//座標
+			TOOL::Uniform(),			//角度
+			2.0f * m_scl.z,				//サイズ
+			TOOL::RandF() * 15 + 5 + (50 * m_scl.z),//数
+			GRAVITY,					//重力値
+			2,							//生存時間
+			m_scl * 0.5f,				//サイズ
+			{ 3.f,3.f,3.f });			//回転速度
+	}
+
+	SetEnable(false);
 }

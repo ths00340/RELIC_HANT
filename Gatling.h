@@ -5,6 +5,9 @@
 #pragma once
 
 #include "Wepon.h"
+
+class NBulletPool;
+
 class Gatling :
 	public Wepon
 {
@@ -17,9 +20,9 @@ class Gatling :
 	ID3D11InputLayout* m_VertexLayout;
 
 	//縦のアングルのみ
-	int fire_time = 0;//発射レート
-	float fire_rate = 0.f;//発射スパン
-	float rate_min = 0.75f;
+	float rate_max = 0.f;//発射レート //最速
+	float rate_min = 0.75f;//初期発射レート//最遅
+	float fire_rate = 0.f;//発射レートの比率
 	float roll_max = 3.14f;//回転速度最大値
 	float barrelRoll = 0.0f;
 	int maxspednum = 20;//何発で最速発射になるか
@@ -27,13 +30,15 @@ class Gatling :
 	Float3 randrot = Float3(0.0f, 0.0f, 0.0f);
 
 	Float3 m_barrelpos;//砲身の座標
+	NBulletPool* pool = nullptr;
 public:
 	Gatling(GameObject* inobject) :Wepon(inobject)
 	{
 		dmg = 5;
 		time = 0;
 		angle = 0.f;
-		fire_time = 0;
+		rate_max = 0.35f;
+		rate_min = 0.75f;
 		fire_rate = 0.f;
 		objS = NULL;
 		roll_max = 3.14f;
@@ -43,6 +48,7 @@ public:
 		rate_min = 0.75f;
 		randrot = Float3(0.0f, 0.0f, 0.0f);
 		range = 60.f;
+		pool = nullptr;
 	}
 
 	void Init();

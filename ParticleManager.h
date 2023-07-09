@@ -27,7 +27,7 @@ class ParticleManager :
 	public GameObject
 {
 private:
-	Model* m_model[(int)PARTICLE_S::END];
+	Model* m_model;
 	std::list<ParticleTest*> Particle;
 	ID3D11VertexShader* m_VertexShader;
 	ID3D11PixelShader* m_PixelShader;
@@ -41,12 +41,12 @@ private:
 	Float3 startpos;
 	int Particles = 0;
 	BLEND_S Bstate;
-	PARTICLE_S Pstate;
 public:
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
+	void OnDisable();
 	void Set(Float3 pos = Float3(0.0f, 0.0f, 0.0f),
 		Float3 rot = Float3(0.f, 0.f, 0.f),
 		float vel = 0.0f,

@@ -40,10 +40,9 @@ void MainMenu::Init()
 	view.TopLeftX = 0;
 	view.TopLeftY = 0;
 	Platform* abc;
-	fade = NULL;
+	fade = nullptr;
 
 	Manager::AddScene<TextureDrawScene>();
-	//Manager::AddScene<DebugDrawScene>();
 
 	menuCam = AddGameObject<Camera_>((int)OBJ_LAYER::System);
 	abc = AddGameObject<Platform>((int)OBJ_LAYER::GameObject);
@@ -74,8 +73,13 @@ void MainMenu::Init()
 
 void MainMenu::Uninit()
 {
-	if (bgm != NULL)
+	if (bgm)
+	{
 		bgm->StopAll();
+		bgm->Destroy();
+		bgm = nullptr;
+	}
+
 	Game::Uninit();
 }
 

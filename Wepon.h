@@ -18,7 +18,7 @@ protected:
 	Float3 m_scl;//サイズ(親オブジェクトに相対的なサイズ)
 	float angle = 0.f;
 	int dmg = 1;
-	int time = 0;//時間計測用
+	float time = 0.f;//時間計測用
 	Float3 ShotAngle;//発射角度
 	Float3 shotpos;//発射座標
 
@@ -33,7 +33,7 @@ public:
 		m_scl = { 1.f,1.f,1.f };
 		angle = 0.f;
 		dmg = 1;
-		time = 0;
+		time = 0.f;
 		ShotAngle = { 0.f,0.f,0.f };
 		shotpos = { 0.f,0.f,0.f };
 		range = 60.f;

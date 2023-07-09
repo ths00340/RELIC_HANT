@@ -18,9 +18,9 @@ private:
 	Model* m_model;//モデルポインタ
 
 	ID3D11VertexShader* m_VertexShader;
-	ID3D11PixelShader* m_PixelShader;
-	ID3D11InputLayout* m_VertexLayout;
-	ID3D11BlendState* blendState;
+	ID3D11PixelShader * m_PixelShader;
+	ID3D11InputLayout * m_VertexLayout;
+	ID3D11BlendState  * blendState;
 
 	//発射音用オーディオポインタ※コンポーネントに移動させるため削除予定
 	class Audio* m_pShotSE = nullptr;
@@ -56,7 +56,7 @@ public:
 	Player()
 	{
 		m_pShotSE = nullptr;
-
+		m_model = nullptr;
 		m_pSta = nullptr;
 		m_pWepon = nullptr;
 		m_pDriveS = nullptr;
@@ -64,6 +64,12 @@ public:
 		m_pHp = nullptr;
 		m_pMp = nullptr;
 		m_Idol = 0.0f;
+
+		m_VertexShader	= nullptr;
+		m_PixelShader	= nullptr;
+		m_VertexLayout	= nullptr;
+		blendState		= nullptr;
+		m_pInput		= nullptr;
 	}
 
 	void Init();//初期化

@@ -6,6 +6,7 @@
 #include "Tools.h"
 #include "Camera.h"
 #include "Status.h"
+#include "NBulletPool.h"
 #include "bullet.h"
 #include "ShotGun_Physics.h"
 
@@ -22,6 +23,7 @@ void ShotGun_Physics::Init()
 	shot->Load("asset\\SE\\ShotSound_2.wav");
 #endif // MUTE
 	range = 30;
+	pool = Manager::GetScene()->GetGameObject<NBulletPool>(OBJ_LAYER::System);
 }
 
 void ShotGun_Physics::Uninit()
@@ -95,12 +97,15 @@ void ShotGun_Physics::Update()
 				randrot = Float3(0.0f, 0.0f, 0.0f);
 				randrot.x = ((TOOL::RandF() * TOOL::AToR(7.f)) - TOOL::AToR(3.5f));
 				randrot.y = ((TOOL::RandF() * TOOL::AToR(7.f)) - TOOL::AToR(3.5f));
-				Bullet* blt = scene->AddGameObject<Bullet>((int)OBJ_LAYER::GameObject);
-				blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), dmg, range);
-				blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
+				Bullet* blt = pool->Recycle();
+				if (blt)
+				{
+					blt->Set(shotpos, ShotAngle + randrot, TOOL::SecDiv(200.0f), dmg, range);
+					blt->SetScl(TOOL::Uniform(2.0f * m_scl.z));
 
-				if (object->LoadComponent<Camera>())
-					object->LoadComponent<Camera>()->SetShakePos(0.1f, 0.25f);
+					if (object->LoadComponent<Camera>())
+						object->LoadComponent<Camera>()->SetShakePos(0.1f, 0.25f);
+				}
 			}
 		}
 	}
@@ -164,12 +169,6 @@ void ShotGun_Physics::Draw()
 	Renderer::SetWorldMatrix(&world);
 	model->Draw();
 
-	TrueF3 = TOOL::GetUp(
-		Float3(object->Getrot().x + object->Getaddrot().x,
-			object->Getrot().y + object->Getaddrot().y,
-			object->Getrot().z + object->Getaddrot().z))
-		* (object->Getmax().y * object->Getscl().y);
-
 	D3DXMatrixTranslation(&trans, m_barrelpos.x + TrueF3.x, m_barrelpos.y + TrueF3.y, m_barrelpos.z + TrueF3.z);
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
@@ -181,7 +180,7 @@ void ShotGun_Physics::Draw()
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 
-	if (objS&&isPredict)
+	if (objS && isPredict)
 		predictionLine->Draw();
 }
 

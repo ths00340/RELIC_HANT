@@ -48,8 +48,6 @@ void Gravity::Update()
 		a.y = groundHeight;
 		object->SetPos(a);
 		object->LoadVec()->y = 0.0f;
-		//object->SetUp(m_Normal);
-		//TOOL::Display("Œ»Ý‚ÌUP [X:%f][Y:%f][Z:%f]\n", object->GetUp().x, object->GetUp().y, object->GetUp().z);
 		isGround = true;
 	}
 }

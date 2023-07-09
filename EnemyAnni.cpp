@@ -16,10 +16,12 @@ void EnemyAnni::Init()
 	for (int i = 0; i < 250; i++)
 	{
 		float sizeY = TOOL::RandF() * 10.0f + 8.0f;
+		Float2 _nPos = TOOL::rand2(i);
+
 		_billM->Set(
-			Float3((TOOL::RandF() * 400.0f) - 200.0f
+			Float3((_nPos.x * 400.0f) - 200.0f
 				, sizeY - 1.0f
-				, (TOOL::RandF() * 400.0f) - 200.0f)
+				, (_nPos.y * 400.0f) - 200.0f)
 			, Float3(8.f, sizeY, 8.f));
 	}
 }

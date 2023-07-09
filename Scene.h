@@ -122,6 +122,23 @@ public:
 	}
 
 	template <typename T>
+	T* GetGameObject(OBJ_LAYER inLayer)
+	{
+		int Layer = (int)inLayer;
+
+		if (Layer < 0 || Layer >(int)OBJ_LAYER::UI)
+			return nullptr;
+
+		for (GameObject* object : g_GameObject[Layer])
+		{
+			if (typeid(*object) == typeid(T))//Œ^‚ð’²‚×‚é
+			{
+				return (T*)object;
+			}
+		}
+		return nullptr;
+	}
+	template <typename T>
 	std::vector<T*> GetGameObjects(int a = -1)
 	{
 		std::vector<T*>objects;
@@ -136,7 +153,7 @@ public:
 					if (typeid(*object) == typeid(T))//Œ^‚ð’²‚×‚é
 					{
 						if (object->GetEnable())
-						objects.push_back((T*)object);
+							objects.push_back((T*)object);
 					}
 				}
 		else
@@ -148,7 +165,7 @@ public:
 				if (typeid(*object) == typeid(T))//Œ^‚ð’²‚×‚é
 				{
 					if (object->GetEnable())
-					objects.push_back((T*)object);
+						objects.push_back((T*)object);
 				}
 			}
 
@@ -161,7 +178,7 @@ public:
 
 		for (GameObject* object : g_GameObject[Layer])
 		{
-				objects.push_back(object);
+			objects.push_back(object);
 		}
 		return objects;
 	}

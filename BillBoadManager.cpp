@@ -136,7 +136,7 @@ void BillBoadManager::Draw()
 	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	Renderer::GetDeviceContext()->OMSetBlendState(m_BlendState, blendFactor, 0xffffffff);
-	
+
 	//頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
@@ -159,7 +159,7 @@ void BillBoadManager::Draw()
 
 bool BillBoadManager::Set(Float3 inPos, Float3 inScl)
 {
-	if (MAX_BILLBOAD<=m_Matrixs.size())
+	if (MAX_BILLBOAD <= m_Matrixs.size())
 	{
 		return false;
 	}

@@ -4,6 +4,9 @@
 //==============================================================================
 #pragma once
 #include "Wepon.h"
+
+class NBulletPool;
+
 class ShotGun_Physics :
 	public Wepon
 {
@@ -23,6 +26,8 @@ private:
 	Float3 m_barrelpos;//ñCêgÇÃç¿ïW
 
 	bool isPredict = true;
+
+	NBulletPool* pool = nullptr;
 public:
 	ShotGun_Physics(GameObject* inobject) :Wepon(inobject)
 	{
@@ -34,6 +39,7 @@ public:
 		randrot = Float3(0.0f, 0.0f, 0.0f);
 		range = 20.f;
 		isPredict = true;
+		pool = nullptr;
 	}
 
 	void Init();

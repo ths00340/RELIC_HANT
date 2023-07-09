@@ -11,6 +11,7 @@ class TimeStr;
 class GameObject;
 class MissionTex;
 class Scene;
+class EnemyPool;
 
 //リスト管理用クラス
 class Object_List {
@@ -108,6 +109,8 @@ protected:
 	TimeStr* Endurance = nullptr;	//耐久時間(-1なら無限)
 	Timer2D* timer = nullptr;		//タイマー描画用オブジェクト
 	MissionTex* mtex = nullptr;		//ミッションの詳細看板
+	EnemyPool* m_pPool = nullptr;		//エネミー用のオブジェクトプール
+
 	float ptime = 0.0f;				//時間減算用
 	float ClTime = 0.0f;			//キープ時間計測用
 

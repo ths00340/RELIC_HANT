@@ -26,19 +26,12 @@ void ParticleTest::Init()
 		TOOL::RandF() * 10.0f / 60.0f,
 		TOOL::RandF() * (10.0f / 60.0f) - (5.0f / 60.0f)
 	);
-	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
-	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 
 	D3DXMatrixIdentity(&m_World);
 }
 
 void ParticleTest::Uninit()
 {
-	if (blendState)
-		blendState = nullptr;
-
-	if (m_model)
-		m_model = nullptr;
 }
 
 void ParticleTest::Update()
@@ -72,13 +65,6 @@ void ParticleTest::Update()
 
 void ParticleTest::Draw()
 {
-	//入力レイアウト設定
-	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
-
-	//シェーダー入力
-	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
-	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
-
 	//マトリクス設定
 	D3DXMATRIX world, scl, rot, trans;
 	D3DXMatrixScaling(&scl, m_scl.x, m_scl.y, m_scl.z);
@@ -87,7 +73,6 @@ void ParticleTest::Draw()
 
 	world = scl * rot * trans;
 	Renderer::SetWorldMatrix(&world);
-	m_model->Draw();
 }
 
 void ParticleTest::Set(D3DXVECTOR3 pos,
@@ -125,10 +110,4 @@ void ParticleTest::InstanceDraw()
 	D3DXMatrixRotationYawPitchRoll(&rot, m_rot.y, m_rot.x, m_rot.z);
 	D3DXMatrixTranslation(&trans, m_pos.x, m_pos.y, m_pos.z);
 	m_World = scl * rot * trans;
-}
-
-void ParticleTest::SetModel(Model* inmodel, BLEND_S blend)
-{
-	m_model = inmodel;
-	blendState = ResourceManager::GetBlend(blend);
 }

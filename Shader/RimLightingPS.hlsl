@@ -17,10 +17,6 @@ void main(in PS_IN In, out PS_OUT Out : SV_Target)
 	float3 eyev = In.WorldPosition.xyz - CameraPosition.xyz;
 	eyev = normalize(eyev); //正規化する
 
-	////光の反射ベクトルを計算
-	//float3 refv = reflect(Light.Direction.xyz, normal.xyz);
-	//refv = normalize(refv); //正規化する
-
 	//ハーフベクトル作成
 	float3	halfv = eyev + Light.Direction.xyz;
 	halfv = normalize(halfv); //正規化する
@@ -38,11 +34,6 @@ void main(in PS_IN In, out PS_OUT Out : SV_Target)
 	//テクスチャのピクセル色を取得
 	Out.Diffuse =
 		g_Texture.Sample(g_SamplerState, In.TexCoord);
-
-	Out.Diffuse.rgb *=
-		In.Diffuse.rgb * light; //明るさと色を乗算
-	Out.Diffuse.a *=
-		In.Diffuse.a; //α別計算
 
 	//スペキュラ値をデフューズとして足しこむ
 	Out.Diffuse.rgb += specular;

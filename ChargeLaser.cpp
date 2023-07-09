@@ -92,7 +92,7 @@ void ChargeLaser::Update()
 
 		if (objS->GetShot())
 		{
-			time+=Renderer::GetDeltaTime();
+			time += Renderer::GetDeltaTime();
 			if (eff == nullptr)
 			{
 				eff = scene->AddGameObject<ChargeEffect>((int)OBJ_LAYER::Billboard);

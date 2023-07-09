@@ -98,7 +98,7 @@ void Field::Init()
 				// 頂点カラーの設定
 				pVtx[i].Diffuse = D3DXVECTOR4(1.f, 1.f, 1.f, 1.f);
 				np *= 100.f;
-				np +=TOOL::fBmNoise(inpos * 0.1f, 4);
+				np += TOOL::fBmNoise(inpos * 0.1f, 4);
 				pVtx[i].Position.y = np;
 				// UV値の設定
 				pVtx[i].TexCoord = D3DXVECTOR2(0.0f + x * 1.0f, 0.0f + y * 1.0f);
@@ -109,7 +109,6 @@ void Field::Init()
 		}
 		Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
 	}
-
 
 	for (int y = 1; y < (CHIP_Y); y++)
 	{
@@ -148,11 +147,11 @@ void Field::Init()
 
 void Field::Uninit()
 {
-	if(m_VertexBuffer)
-	m_VertexBuffer->Release();
+	if (m_VertexBuffer)
+		m_VertexBuffer->Release();
 
-	if(m_IndexBuffer)
-	m_IndexBuffer->Release();
+	if (m_IndexBuffer)
+		m_IndexBuffer->Release();
 }
 
 void Field::Update()

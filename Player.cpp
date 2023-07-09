@@ -115,7 +115,6 @@ struct Floatt3 {
 
 void Player::Update()
 {
-
 	m_Idol += TOOL::AToR(30);
 	if (m_Idol > TOOL::AToR(90))
 		m_Idol = 0;
@@ -130,7 +129,7 @@ void Player::Update()
 				m_pCam->FlontTarget<Enemy>();
 			}
 
-		if (!m_Destoroy)
+		if (!m_Destroy)
 			m_pSta->SetShot(m_pInput->GetShot());
 	}
 
@@ -254,7 +253,7 @@ void Player::Draw()
 void Player::Damage(int dmg)
 {
 	if (m_pCam)
-		m_pCam->SetShakeRot(15, TOOL::AToR(3.f));
+		m_pCam->SetShakeRot(0.25f, TOOL::AToR(3.f));
 
 	if (m_pSta)
 		m_pSta->AddHP(-dmg);

@@ -44,7 +44,7 @@ void Fissure::Update()
 
 void Fissure::Draw()
 {
-	if (m_Destoroy)
+	if (m_Destroy)
 		return;
 
 	D3D11_MAPPED_SUBRESOURCE msr;

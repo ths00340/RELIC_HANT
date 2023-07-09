@@ -11,6 +11,7 @@ void main(in VS_IN_INSTANCE In, out PS_IN Out)
 	worldNormal = mul(normal, ww);
 	worldNormal = normalize(worldNormal);
 	worldNormal.w = 1.f;
+	Out.Normal = worldNormal; //回転後の法線出力 In.Normalでなく回転後の法線を出力
 
 	float light = -dot(Light.Direction.xyz, worldNormal.xyz);
 	light = saturate(light);

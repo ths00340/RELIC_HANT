@@ -27,19 +27,17 @@ protected:
 	Float3 minsize = { 0.0f, 0.0f, 0.0f };//最小座標
 	Float3 maxsize = { 0.0f, 0.0f, 0.0f };//最大座標
 
-	bool  m_Destoroy = false;//破壊フラグ
+	bool  m_Destroy = false;//破壊フラグ
 
 	std::list<CComponent*> Component;//疑似コンポーネント
 
 	bool m_Stop = false;//アップデートの停止///秒数にするべきか
 	bool m_Enable = true;
 
-
 	const char* name = "NoName";//タグ
 
 private:
 	ID3D11BlendState* blendState = nullptr;
-	GameObject* me;//自分指定//いるかは分からん
 
 	Float3 MatrixToEuler(const D3DXMATRIX& matrix)
 	{
@@ -51,10 +49,26 @@ private:
 
 		return ret;
 	}
+
+	void ComponentEnable()
+	{
+		for (CComponent* comp : Component)
+		{
+			comp->OnEnable();
+		}
+	}
+
+	void ComponentDisaible()
+	{
+		for (CComponent* comp : Component)
+		{
+			comp->OnDisable();
+		}
+	}
+
 public:
 	GameObject() {
-		me = this;
-		m_Destoroy = false;
+		m_Destroy = false;
 		m_Stop = false;
 	};
 
@@ -63,6 +77,8 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void InstanceDraw() {};
+	virtual void OnEnable() {};
+	virtual void OnDisable() {};
 
 	virtual void FixedUpdate() {
 		m_pos += m_vec;
@@ -112,16 +128,29 @@ public:
 	}
 
 	void SetDestroy() {
-		m_Destoroy = true;
+		m_Destroy = true;
 	}
-	void SetEnable(bool inEnable) { m_Enable = inEnable; };
+	virtual void SetEnable(bool inEnable) {
+		if (inEnable)
+		{
+			m_Enable = inEnable;
+			OnEnable();
+			ComponentEnable();
+			return;
+		}
+
+		m_Enable = inEnable;
+		OnDisable();
+		ComponentDisaible();
+		return;
+	};
 	void SetStop(bool stop = true)
 	{
 		m_Stop = stop;
 	}
 
 	//取得系
-	const bool	 GetDestory() { return m_Destoroy; }
+	const bool	 GetDestory() { return m_Destroy; }
 	const bool	 GetEnable() { return m_Enable; }
 	const bool   GetStop() { return m_Stop; }
 	const Float3 Getpos() { return m_pos; };
@@ -182,7 +211,7 @@ public:
 	//削除
 	const bool Destroy()
 	{
-		if (m_Destoroy)
+		if (m_Destroy)
 		{
 			RemoveComponents();
 			Uninit();
@@ -253,9 +282,7 @@ public:
 		{
 			if (typeid(*comp) == typeid(T))//型を調べる
 			{
-				comp->Uninit();
-				Component.remove(comp);
-				delete comp;
+				comp->SetDestroy();
 				return true;
 			}
 		}
@@ -272,6 +299,11 @@ public:
 
 		Component.clear();
 		return true;
+	}
+
+	void CheckDeadComponent()
+	{
+		Component.remove_if([](CComponent* cmp) {return cmp->Destroy(); });
 	}
 
 	const char* GetName()

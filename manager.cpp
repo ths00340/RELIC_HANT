@@ -27,8 +27,6 @@ void Manager::Init()
 	Audio::InitMaster();
 	common = nullptr;
 	Input::ShowPoint(true);
-
-	srand((unsigned int)timeGetTime());
 	SetScene<Logo_S>();
 	legtype = MOVE_TYPE::CAR;
 	wepon = WEPON_TYPE::SHOTGUN_1;
@@ -107,7 +105,7 @@ void Manager::Draw()
 
 	Renderer::SetLight(light);
 	Renderer::BeginTexture();
-	//レンダーテクスチャシーン描画//マルチレンダーになるかも…
+	//レンダーテクスチャシーン描画
 	NowScene->ObjectDraws(OBJ_LAYER::System, OBJ_LAYER::Billboard);
 
 	Renderer::SetLight(light);

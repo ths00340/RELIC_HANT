@@ -460,7 +460,7 @@ void Renderer::Update()
 	DWORD keikaTime = nowTime - oldTime;
 
 	int intValue = static_cast<int>(keikaTime);
-	
+
 	deltaTime = (float)intValue / 1000.f;
 
 	Time.w += deltaTime;

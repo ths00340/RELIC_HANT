@@ -14,6 +14,9 @@
 ///GameObject
 #include "audio.h"
 #include "GameObject.h"
+#include "EnemyPool.h"
+#include "NBulletPool.h"
+#include "ParticlePool.h"
 #include "Player.h"
 #include "DebugCamMove.h"
 #include "Camera.h"
@@ -47,6 +50,11 @@ void Game::Init()
 	//カメラ管理用オブジェクトの追加 インスタンシングにするべき
 	VCam = AddGameObject<ViewCamera>((int)OBJ_LAYER::System);
 
+	//オブジェクトプール群　もっと使いやすい構造に変更するべき
+	AddGameObject<EnemyPool>((int)OBJ_LAYER::System);
+	AddGameObject<NBulletPool>((int)OBJ_LAYER::System)->Set(50);
+	AddGameObject<ParticlePool>((int)OBJ_LAYER::System)->Set(25);
+
 	//ステージ基礎の追加
 	AddGameObject<Skybox>((int)OBJ_LAYER::NoCaring);
 	AddGameObject<Field>((int)OBJ_LAYER::NoCaring);
@@ -70,7 +78,6 @@ void Game::Init()
 	OverBGM->Load("asset\\SE\\Over.wav");
 #endif // !MUTE
 	debug_com = false;
-
 	Input::ShowPoint(false);
 	Input::CangeFixedPointer();
 	Pause = false;

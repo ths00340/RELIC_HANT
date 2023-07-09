@@ -40,7 +40,7 @@ void MainMenu::Init()
 	view.TopLeftX = 0;
 	view.TopLeftY = 0;
 	Platform* abc;
-	fade = NULL;
+	fade = nullptr;
 
 	Manager::AddScene<TextureDrawScene>();
 
@@ -54,7 +54,7 @@ void MainMenu::Init()
 	pl->RemoveComponent<cInputOperation>();
 	pl->RemoveComponent<AttitudeControl>();
 	pl->DeleteDriveS();
-	
+
 	pl->SetScl(TOOL::Uniform(0.3f));
 	pl->SetPos(Float3(5.f, 0.5f, 2.f));
 

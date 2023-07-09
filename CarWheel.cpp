@@ -20,7 +20,7 @@ void CarWheel::Init()
 
 void CarWheel::Uninit()
 {
-	if(model)
+	if (model)
 		model = nullptr;
 
 	if (m_VertexLayout)

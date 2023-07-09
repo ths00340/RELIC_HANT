@@ -31,7 +31,7 @@ void ChargeEffect::Uninit()
 
 void ChargeEffect::Update()
 {
-	time+=Renderer::GetDeltaTime();
+	time += Renderer::GetDeltaTime();
 	if (time >= flametime)
 	{
 		m_Count++;
@@ -48,7 +48,7 @@ void ChargeEffect::Update()
 
 void ChargeEffect::Draw()
 {
-	if (m_Destoroy)
+	if (m_Destroy)
 		return;
 
 	float x = m_Count % maxcount * (1.0f / 10.0f);

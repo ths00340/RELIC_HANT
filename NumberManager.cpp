@@ -21,6 +21,7 @@ void NumberManager::Uninit()
 		object->Uninit();
 		delete object;
 	}
+	m_Num.clear();
 }
 
 void NumberManager::Update()

@@ -18,7 +18,7 @@ void ExplosiveBullet::Finish()
 	float maxshake = 120.f;
 	Scene* scene = Manager::GetScene();
 
-	ExplodeDome* dome=scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject);
+	ExplodeDome* dome = scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject);
 	dome->Set(m_pos, DmgRange, 0.2f, atk);
 	dome->SetUp(m_pGra->GetGroundNormal());
 	SetDestroy();

@@ -26,8 +26,7 @@ void Camera::Init()
 }
 
 void Camera::Uninit() {
-
-	if(m_pInput)
+	if (m_pInput)
 		m_pInput = nullptr;
 }
 
@@ -75,7 +74,7 @@ void Camera::Update()
 		Float3 tagpos;
 		tagpos = tag->Getpos() - object->Getpos();
 		float zeroFloat = 0.f;
-		Angle.y = TOOL::SmoothDamp(Angle.y, Angle.y+TOOL::SubAngle(tagpos, Dir), zeroFloat, 0.025f, 1000.f, Renderer::GetDeltaTime());
+		Angle.y = TOOL::SmoothDamp(Angle.y, Angle.y + TOOL::SubAngle(tagpos, Dir), zeroFloat, 0.025f, 1000.f, Renderer::GetDeltaTime());
 		Angle.x = -atan2f(tagpos.y, hypotf(tagpos.z, tagpos.x));
 		if (!tag->GetEnable())
 		{

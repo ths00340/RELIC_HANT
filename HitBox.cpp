@@ -32,7 +32,6 @@ void HitBox::Uninit()
 
 	if (blendState)
 		blendState = nullptr;
-
 }
 
 void HitBox::Update()

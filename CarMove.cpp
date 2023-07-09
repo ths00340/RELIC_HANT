@@ -17,7 +17,7 @@ void CarMove::Init()
 
 void CarMove::Uninit()
 {
-	if(m_pInput)
+	if (m_pInput)
 		m_pInput = nullptr;
 }
 

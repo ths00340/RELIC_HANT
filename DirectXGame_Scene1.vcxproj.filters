@@ -106,6 +106,15 @@
     <Filter Include="Shader\Model">
       <UniqueIdentifier>{d56dc68c-73fd-4f81-9017-569bb3f7dcd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\GameObject\Base">
+      <UniqueIdentifier>{6d3f6acc-a404-4fb6-bfc6-a3bbe9718f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Pools">
+      <UniqueIdentifier>{11b79371-8c67-40ac-ae54-8d42f4ed91e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GameObject\Pool">
+      <UniqueIdentifier>{a234de30-8df2-44c5-aaf9-5375e4c0f897}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h">
@@ -212,9 +221,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>ヘッダー ファイル\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="CComponent.h">
       <Filter>ヘッダー ファイル\Component</Filter>
@@ -624,8 +630,23 @@
     <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ReuseObjectAbstract.h">
+    <ClInclude Include="resource.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ヘッダー ファイル\GameObject\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>ヘッダー ファイル\GameObject\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPool.h">
+      <Filter>ヘッダー ファイル\GameObject\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="NBulletPool.h">
+      <Filter>ヘッダー ファイル\GameObject\Pool</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticlePool.h">
+      <Filter>ヘッダー ファイル\GameObject\Pool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -899,8 +920,14 @@
     <ClCompile Include="BillBoadManager.cpp">
       <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="ReuseObjectAbstract.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="EnemyPool.cpp">
+      <Filter>ソース ファイル\GameObject\Pools</Filter>
+    </ClCompile>
+    <ClCompile Include="NBulletPool.cpp">
+      <Filter>ソース ファイル\GameObject\Pools</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticlePool.cpp">
+      <Filter>ソース ファイル\GameObject\Pools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

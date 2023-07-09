@@ -1,4 +1,5 @@
 #include "BATTLE_DATA.h"
+#include "renderer.h"
 #include "GameObject.h"
 #include "TimeStr.h"
 #include "Timer2D.h"
@@ -41,7 +42,7 @@ void BATTLE_DATA::Update()
 void BATTLE_DATA::IsTimeLimit()
 {
 	if (!Clear && !GameOver)
-		ptime += TOOL::SecDiv(1.0f);
+		ptime += Renderer::GetDeltaTime();
 
 	if (ptime > 1.f)
 	{

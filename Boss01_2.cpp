@@ -11,10 +11,12 @@ void Boss01_2::Init()
 	SetBattle<BOSS_01_InEn>();
 	for (int i = 0; i < 250; i++)
 	{
-		Tree* t = NULL;
+		Tree* t = nullptr;
 		t = AddGameObject<Tree>((int)OBJ_LAYER::Billboard);
 		t->LoadScl()->y = TOOL::RandF() * 10.0f + 8.0f;
-		t->Set(Float3((TOOL::RandF() * 400.0f) - 200.0f, t->Getscl().y - 1.0f, (TOOL::RandF() * 400.0f) - 200.0f));
+		Float2 _nPos = TOOL::rand2(i);
+
+		t->Set(Float3((_nPos.x * 400.0f) - 200.0f, t->Getscl().y - 1.0f, (_nPos.y * 400.0f) - 200.0f));
 	}
 }
 

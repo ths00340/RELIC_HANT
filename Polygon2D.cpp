@@ -48,7 +48,6 @@ void Polygon2D::Uninit()
 	if (m_AddTexture)
 		for (int i = 0; i < 7; i++)
 			m_AddTexture[i] = nullptr;
-
 }
 
 void Polygon2D::Draw()

@@ -1,15 +1,15 @@
 #include "main.h"
-#include "manager.h"
 #include "Tools.h"
+#include "manager.h"
 #include "GameObject.h"
 #include "DebugObject.h"
 
 void DebugObject::Init()
 {
 	DebugOBJ = ResourceManager::AddModel("asset\\models\\cube.obj");
-	m_size = TOOL::Uniform(1.f);
 	ResourceManager::GetShaderState(&m_VertexShader, &m_PixelShader, &m_VertexLayout, SHADER_S::LIGHT_OFF);
 	blendState = ResourceManager::GetBlend(BLEND_S::OBJ_TRANS);
+	m_size = TOOL::Uniform(1.f);
 }
 
 void DebugObject::Update()

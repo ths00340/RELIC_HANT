@@ -35,10 +35,12 @@ void Scene::Update()
 	{
 		for (GameObject* object : g_GameObject[i])//”ÍˆÍforƒ‹[ƒv
 		{
-			if (object->GetStop())
+			if (object->GetStop() || !object->GetEnable())
 				continue;
 
 			object->Update();
+
+			object->CheckDeadComponent();
 
 			for (CComponent* com : object->GetComponent())
 				com->Update();

@@ -34,7 +34,7 @@ void main(in PS_EdgeInput In, out float4 outDiffuse : SV_Target)
 	depth2 /= 8.0f;
 
 	//法線の計算結果、あるいは深度値の計算結果が一定以上ならエッジとみなす。
-	if (length(Normal) >= 0.3f || abs(depth - depth2) > 0.0005f) {
+	if (length(Normal) >= 0.5f || abs(depth - depth2) > 0.0005f) {
 		outDiffuse = float4(0.f, 0.f, 0.f, 1.f);//エッジ
 	}
 	else {

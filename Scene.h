@@ -56,6 +56,7 @@ public:
 	};
 	virtual void Uninit()
 	{
+		int I = 0;
 		for (int i = LAYER_NUM - 1; i >= 0; i--)
 		{
 			for (GameObject* object : g_GameObject[i])
@@ -64,8 +65,10 @@ public:
 
 				object->Uninit();
 				delete object;
+				I++;
 			}
 			g_GameObject[i].clear();
+			I = 0;
 		}
 	}
 	virtual void Update();
@@ -119,6 +122,23 @@ public:
 	}
 
 	template <typename T>
+	T* GetGameObject(OBJ_LAYER inLayer)
+	{
+		int Layer = (int)inLayer;
+
+		if (Layer < 0 || Layer >(int)OBJ_LAYER::UI)
+			return nullptr;
+
+		for (GameObject* object : g_GameObject[Layer])
+		{
+			if (typeid(*object) == typeid(T))//Œ^‚ð’²‚×‚é
+			{
+				return (T*)object;
+			}
+		}
+		return nullptr;
+	}
+	template <typename T>
 	std::vector<T*> GetGameObjects(int a = -1)
 	{
 		std::vector<T*>objects;
@@ -127,17 +147,25 @@ public:
 			for (int i = 0; i < LAYER_NUM; i++)
 				for (GameObject* object : g_GameObject[i])
 				{
+					if (!object->GetEnable())
+						continue;
+
 					if (typeid(*object) == typeid(T))//Œ^‚ð’²‚×‚é
 					{
-						objects.push_back((T*)object);
+						if (object->GetEnable())
+							objects.push_back((T*)object);
 					}
 				}
 		else
 			for (GameObject* object : g_GameObject[a])
 			{
+				if (!object->GetEnable())
+					continue;
+
 				if (typeid(*object) == typeid(T))//Œ^‚ð’²‚×‚é
 				{
-					objects.push_back((T*)object);
+					if (object->GetEnable())
+						objects.push_back((T*)object);
 				}
 			}
 
@@ -149,8 +177,9 @@ public:
 		std::vector<GameObject*>objects;
 
 		for (GameObject* object : g_GameObject[Layer])
+		{
 			objects.push_back(object);
-
+		}
 		return objects;
 	}
 
@@ -161,8 +190,16 @@ public:
 			for (int i = 0; i < LAYER_NUM; i++)
 				for (GameObject* object : g_GameObject[i])
 				{
+					bool isEnable = object->GetEnable();
+
+					if (!isEnable)
+						continue;
+
 					if (object == obj)//Œ^‚ð’²‚×‚é
 					{
+						if (!isEnable)
+							return false;
+
 						return true;
 					}
 				}
@@ -172,8 +209,16 @@ public:
 		{
 			for (GameObject* object : g_GameObject[a])
 			{
+				bool isEnable = object->GetEnable();
+
+				if (!isEnable)
+					continue;
+
 				if (object == obj)//Œ^‚ð’²‚×‚é
 				{
+					if (!isEnable)
+						return false;
+
 					return true;
 				}
 			}
@@ -220,6 +265,9 @@ public:
 
 		for (GameObject* object : g_GameObject[inLayer])//”ÍˆÍforƒ‹[ƒv
 		{
+			if (!object->GetEnable())
+				continue;
+
 			if (object->GetBlendState() != NULL)
 				Renderer::GetDeviceContext()->OMSetBlendState(object->GetBlendState(), blendFactor, 0xffffffff);
 

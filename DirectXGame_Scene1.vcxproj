@@ -24,6 +24,7 @@
     <ClInclude Include="audio.h" />
     <ClInclude Include="BATTLE_DATA.h" />
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="BillBoadManager.h" />
     <ClInclude Include="billboard_Temp.h" />
     <ClInclude Include="Blinking_Space.h" />
     <ClInclude Include="Blur_Tex.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="DriveSystem.h" />
     <ClInclude Include="ENDURANCE.h" />
     <ClInclude Include="EnemyAnni.h" />
+    <ClInclude Include="EnemyPool.h" />
     <ClInclude Include="Enemy_Anni.h" />
     <ClInclude Include="ExplodeDome.h" />
     <ClInclude Include="Explosion.h" />
@@ -79,11 +81,14 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="CarMove.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="NBulletPool.h" />
     <ClInclude Include="NormalFade.h" />
     <ClInclude Include="NormalMove.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="NumberManager.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="ParticlePool.h" />
     <ClInclude Include="ParticleTest.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Platform.h" />
@@ -104,9 +109,6 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SousaH.h" />
     <ClInclude Include="SphereShadow.h" />
-    <ClInclude Include="Stage01.h" />
-    <ClInclude Include="Stage02.h" />
-    <ClInclude Include="Stage03.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="DebugCamMove.h" />
@@ -129,6 +131,7 @@
     <ClCompile Include="audio.cpp" />
     <ClCompile Include="BATTLE_DATA.cpp" />
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="BillBoadManager.cpp" />
     <ClCompile Include="Blinking_Space.cpp" />
     <ClCompile Include="Blur_Tex.cpp" />
     <ClCompile Include="Boss01.cpp" />
@@ -151,6 +154,7 @@
     <ClCompile Include="Dodai.cpp" />
     <ClCompile Include="ENDURANCE.cpp" />
     <ClCompile Include="EnemyAnni.cpp" />
+    <ClCompile Include="EnemyPool.cpp" />
     <ClCompile Include="Enemy_Anni.cpp" />
     <ClCompile Include="ExplodeDome.cpp" />
     <ClCompile Include="Explosion.cpp" />
@@ -175,11 +179,13 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="CarMove.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="NBulletPool.cpp" />
     <ClCompile Include="NormalFade.cpp" />
     <ClCompile Include="NormalMove.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="NumberManager.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="ParticlePool.cpp" />
     <ClCompile Include="ParticleTest.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -197,9 +203,6 @@
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SousaH.cpp" />
     <ClCompile Include="SphereShadow.cpp" />
-    <ClCompile Include="Stage01.cpp" />
-    <ClCompile Include="Stage02.cpp" />
-    <ClCompile Include="Stage03.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="DebugCamMove.cpp" />
@@ -401,6 +404,22 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shader\InsvertexYBillBoadPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\InsvertexYBillBoadVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\InsvertexLightingPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

@@ -3,21 +3,19 @@
 Texture2D g_Texture : register(t0);
 SamplerState g_SamplerState : register(s0);
 
-void main(in PS_IN In, out float4 outDiffuse : SV_Target)
+void main(in PS_IN In, out PS_OUT Out : SV_Target)
 {
 	//ピクセルの法線を正規化
 	float4 normal = normalize(In.Normal);
 	//光源計算をする
 	float light = -dot(normal.xyz, Light.Direction.xyz);
 
+	Out.Normal.rgb = normal;
+	Out.Normal.a = 1.f;
 	//スペキュラの計算
 	//カメラからピクセルへ向かうベクトル
 	float3 eyev = In.WorldPosition.xyz - CameraPosition.xyz;
 	eyev = normalize(eyev); //正規化する
-
-	////光の反射ベクトルを計算
-	//float3 refv = reflect(Light.Direction.xyz, normal.xyz);
-	//refv = normalize(refv); //正規化する
 
 	//ハーフベクトル作成
 	float3	halfv = eyev + Light.Direction.xyz;
@@ -34,20 +32,15 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	rim = saturate(rim); //rimをサチュレートする
 
 	//テクスチャのピクセル色を取得
-	outDiffuse =
+	Out.Diffuse =
 		g_Texture.Sample(g_SamplerState, In.TexCoord);
 
-	outDiffuse.rgb *=
-		In.Diffuse.rgb * light; //明るさと色を乗算
-	outDiffuse.a *=
-		In.Diffuse.a; //α別計算
-
 	//スペキュラ値をデフューズとして足しこむ
-	outDiffuse.rgb += specular;
+	Out.Diffuse.rgb += specular;
 	//リム値をデフューズとして足しこむ
-	outDiffuse.r += rim;
+	Out.Diffuse.r += rim;
 
-	outDiffuse.r = max(outDiffuse.r, 0.05f);
-	outDiffuse.g = max(outDiffuse.g, 0.05f);
-	outDiffuse.b = max(outDiffuse.b, 0.05f);
+	Out.Diffuse.r = max(Out.Diffuse.r, 0.05f);
+	Out.Diffuse.g = max(Out.Diffuse.g, 0.05f);
+	Out.Diffuse.b = max(Out.Diffuse.b, 0.05f);
 }

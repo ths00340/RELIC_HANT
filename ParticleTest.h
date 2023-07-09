@@ -12,9 +12,6 @@ enum class BLEND_S;
 class ParticleTest :public GameObject
 {
 private:
-	Model* m_model = nullptr;
-	ID3D11BlendState* blendState = nullptr;
-
 	D3DXMATRIX m_World;
 	Float3 m_vel = { 0.f,0.f,0.f };
 	Float3 m_ang_vel = { 0.f,0.f,0.f };
@@ -27,9 +24,6 @@ private:
 public:
 	ParticleTest()
 	{
-		m_model = nullptr;
-		blendState = nullptr;
-
 		m_vel = { 0.f,0.f,0.f };
 		m_ang_vel = { 0.f,0.0f,0.f };
 		Gravity = 0.f;;
@@ -40,6 +34,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	void InstanceDraw();
 	void Set(D3DXVECTOR3 pos = Float3(0.f, 0.f, 0.f),
 		float inGravity = GRAVITY,
 		int inLiveTime = 60,
@@ -47,7 +42,5 @@ public:
 		Float3 scl = Float3(0.15f, 0.15f, 0.15f),
 		Float3 Rot = Float3(1.0f, 1.0f, 1.0f));
 
-	void SetModel(Model* inmodel, BLEND_S blend);
-	ID3D11BlendState* GetBlendState()override { return blendState; }
 	D3DXMATRIX GetWorld() { return m_World; };
 };

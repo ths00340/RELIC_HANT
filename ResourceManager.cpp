@@ -253,6 +253,12 @@ void ResourceManager::StartUp()
 		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::INSTANCE_LIGHT_ON], "InsvertexLightingPS.cso");
 	}
 
+	//INSTANCE_Y_BILLBOAD
+	{
+		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::INSTANCE_Y_BILLBOAD], &m_VertexLayout[(int)SHADER_S::INSTANCE_Y_BILLBOAD], "InsvertexYBillBoadVS.cso");
+		Renderer::CreatePixelShader(&m_PixelShader[(int)SHADER_S::INSTANCE_Y_BILLBOAD], "InsvertexYBillBoadPS.cso");
+	}
+
 	//NOISE_CLOUD
 	{
 		Renderer::CreateVertexShader(&m_VertexShader[(int)SHADER_S::NOISE_CLOUD], &m_VertexLayout[(int)SHADER_S::NOISE_CLOUD], "SkyCloudVS.cso");

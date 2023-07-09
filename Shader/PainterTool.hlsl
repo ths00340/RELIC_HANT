@@ -1,7 +1,7 @@
 #define PI 3.14159265359
 
 //乱数
-float rand(float2 uv) //引数はシード値と呼ばれる　同じ値を渡せば同じものを返す
+float rand(float2 uv)
 {
 	return frac(sin(dot(uv.xy, float2(12.9898f, 78.233f))) * 43758.5453f);
 }

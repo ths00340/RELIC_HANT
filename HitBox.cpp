@@ -13,7 +13,26 @@ void HitBox::Init()
 }
 
 void HitBox::Uninit()
-{}
+{
+	if (model)
+	{
+		for (int i = 0; i < (int)HITBOX_TYPE::TYPE_END; i++)
+		{
+			model[i] = nullptr;
+		}
+	}
+	if (m_VertexLayout)
+		m_VertexLayout = nullptr;
+
+	if (m_VertexShader)
+		m_VertexShader = nullptr;
+
+	if (m_PixelShader)
+		m_PixelShader = nullptr;
+
+	if (blendState)
+		blendState = nullptr;
+}
 
 void HitBox::Update()
 {

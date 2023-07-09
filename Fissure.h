@@ -7,17 +7,25 @@
 class Fissure :
 	public GameObject
 {
-	static ID3D11Buffer* m_VertexBuffer;
+	ID3D11Buffer *			m_VertexBuffer;
 	ID3D11ShaderResourceView* m_Texture;
 
-	ID3D11VertexShader* m_VertexShader;
-	ID3D11PixelShader* m_PixelShader;
-	ID3D11InputLayout* m_VertexLayout;
-	ID3D11BlendState* blendState;
+	ID3D11VertexShader*		m_VertexShader;
+	ID3D11PixelShader*		m_PixelShader;
+	ID3D11InputLayout*		m_VertexLayout;
+	ID3D11BlendState*		blendState;
 	int flame = 0;
 	int maxtime = 60;
 	float alfa = 0.0f;
 public:
+	Fissure()
+	{
+		m_VertexShader	= nullptr;
+		m_PixelShader	= nullptr;
+		m_VertexLayout	= nullptr;
+		blendState		= nullptr;
+	}
+
 	void Init();
 	void Uninit();
 	void Update();

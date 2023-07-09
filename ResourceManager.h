@@ -54,6 +54,7 @@ enum class SHADER_S
 	NORMAL,//法線出力シェーダー
 	SIMPLE_SKY,//簡易空シェーダー
 	INSTANCE_LIGHT_ON,//インスタンシング光源ありシェーダー
+	INSTANCE_Y_BILLBOAD,//インスタンシングY固定ビルボード
 	NOISE_CLOUD,//ノイズ雲シェーダー
 	BREND_TEX,//テクスチャブレンド
 	SHADER_E//シェーダーの最大数

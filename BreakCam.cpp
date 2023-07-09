@@ -18,7 +18,9 @@ void BreakCam::Init()
 }
 
 void BreakCam::Uninit()
-{}
+{
+	cam = nullptr;
+}
 
 void BreakCam::Update()
 {}

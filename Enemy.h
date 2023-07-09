@@ -27,6 +27,8 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	void OnEnable();
+
 	void PlayHit();
 	static void Load();
 	void SetFireRate(float intime) { FireRate = intime; }

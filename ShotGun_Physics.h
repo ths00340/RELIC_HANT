@@ -4,6 +4,9 @@
 //==============================================================================
 #pragma once
 #include "Wepon.h"
+
+class NBulletPool;
+
 class ShotGun_Physics :
 	public Wepon
 {
@@ -16,11 +19,15 @@ private:
 	ID3D11PixelShader* m_PixelShader;
 	ID3D11InputLayout* m_VertexLayout;
 
-	int fire_time = 0;
+	float fire_time = 0;
 
 	Float3 randrot = Float3(0.0f, 0.0f, 0.0f);//óêêîópÇÃì¸ÇÍï®
 
 	Float3 m_barrelpos;//ñCêgÇÃç¿ïW
+
+	bool isPredict = true;
+
+	NBulletPool* pool = nullptr;
 public:
 	ShotGun_Physics(GameObject* inobject) :Wepon(inobject)
 	{
@@ -31,12 +38,15 @@ public:
 		objS = NULL;
 		randrot = Float3(0.0f, 0.0f, 0.0f);
 		range = 20.f;
+		isPredict = true;
+		pool = nullptr;
 	}
 
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
+	void SetPredict(bool isP = false) { isPredict = isP; }
 
 	static void Load();
 };

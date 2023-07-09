@@ -21,7 +21,7 @@ void Status::Update()
 	{
 		if (HP <= 0)
 		{
-			TOOL::Display((char*)"Á–Å%s\n", object->GetName());
+			TOOL::Display((char*)"HP‘S‘¹F%s\n", object->GetName());
 			object->Finish();
 			return;
 		}

@@ -18,7 +18,7 @@ void ExplosiveBullet::Finish()
 	float maxshake = 120.f;
 	Scene* scene = Manager::GetScene();
 
-	ExplodeDome* dome=scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject);
+	ExplodeDome* dome = scene->AddGameObject<ExplodeDome>((int)OBJ_LAYER::GameObject);
 	dome->Set(m_pos, DmgRange, 0.2f, atk);
 	dome->SetUp(m_pGra->GetGroundNormal());
 	SetDestroy();
@@ -28,8 +28,8 @@ void ExplosiveBullet::Finish()
 		float rang = TOOL::PointRange(pl->Getpos(), m_pos);
 		maxshake = rang / maxshake;
 		maxshake = 1.f - maxshake;//—£‚ê‚½•ª‚¾‚¯Œ¸­
-		pl->LoadComponent<Camera>()->SetShakePos(30 * maxshake, 1.0f * maxshake);
-		pl->LoadComponent<Camera>()->SetShakeRot(30 * maxshake, TOOL::AToR(2.5f) * maxshake);
+		pl->LoadComponent<Camera>()->SetShakePos(0.5f * maxshake, 1.0f * maxshake);
+		pl->LoadComponent<Camera>()->SetShakeRot(0.5f * maxshake, TOOL::AToR(2.5f) * maxshake);
 	}
 }
 
@@ -60,6 +60,9 @@ void ExplosiveBullet::Update()
 
 	for (Enemy* enemy : enemyList)
 	{
+		if (!enemy->GetEnable())
+			continue;
+
 		Float3 enemyPos = enemy->Getpos();
 		float size_z_e = enemy->GetModel()->Get_max().z * enemy->Getscl().z;
 		float size_z_m = m_model->Get_max().z * m_scl.z;

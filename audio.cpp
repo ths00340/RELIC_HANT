@@ -64,7 +64,7 @@ void Audio::Load(const char* FileName)
 		mmioDescend(hmmio, &datachunkinfo, &riffchunkinfo, MMIO_FINDCHUNK);
 
 		buflen = datachunkinfo.cksize;
-		m_SoundData = new unsigned char[buflen];
+		m_SoundData = DBG_NEW unsigned char[buflen];
 		readlen = mmioRead(hmmio, (HPSTR)m_SoundData, buflen);
 
 		m_Length = readlen;

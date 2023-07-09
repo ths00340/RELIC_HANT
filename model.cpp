@@ -100,7 +100,7 @@ void Model::Load(const char* FileName)
 
 	// サブセット設定
 	{
-		m_SubsetArray = new SUBSET[model.SubsetNum];
+		m_SubsetArray = DBG_NEW SUBSET[model.SubsetNum];
 		m_SubsetNum = model.SubsetNum;
 
 		for (unsigned int i = 0; i < model.SubsetNum; i++)
@@ -254,17 +254,17 @@ void Model::LoadObj(const char* FileName, MODEL* Model)
 	}
 
 	//メモリ確保
-	positionArray = new D3DXVECTOR3[positionNum];
-	normalArray = new D3DXVECTOR3[normalNum];
-	texcoordArray = new D3DXVECTOR2[texcoordNum];
+	positionArray = DBG_NEW D3DXVECTOR3[positionNum];
+	normalArray = DBG_NEW D3DXVECTOR3[normalNum];
+	texcoordArray = DBG_NEW D3DXVECTOR2[texcoordNum];
 
-	Model->VertexArray = new VERTEX_3D[vertexNum];
+	Model->VertexArray = DBG_NEW VERTEX_3D[vertexNum];
 	Model->VertexNum = vertexNum;
 
-	Model->IndexArray = new unsigned int[indexNum];
+	Model->IndexArray = DBG_NEW unsigned int[indexNum];
 	Model->IndexNum = indexNum;
 
-	Model->SubsetArray = new SUBSET[subsetNum];
+	Model->SubsetArray = DBG_NEW SUBSET[subsetNum];
 	Model->SubsetNum = subsetNum;
 
 	//要素読込
@@ -461,7 +461,7 @@ void Model::LoadMaterial(const char* FileName, MODEL_MATERIAL** MaterialArray, u
 	}
 
 	//メモリ確保
-	materialArray = new MODEL_MATERIAL[materialNum];
+	materialArray = DBG_NEW MODEL_MATERIAL[materialNum];
 
 	//要素読込
 	int mc = -1;

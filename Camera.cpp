@@ -39,7 +39,7 @@ void Camera::Update()
 
 	//äpìxêßå¿
 	Angle.x = TOOL::Limit(Angle.x, TOOL::AToR(60.0f), -TOOL::AToR(60.0f));
-	if (!m_pInput == NULL)
+	if (m_pInput)
 		if (!tag)
 		{
 			{

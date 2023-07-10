@@ -10,7 +10,7 @@
 void ParticleTest::Init()
 {
 	name = "ParticleTest";
-	time = 0;
+	time = 0.f;
 	m_pos = Float3(-3.f, 1.f, 0.f);
 	m_scl = Float3(0.15f, 0.15f, 0.15f);
 	DefaultSize = m_scl;
@@ -36,7 +36,7 @@ void ParticleTest::Uninit()
 
 void ParticleTest::Update()
 {
-	time++;
+	time+=Renderer::GetDeltaTime();
 	if (time > live_time)
 	{
 		SetDestroy();
@@ -59,7 +59,7 @@ void ParticleTest::Update()
 	}
 
 	int testt = live_time - time;
-	float testsize = (float)testt / (float)live_time;
+	float testsize = testt / live_time;
 	m_scl = DefaultSize * testsize;
 }
 
@@ -77,11 +77,12 @@ void ParticleTest::Draw()
 
 void ParticleTest::Set(D3DXVECTOR3 pos,
 	float inGravity,
-	int inLiveTime,
+	float inLiveTime,
 	Float3 vel,
 	Float3 scl,
 	Float3 Rot)
 {
+	time = 0.f;
 	live_time = inLiveTime;
 	Gravity = inGravity;
 	m_pos = pos;

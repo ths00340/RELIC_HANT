@@ -29,7 +29,12 @@
 
 //Conponent
 #include "Status.h"
-#include "HitBox.h"
+
+#ifdef DEBUG
+	#include "HitBox.h"
+#endif // DEBUG
+
+
 
 void Game::Init()
 {
@@ -52,14 +57,15 @@ void Game::Init()
 
 	//オブジェクトプール群　もっと使いやすい構造に変更するべき
 	AddGameObject<EnemyPool>((int)OBJ_LAYER::System);
-	AddGameObject<NBulletPool>((int)OBJ_LAYER::System)->Set(50);
-	AddGameObject<ParticlePool>((int)OBJ_LAYER::System)->Set(25);
+	AddGameObject<NBulletPool>((int)OBJ_LAYER::System)->Set(40);
+	AddGameObject<ParticlePool>((int)OBJ_LAYER::System)->Set(40);
 
 	//ステージ基礎の追加
 	AddGameObject<Skybox>((int)OBJ_LAYER::NoCaring);
 	AddGameObject<Field>((int)OBJ_LAYER::NoCaring);
 
 	//プレイヤーの設定読み込み
+	Player* pl;
 	pl = AddGameObject<Player>((int)OBJ_LAYER::GameObject);
 	pl->SetHP(pl->LoadComponent<Status>()->GetHPM());//HP表示用UI
 	pl->SetMP();//MP表示用UI
@@ -161,6 +167,7 @@ void Game::Update()
 		}
 	}
 
+#ifdef DEBUG
 	//デバック用
 	if (debug_com)
 	{
@@ -219,6 +226,7 @@ void Game::Update()
 				}
 		}
 	}
+#endif // DEBUG
 
 	//シーン遷移用
 	{
@@ -268,6 +276,7 @@ void Game::Update()
 			}
 	}
 
+#ifdef DEBUG
 	//デバックモード起動
 	if (Input::GetKeyPress(DIK_RSHIFT) && Input::GetKeyTrigger(DIK_F12))
 	{
@@ -276,6 +285,7 @@ void Game::Update()
 		else
 			debug_com = true;
 	}
+#endif // DEBUG
 }
 
 void Game::Draw()
@@ -366,16 +376,7 @@ void Game::NoUIDraw()
 	}
 }
 
-void Game::SetPlayer(Player* player)
-{
-	if (!pl)
-	{
-		pl = player;
-		g_GameObject[(int)OBJ_LAYER::GameObject].push_back(player);
-		GetGameObject<ViewCamera>()->SetView(player->LoadComponent<Camera>());
-	}
-}
-
+#ifdef DEBUG
 void Game::DebugDraw()
 {
 	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -394,6 +395,7 @@ void Game::DebugDraw()
 		}
 	}
 }
+#endif // DEBUG
 
 void Game::NextScene()
 {
@@ -419,8 +421,13 @@ void Game::Clear()
 #ifndef MUTE
 	ClearBGM->Play(false, 0.1f);
 #endif // !MUTE
-	if (GetLiveObj(pl))
-		pl->LoadComponent<Status>()->SetBreak();
+
+	Player* pl = GetGameObject<Player>();
+	if (pl)
+	{
+		if (GetLiveObj(pl))//クリアしたプレイヤーの非破壊設定
+			pl->LoadComponent<Status>()->SetBreak();
+	}
 }
 
 //ゲームオーバーした際の処理

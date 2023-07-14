@@ -6,13 +6,8 @@ class Enemy;
 //\‘¢‚ª‰˜‚¢‚Ì‚ÅC³
 
 class EnemyPool :
-	public ObjectPool
+	public ObjectPool<Enemy>
 {
-private:
-	std::list<Enemy*> Pool;
 public:
-	void Init();
-	void Uninit();
 	void Set(int num);
-	Enemy* Recycle();
 };

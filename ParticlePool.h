@@ -4,13 +4,8 @@
 class ParticleManager;
 
 class ParticlePool :
-	public ObjectPool
+	public ObjectPool<ParticleManager>
 {
-private:
-	std::list<ParticleManager*> Pool;
 public:
-	void Init();
-	void Uninit();
 	void Set(int num);
-	ParticleManager* Recycle();
 };

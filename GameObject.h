@@ -70,6 +70,7 @@ public:
 	GameObject() {
 		m_Destroy = false;
 		m_Stop = false;
+		Component.clear();
 	};
 
 	virtual ~GameObject() {

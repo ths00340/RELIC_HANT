@@ -4,13 +4,8 @@
 class Bullet;
 
 class NBulletPool :
-	public ObjectPool
+	public ObjectPool<Bullet>
 {
-private:
-	std::list<Bullet*> Pool;
 public:
-	void Init();
-	void Uninit();
 	void Set(int num);
-	Bullet* Recycle();
 };

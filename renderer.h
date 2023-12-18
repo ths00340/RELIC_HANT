@@ -44,52 +44,58 @@ struct LIGHT
 class Renderer
 {
 private:
-	static DWORD oldTime;
 
-	//シェーダー送信用の時間
-	static D3DXVECTOR4 Time;
-	static float deltaTime;
+	struct RenderSettings {
+		DWORD oldTime=0;
 
-	//バックグラウンドの色
-	static float ClearColor[4];
+		//シェーダー送信用の時間
+		D3DXVECTOR4 Time{0.f,0.f,0.f,0.f};
+		float deltaTime=0.f;
 
-	static D3D_FEATURE_LEVEL       m_FeatureLevel;
+		//バックグラウンドの色
+		float ClearColor[4] = {0.f,0.f,0.f,0.f};
 
-	static ID3D11Device* m_Device;
-	static ID3D11DeviceContext* m_DeviceContext;
-	static IDXGISwapChain* m_SwapChain;
-	static ID3D11RenderTargetView* m_RenderTargetView;
-	static ID3D11DepthStencilView* m_DepthStencilView;
+		D3D_FEATURE_LEVEL       m_FeatureLevel = D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_11_0;
 
-	static ID3D11Buffer* m_WorldBuffer;
-	static ID3D11Buffer* m_ViewBuffer;
-	static ID3D11Buffer* m_ProjectionBuffer;
-	static ID3D11Buffer* m_MaterialBuffer;
-	static ID3D11Buffer* m_LightBuffer;
-	static ID3D11Buffer* m_CameraBuffer;
-	static ID3D11Buffer* m_ParameterBuffer;
-	static ID3D11Buffer* m_TimeBuffer;
+		ID3D11Device* m_Device=nullptr;
+		ID3D11DeviceContext* m_DeviceContext = nullptr;
+		IDXGISwapChain* m_SwapChain = nullptr;
+		ID3D11RenderTargetView* m_RenderTargetView = nullptr;
+		ID3D11DepthStencilView* m_DepthStencilView = nullptr;
 
-	static ID3D11DepthStencilState* m_DepthStateEnable;
-	static ID3D11DepthStencilState* m_DepthStateDisable;
+		ID3D11Buffer* m_WorldBuffer = nullptr;
+		ID3D11Buffer* m_ViewBuffer = nullptr;
+		ID3D11Buffer* m_ProjectionBuffer = nullptr;
+		ID3D11Buffer* m_MaterialBuffer = nullptr;
+		ID3D11Buffer* m_LightBuffer = nullptr;
+		ID3D11Buffer* m_CameraBuffer = nullptr;
+		ID3D11Buffer* m_ParameterBuffer = nullptr;
+		ID3D11Buffer* m_TimeBuffer = nullptr;
 
-	//深度ステンシルビュー
-	static ID3D11DepthStencilView* m_ShadowDepthStencilView;
+		ID3D11DepthStencilState* m_DepthStateEnable = nullptr;
+		ID3D11DepthStencilState* m_DepthStateDisable = nullptr;
 
-	//深度テクスチャの入れ物
-	static ID3D11ShaderResourceView* m_ShadowDepthShaderResourceView;
+		//深度ステンシルビュー
+		ID3D11DepthStencilView* m_ShadowDepthStencilView = nullptr;
 
-	//レンダーテクスチャ用ターゲットビュー
-	static ID3D11RenderTargetView* m_RenderTextureView[(int)RENDER_::NUM];
+		//深度テクスチャの入れ物
+		ID3D11ShaderResourceView* m_ShadowDepthShaderResourceView = nullptr;
 
-	//レンダーテクスチャの入れ物
-	static ID3D11ShaderResourceView* m_RenderTextureShaderResourceView[(int)RENDER_::NUM];
+		//レンダーテクスチャ用ターゲットビュー
+		ID3D11RenderTargetView* m_RenderTextureView[(int)RENDER_::NUM] = { nullptr };
 
-	//深度ステンシルビュー
-	static ID3D11DepthStencilView* m_RenderDepthStencilView;
+		//レンダーテクスチャの入れ物
+		ID3D11ShaderResourceView* m_RenderTextureShaderResourceView[(int)RENDER_::NUM] = { nullptr };
 
-	//深度テクスチャの入れ物
-	static ID3D11ShaderResourceView* m_RenderDepthShaderResourceView;
+		//深度ステンシルビュー
+		ID3D11DepthStencilView* m_RenderDepthStencilView = nullptr;
+
+		//深度テクスチャの入れ物
+		ID3D11ShaderResourceView* m_RenderDepthShaderResourceView = nullptr;
+
+	};
+
+	static RenderSettings m_Settings;
 
 public:
 	static void Init();
@@ -109,52 +115,52 @@ public:
 	static void SetCameraPosition(D3DXVECTOR3 CameraPosition);
 	static void SetParameter(D3DXVECTOR4 Parameter);
 
-	static ID3D11Device* GetDevice(void) { return m_Device; }
-	static ID3D11DeviceContext* GetDeviceContext(void) { return m_DeviceContext; }
+	static ID3D11Device* GetDevice(void) { return m_Settings.m_Device; }
+	static ID3D11DeviceContext* GetDeviceContext(void) { return m_Settings.m_DeviceContext; }
 
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
 
 	static ID3D11ShaderResourceView* GetShadowDepthTexture()
 	{
-		return m_ShadowDepthShaderResourceView;
+		return m_Settings.m_ShadowDepthShaderResourceView;
 	}
 
 	static ID3D11ShaderResourceView* GetRenderDepthTexture()
 	{
-		return m_RenderDepthShaderResourceView;
+		return m_Settings.m_RenderDepthShaderResourceView;
 	}
 
 	static ID3D11ShaderResourceView** GetRenderTexture() {
-		return m_RenderTextureShaderResourceView;
+		return m_Settings.m_RenderTextureShaderResourceView;
 	};
 
 	static ID3D11ShaderResourceView* GetRenderTexture(RENDER_ LAYER) {
-		return m_RenderTextureShaderResourceView[(int)LAYER];
+		return m_Settings.m_RenderTextureShaderResourceView[(int)LAYER];
 	};
 
 	//深度バッファ用Begin
 	static void BeginDepth()//新規関数追加
 	{
 		//シャドウバッファを深度バッファに設定し、内容を1で塗りつぶしておく
-		m_DeviceContext->OMSetRenderTargets(0, NULL, m_ShadowDepthStencilView);
-		m_DeviceContext->ClearDepthStencilView(m_ShadowDepthStencilView,
+		m_Settings.m_DeviceContext->OMSetRenderTargets(0, NULL, m_Settings.m_ShadowDepthStencilView);
+		m_Settings.m_DeviceContext->ClearDepthStencilView(m_Settings.m_ShadowDepthStencilView,
 			D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 
 	//レンダーテクスチャ用Begin
 	static void  BeginTexture()
 	{
-		m_DeviceContext->OMSetRenderTargets((int)RENDER_::NUM, m_RenderTextureView, m_RenderDepthStencilView);
+		m_Settings.m_DeviceContext->OMSetRenderTargets((int)RENDER_::NUM, m_Settings.m_RenderTextureView, m_Settings.m_RenderDepthStencilView);
 
 		for (int i = 0; i < (int)RENDER_::NUM; i++)
-			m_DeviceContext->ClearRenderTargetView(m_RenderTextureView[i], ClearColor);
+			m_Settings.m_DeviceContext->ClearRenderTargetView(m_Settings.m_RenderTextureView[i], m_Settings.ClearColor);
 
-		m_DeviceContext->ClearDepthStencilView(m_RenderDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+		m_Settings.m_DeviceContext->ClearDepthStencilView(m_Settings.m_RenderDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 
-	static void SetTime(float inTime = 0.f) { Time.w = inTime; }
+	static void SetTime(float inTime = 0.f) { m_Settings.Time.w = inTime; }
 
-	static const Float4 GetTime() { return Time; }
-	static const float GetDeltaTime() { return deltaTime; }
+	static const Float4 GetTime() { return m_Settings.Time; }
+	static const float GetDeltaTime() { return m_Settings.deltaTime; }
 };

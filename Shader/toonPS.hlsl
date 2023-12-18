@@ -8,6 +8,7 @@ void main(in PS_IN In, out PS_OUT Out)
 	Out.Normal = In.Normal;
 	//ピクセルの法線を正規化
 	float4 normal = normalize(In.Normal);
+
 	//光源計算をする
 	float light = -dot(normal.xyz, Light.Direction.xyz);
 

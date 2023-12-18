@@ -134,7 +134,7 @@ void ParticleManager::OnDisable()
 	Particle.clear();
 }
 
-void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, float inGravity, int livetime, Float3 scl, Float3 Rot)
+void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, float inGravity, float livetime, Float3 scl, Float3 Rot)
 {
 	SetEnable(true);
 	m_pos = pos;
@@ -146,7 +146,7 @@ void ParticleManager::Set(Float3 pos, Float3 rot, float vel, int particle_num, f
 	{
 		ParticleTest* gameObject = DBG_NEW ParticleTest();
 		gameObject->Init();
-		gameObject->Set(m_pos, inGravity, TOOL::FrameMulti((float)livetime), TOOL::Uniform(vel), scl, Rot);
+		gameObject->Set(m_pos, inGravity, livetime, TOOL::Uniform(vel), scl, Rot);
 		Particle.push_back(gameObject);
 	}
 

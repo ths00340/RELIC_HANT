@@ -7,6 +7,7 @@
 
 void Tree::Init()
 {
+	Component.clear();
 	//テクスチャ読み込み
 	m_Texture = ResourceManager::AddTex("asset/texture/Tree01.png");
 

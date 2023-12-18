@@ -3,16 +3,6 @@
 #include "Scene.h"
 #include "Enemy.h"
 
-void EnemyPool::Init()
-{
-	Pool.clear();
-}
-
-void EnemyPool::Uninit()
-{
-	Pool.clear();
-}
-
 void EnemyPool::Set(int num)
 {
 	if (Once)
@@ -29,17 +19,4 @@ void EnemyPool::Set(int num)
 		ene->SetEnable(false);
 		Pool.push_back(ene);
 	}
-}
-
-Enemy* EnemyPool::Recycle()
-{
-	for (Enemy* obj : Pool)
-	{
-		if (!obj->GetEnable())
-		{
-			obj->SetEnable(true);
-			return obj;
-		}
-	}
-	return nullptr;
 }

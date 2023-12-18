@@ -49,6 +49,7 @@ void MainMenu::Init()
 	abc->SetPos(TOOL::Uniform());
 	abc->SetScl(TOOL::Uniform(0.25f));
 
+	Player* pl = GetGameObject<Player>();
 	pl = AddGameObject<Player>((int)OBJ_LAYER::GameObject);
 	pl->RemoveComponent<Status>();
 	pl->RemoveComponent<cInputOperation>();

@@ -70,7 +70,12 @@ public:
 	GameObject() {
 		m_Destroy = false;
 		m_Stop = false;
+		Component.clear();
 	};
+
+	virtual ~GameObject() {
+		RemoveComponents();
+	}
 
 	virtual void Init() = 0;//ƒˆ‰¼‘zŠÖ”
 	virtual void Uninit() = 0;
@@ -248,16 +253,14 @@ public:
 	T* LoadComponent()
 	{
 		GameObject* a = this;
-		int aaa = 0;
 		for (CComponent* comp : Component)
 		{
-			aaa++;
 			if (typeid(*comp) == typeid(T))//Œ^‚ğ’²‚×‚é
 			{
 				return (T*)comp;
 			}
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	template <typename T>

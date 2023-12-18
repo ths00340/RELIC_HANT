@@ -16,8 +16,8 @@ private:
 	Float3 m_vel = { 0.f,0.f,0.f };
 	Float3 m_ang_vel = { 0.f,0.f,0.f };
 	float Gravity = 0.f;
-	int live_time = 0;
-	int time = 0;
+	float live_time = 0.f;
+	float time = 0.f;
 
 	Float3 DefaultSize;
 
@@ -26,9 +26,9 @@ public:
 	{
 		m_vel = { 0.f,0.f,0.f };
 		m_ang_vel = { 0.f,0.0f,0.f };
-		Gravity = 0.f;;
-		live_time = 0;
-		time = 0;
+		Gravity = 0.f;
+		live_time = 0.f;
+		time = 0.f;
 	}
 	void Init();
 	void Uninit();
@@ -37,7 +37,7 @@ public:
 	void InstanceDraw();
 	void Set(D3DXVECTOR3 pos = Float3(0.f, 0.f, 0.f),
 		float inGravity = GRAVITY,
-		int inLiveTime = 60,
+		float inLiveTime = 1.f,
 		Float3 vel = Float3(1.f, 1.f, 1.f),
 		Float3 scl = Float3(0.15f, 0.15f, 0.15f),
 		Float3 Rot = Float3(1.0f, 1.0f, 1.0f));

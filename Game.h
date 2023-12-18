@@ -15,7 +15,6 @@ protected:
 	class Audio* OverBGM = nullptr;
 
 	class Common* fade = nullptr;
-	class Player* pl = nullptr;
 	class ViewCamera* VCam = nullptr;
 
 	ID3D11BlendState* m_pDefaultBlend = nullptr;
@@ -42,7 +41,6 @@ public:
 	virtual void BGMSelect();
 	virtual void Clear();
 	virtual void GameOver();
-	void SetPlayer(Player* player);
 	void SetNext() { Next = true; }
 
 	template <typename T>
@@ -64,7 +62,7 @@ public:
 
 	BATTLE_DATA* GetB_Data() { return B_Data; }
 
-#ifndef DEBUG
+#ifdef DEBUG
 	void DebugDraw();
 #endif // DEBUG
 };

@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "Tools.h"
 #include "Status.h"
+#include "ParticlePool.h"
 #include "ParticleManager.h"
 #include "Explosion.h"
 
@@ -53,18 +54,24 @@ void Bullet::Update()
 				sta->PullHP(atk);
 				scene->AddGameObject<Explosion>((int)OBJ_LAYER::Billboard)->Set(m_pos);
 
-				ParticleManager* mana = Manager::GetScene()->AddGameObject<ParticleManager>(1);
-				mana->SetModel(PARTICLE_S::DEBRIS, BLEND_S::OBJ_OPAQUE);
-				mana->Set(
-					m_pos,
-					TOOL::Uniform(),
-					0.3f * m_scl.z,
-					TOOL::RandF() * 5,
-					GRAVITY,
-					1,
-					TOOL::Uniform(0.25) * m_scl.z,
-					Float3(3.0f, 3.0f, 3.0f)
-				);
+				ParticlePool* pool = scene->GetGameObject<ParticlePool>(OBJ_LAYER::System);
+
+				ParticleManager* mana = pool->Recycle();
+				
+				if(mana)
+				{
+					mana->SetModel(PARTICLE_S::DEBRIS, BLEND_S::OBJ_OPAQUE);
+					mana->Set(
+						m_pos,
+						TOOL::Uniform(),
+						0.3f * m_scl.z,
+						TOOL::RandF() * 10,
+						GRAVITY,
+						1,
+						TOOL::Uniform(0.25) * m_scl.z,
+						Float3(3.0f, 3.0f, 3.0f)
+					);
+				}
 				return;
 			}
 		}

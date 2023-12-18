@@ -52,7 +52,7 @@ public:
 		float vel = 0.0f,
 		int particle_num = 1.0f,
 		float inGravity = 0.0f,
-		int livetime = 2.0f,
+		float livetime = 2.0f,
 		Float3 scl = Float3(0.15f, 0.15f, 0.15f),
 		Float3 Rot = Float3(1.0f, 1.0f, 1.0f));
 

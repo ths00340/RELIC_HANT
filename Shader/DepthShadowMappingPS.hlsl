@@ -8,9 +8,11 @@ void main(in PS_IN In, out PS_OUT Out)
 	//日向での色＝普通のテクスチャ＊頂点色を作成しておく
 	Out.Diffuse = g_Texture.Sample(g_SamplerState, In.TexCoord);
 	//Out.Diffuse *= In.Diffuse;
-	In.ShadowPosition.xyz /= In.ShadowPosition.w; //投影面でのピクセルの座標つくる
-	In.ShadowPosition.x = In.ShadowPosition.x * 0.5 + 0.5; //テクスチャ座標に変換
-	In.ShadowPosition.y = -In.ShadowPosition.y * 0.5 + 0.5; //
+	In.ShadowPosition.xy /= In.ShadowPosition.z; //投影面でのピクセルの座標つくる
+	In.ShadowPosition.x *= -1.f;
+	In.ShadowPosition.y *= -1.f;
+	//In.ShadowPosition.x = In.ShadowPosition.x * 0.5 + 0.5; //テクスチャ座標に変換
+	//In.ShadowPosition.y = -In.ShadowPosition.y * 0.5 + 0.5; //
 
 		//シャドウマップテクスチャより、ライトカメラからピクセルまでの距離（深度値）を取得
 	float depth = g_TextureShadowDepth.Sample(g_SamplerState,
